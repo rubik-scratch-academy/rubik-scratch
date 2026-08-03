@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التدريب الاحترافية | روبيك وسكراتش</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #06B6D4;
+            --accent: #F59E0B;
+            --bg-dark: #0F172A;
+            --bg-card: #1E293B;
+            --text-light: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #FFF;
+        }
+
+        .card-info {
+            margin: 15px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card-info i {
+            color: var(--accent);
+            margin-left: 5px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #4338CA;
+        }
+
+        /* Notice Box */
+        .notice-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            color: #FDE68A;
+        }
+
+        .notice-box h4 {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Floating Cart Trigger Button */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 99;
+        }
+
+        .cart-badge {
+            background: #000;
+            color: #FFF;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+        }
+
+        /* Cart Sidebar Drawer */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 350px;
+            height: 100%;
+            background: var(--bg-card);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+            z-index: 100;
+            transition: left 0.3s ease;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            left: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .remove-btn {
+            color: #EF4444;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .cart-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        .sibling-discount {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 98;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>منصة التدريب والتعليم الرقمي</h1>
+        <p>دورات احترافية في حل مكعبات روبيك وبرمجة سكراتش للأطفال واليافعين</p>
+    </header>
+
+    <div class="container">
+
+        <!-- تنبيه مهم -->
+        <div class="notice-box">
+            <h4><i class="fas fa-exclamation-circle"></i> ملاحظة مهمة بخصوص الساعات التدريبية:</h4>
+            <p>جميع الساعات الموضحة في الدورات والباقات تمثل <strong>الحد الأقصى المخصص للتفكير والتدريب</strong>. في حال إتقان الطالب للمهارات وإتمام المحتوى المحدد قبل انتهاء الوقت، تعتبر الدورة مكتملة بنجاح ولا تترتب على الساعات المتبقية أي حصص إضافية.</p>
+        </div>
+
+        <!-- قسم مكعبات روبيك -->
+        <h2 class="section-title"><i class="fas fa-cube"></i> دورات مكعب روبيك</h2>
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <h3>المكعب الثلاثي (3x3)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 3 ساعات</div>
+                </div>
+                <div>
+                    <div class="price">150 ريال</div>
+                    <button class="btn" onclick="addToCart('دورة المكعب الثلاثي', 150)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>المكعب الثنائي (2x2)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعتان</div>
+                </div>
+                <div>
+                    <div class="price">100 ريال</div>
+                    <button class="btn" onclick="addToCart('دورة المكعب الثنائي', 100)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>المكعب الهرمي (Pyraminx)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعتان</div>
+                </div>
+                <div>
+                    <div class="price">100 ريال</div>
+                    <button class="btn" onclick="addToCart('دورة المكعب الهرمي', 100)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>مكعب الميرور (Mirror)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 3 ساعات</div>
+                </div>
+                <div>
+                    <div class="price">100 ريال</div>
+                    <button class="btn" onclick="addToCart('دورة مكعب الميرور', 100)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>الميجامنكس (Megaminx)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 4 ساعات</div>
+                </div>
+                <div>
+                    <div class="price">200 ريال</div>
+                    <button class="btn" onclick="addToCart('دورة الميجامنكس', 200)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card" style="border: 1px solid var(--primary);">
+                <div>
+                    <h3>باقة (الثلاثي + الثنائي)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 5 ساعات</div>
+                </div>
+                <div>
+                    <div class="price">200 ريال</div>
+                    <button class="btn" onclick="addToCart('باقة الثلاثي + الثنائي', 200)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card" style="border: 1px solid var(--accent);">
+                <div>
+                    <h3>باقة التحدي (الهرمي + الميجامنكس + الميرور)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 7 ساعات</div>
+                </div>
+                <div>
+                    <div class="price">400 ريال</div>
+                    <button class="btn" onclick="addToCart('باقة التحدي لروبيك', 400)">إضافة للسلة</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم سكراتش -->
+        <h2 class="section-title"><i class="fas fa-code"></i> دورات برمجة سكراتش (Scratch)</h2>
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <h3>أساسيات سكراتش بالكامل</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 3 ساعات</div>
+                    <p style="font-size: 0.85rem; color: #CBD5E1;">شرح دقيق لكافة الأساسيات والإجابة عن جميع الأسئلة</p>
+                </div>
+                <div>
+                    <div class="price">250 ريال</div>
+                    <button class="btn" onclick="addToCart('أساسيات سكراتش', 250)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>تعليم برمجة لعبة منصات (Platformer)</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعتان</div>
+                </div>
+                <div>
+                    <div class="price">100 ريال</div>
+                    <button class="btn" onclick="addToCart('تعليم برمجة لعبة Platformer', 100)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>تعليم برمجة لعبة أسلحة بسيطة</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعتان</div>
+                </div>
+                <div>
+                    <div class="price">100 ريال</div>
+                    <button class="btn" onclick="addToCart('تعليم برمجة لعبة أسلحة', 100)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>تعليم برمجة لعبة كرة قدم</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعة واحدة</div>
+                </div>
+                <div>
+                    <div class="price">50 ريال</div>
+                    <button class="btn" onclick="addToCart('تعليم برمجة لعبة كرة قدم', 50)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>تعليم برمجة الآلة الحاسبة</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: ساعة واحدة</div>
+                </div>
+                <div>
+                    <div class="price">50 ريال</div>
+                    <button class="btn" onclick="addToCart('تعليم برمجة الآلة الحاسبة', 50)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>تعليم برمجة لعبة من اختيار المتعلم</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> حسب تفاصيل اللعبة</div>
+                </div>
+                <div>
+                    <div class="price">150 ريال</div>
+                    <button class="btn" onclick="addToCart('تعليم برمجة لعبة خاصة', 150)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card" style="border: 1px solid var(--primary);">
+                <div>
+                    <h3>باقة الانطلاق</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 5 ساعات</div>
+                    <p style="font-size: 0.85rem; color: #CBD5E1;">الأساسيات + لعبة كرة قدم + لعبة منصات + الآلة الحاسبة</p>
+                </div>
+                <div>
+                    <div class="price">350 ريال</div>
+                    <button class="btn" onclick="addToCart('باقة الانطلاق سكراتش', 350)">إضافة للسلة</button>
+                </div>
+            </div>
+
+            <div class="card" style="border: 1px solid var(--accent);">
+                <div>
+                    <h3>الباقة الشاملة للألعاب</h3>
+                    <div class="card-info"><i class="far fa-clock"></i> الحد الأقصى: 4 ساعات</div>
+                    <p style="font-size: 0.85rem; color: #CBD5E1;">لعبة أسلحة + لعبة منصات + كرة قدم + الآلة الحاسبة</p>
+                </div>
+                <div>
+                    <div class="price">400 ريال</div>
+                    <button class="btn" onclick="addToCart('الباقة الشاملة للألعاب', 400)">إضافة للسلة</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Floating Cart Trigger Button -->
+    <button class="floating-cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span>السلة</span>
+        <span class="cart-badge" id="cart-count">0</span>
+    </button>
+
+    <!-- Cart Overlay & Sidebar Drawer -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> سلة الدورات</h3>
+            <button class="close-btn" onclick="toggleCart()">&times;</button>
+        </div>
+
+        <div class="cart-items" id="cart-items">
+            <!-- Dynamic Items -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="sibling-discount">
+                <input type="checkbox" id="sibling-check" onchange="updateTotal()">
+                <label for="sibling-check">تطبيق خصم الأخوان (10 ريال)</label>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin: 15px 0;">
+                <span>المجموع النهائي:</span>
+                <span id="cart-total">0 ريال</span>
+            </div>
+            <button class="btn" style="background: #22C55E;" onclick="checkoutWhatsApp()">
+                <i class="fab fa-whatsapp"></i> تأكيد وإرسال عبر واثساب
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        const phone = "966569749374";
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function addToCart(title, price) {
+            cart.push({ title, price });
+            updateCartUI();
+            
+            // Open drawer automatically when adding an item
+            document.getElementById('cart-drawer').classList.add('open');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            
+            cartCount.innerText = cart.length;
+            cartItemsContainer.innerHTML = '';
+
+            if(cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 30px;">السلة فارغة حالياً</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div>
+                                <div>${item.title}</div>
+                                <strong style="color: var(--accent);">${item.price} ريال</strong>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+            }
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            const isSiblingDiscount = document.getElementById('sibling-check').checked;
+
+            if (isSiblingDiscount && total > 0) {
+                total = Math.max(0, total - 10);
+            }
+
+            document.getElementById('cart-total').innerText = total + ' ريال';
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert('الرجاء إضافة دورة إلى السلة أولاً');
+                return;
+            }
+
+            let message = "مرحباً، أرغب بالتسجيل في الدورات التالية:\n";
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.title} (${item.price} ريال)\n`;
+            });
+
+            const isSibling = document.getElementById('sibling-check').checked;
+            if (isSibling) {
+                message += "\n*تم تطبيق خصم الأخوان (10 ريال)*";
+            }
+
+            const totalText = document.getElementById('cart-total').innerText;
+            message += `\n\n*المجموع الكلي: ${totalText}*`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+</html>
