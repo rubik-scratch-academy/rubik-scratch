@@ -3,400 +3,846 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية المكعب والبرمجة</title>
+    <title>منصة التدريب الاحترافية | روبيك وسكراتش</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* خلفية مبهجة تتغير بسلاسة بألوان فاتحة */
+        /* خلفية مبهجة تتغير بسلاسة بألوان فاتحة وزاهية مع تركيز على الأحمر الوردي والدرجات المبهجة */
         @keyframes dynamicBG {
-            0%   { background-color: #f0f8ff; }
-            25%  { background-color: #fff0f5; }
-            50%  { background-color: #f0fff4; }
-            75%  { background-color: #fffde7; }
-            100% { background-color: #f0f8ff; }
+            0%   { background-color: #ffe4e6; } /* أحمر فاتح / Rose */
+            20%  { background-color: #fef3c7; } /* أصفر زاهي */
+            40%  { background-color: #ffe4d6; } /* برتقالي فاتح */
+            60%  { background-color: #fce7f3; } /* وردي أحمر / Pink */
+            80%  { background-color: #e0f2fe; } /* سماوي */
+            100% { background-color: #ffe4e6; }
         }
 
         :root {
-            --dark-text: #0f172a;
-            --primary: #2563eb;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow: 0 8px 30px rgba(0,0,0,0.06);
+            --primary: #991b1b; /* أحمر غامق احترافي للنصوص والأزرار */
+            --primary-accent: #dc2626; /* أحمر زاهي للتفاعلات */
+            --secondary: #0d9488;
+            --accent: #d97706;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --card-bg: rgba(255, 255, 255, 0.93);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            padding-bottom: 220px; /* مساحة للسلة العائمة */
-            color: var(--dark-text);
-            animation: dynamicBG 16s infinite alternate ease-in-out;
+            color: var(--text-dark);
+            animation: dynamicBG 12s infinite alternate ease-in-out;
+            padding-bottom: 90px;
+            line-height: 1.6;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; }
-
-        header {
-            text-align: center;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .section-title {
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-accent);
+        }
+
+        /* Hero Header */
+        header.hero {
             text-align: center;
-            font-size: 1.6rem;
-            color: var(--dark-text);
-            margin: 30px 0 15px;
-            border-bottom: 3px solid var(--primary);
+            padding: 40px 20px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header.hero h1 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        header.hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin: 35px 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.9rem;
+            color: var(--primary);
             display: inline-block;
+            position: relative;
+            padding-bottom: 8px;
         }
 
-        .center { text-align: center; }
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 25%;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-accent);
+            border-radius: 2px;
+        }
 
+        .sub-header {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed #fca5a5;
+            padding-bottom: 8px;
+        }
+
+        /* Grid & Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 22px;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: var(--radius);
+            padding: 22px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.9);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card h3 { margin-top: 0; color: #1e3a8a; }
-        .price-tag { color: #059669; font-weight: bold; font-size: 1.1rem; }
-        .badge { background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.15);
+        }
 
-        .options-group {
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 10px 0;
+        .card-header-icon {
+            font-size: 2rem;
+            color: var(--primary-accent);
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .card p.desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .online-badge {
+            display: inline-block;
+            background: #ffe4e6;
+            color: #991b1b;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #059669;
+            margin-bottom: 15px;
+        }
+
+        /* Inputs & Options */
+        .options-box {
+            background: #fff5f5;
+            border: 1px solid #fecdd3;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .options-box label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
         }
 
         select, input[type="text"] {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border: 1px solid #fca5a5;
             border-radius: 8px;
-            box-sizing: border-box;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--primary-accent);
+        }
+
+        .neigh-box {
+            margin-top: 10px;
+            display: none;
         }
 
         .btn {
-            background: var(--dark-text);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.95rem;
             width: 100%;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .btn:hover { background: var(--primary); }
+        .btn:hover {
+            background: var(--primary-accent);
+        }
 
-        /* السلة العائمة */
-        #cart {
+        /* ================= زر السلة الصغير العائم ================= */
+        #cart-trigger {
             position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 550px;
-            background: #ffffff;
-            border: 2px solid var(--primary);
-            border-radius: 18px;
-            padding: 15px 20px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary-accent);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+            cursor: pointer;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.2s;
         }
 
-        .cart-header { display: flex; justify-content: space-between; align-items: center; }
-        .cart-items-list { max-height: 90px; overflow-y: auto; font-size: 0.85rem; margin: 8px 0; }
-        .cart-item-row { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px dashed #e2e8f0; }
-        .summary { font-size: 0.9rem; font-weight: bold; color: #334155; margin-top: 5px; }
-        .discount-text { color: #d97706; }
+        #cart-trigger:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-count {
+            background: white;
+            color: var(--primary-accent);
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+        }
+
+        /* نافذة السلة (Pop-up Modal) */
+        #cart-modal {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 340px;
+            max-width: 90vw;
+            background: #ffffff;
+            border: 2px solid var(--primary-accent);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 1001;
+            display: none; /* مخفية حتى النقر */
+            flex-direction: column;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #fee2e2;
+        }
+
+        .cart-header h3 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: #991b1b;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .cart-items-list {
+            max-height: 140px;
+            overflow-y: auto;
+            margin: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px dashed #fecdd3;
+        }
+
+        .remove-item {
+            color: #ef4444;
+            cursor: pointer;
+            margin-right: 6px;
+            font-weight: bold;
+        }
+
+        .cart-summary {
+            background: #fff5f5;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .cart-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.95rem;
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 10px; }
+            header.hero h1 { font-size: 1.7rem; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>🎮 أكاديمية تعليم المكعب والبرمجة 🧩</h1>
-        <p>تطوير مهارات التفكير والذكاء للأطفال والناشئين</p>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-cubes"></i> أكاديمية المكعب والبرمجة
+        </div>
+        <ul class="nav-links">
+            <li><a href="#rubik-section">دورات المكعب</a></li>
+            <li><a href="#scratch-section">دورات سكراتش</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Hero -->
+    <header class="hero">
+        <h1>منصة التدريب التفاعلية والاحترافية 🚀</h1>
+        <p>تطوير مهارات التفكير المنطقي والذكاء للأطفال والناشئين بأحدث أساليب التدريب</p>
     </header>
 
-    <!-- قسم المكعب -->
-    <div class="center"><h2 class="section-title">🧩 قسم دورات مكعب روبيك</h2></div>
+    <div class="container">
 
-    <h3>👤 أولاً: الاشتراكات الفردية</h3>
-    <div class="grid">
-
-        <!-- كرت دورة 3x3 -->
-        <div class="card">
-            <div>
-                <h3>مكعب 3x3 الكلاسيكي</h3>
-                <p>أساسيات وحل المكعب كاملاً.</p>
-                <span class="badge">الأسعار المعروضة للأونلاين</span>
-                <p class="price-tag">السعر الأساسي: 100 ريال</p>
+        <!-- ================= قسم المكعب ================= -->
+        <section id="rubik-section">
+            <div class="section-header">
+                <h2>🧩 قسم دورات مكعب روبيك</h2>
             </div>
-            <div class="options-group">
-                <label>نوع الحضور:</label>
-                <select id="mode-3x3" onchange="toggleNeighborhood('3x3')">
-                    <option value="online">أونلاين (الأساسي)</option>
-                    <option value="onsite">حضوري (+50 ريال)</option>
-                </select>
-                <div id="neigh-box-3x3" style="display:none;">
-                    <input type="text" id="neigh-3x3" placeholder="أدخل اسم الحي الخاص بك">
+
+            <!-- 1. الاشتراكات الفردية -->
+            <div class="sub-header">
+                <i class="fa-solid fa-user"></i> أولاً: الاشتراكات الفردية
+            </div>
+            <div class="grid">
+
+                <!-- 3x3 -->
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-cube"></i></div>
+                        <h3>دورة المكعب الكلاسيكي (3x3)</h3>
+                        <p class="desc">تعلم أساسيات وطريقة الحل الكاملة خطوة بخطوة مع احتراف السرعة.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">100 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-3x3" onchange="toggleNeigh('3x3')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-3x3" class="neigh-box">
+                                <input type="text" id="neigh-3x3" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('مكعب 3x3 الكلاسيكي', 100, '3x3')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <button class="btn" onclick="addCourse('مكعب 3x3', 100, '3x3')">إضافة للسلة 🛒</button>
-        </div>
 
-        <!-- كرت دورة 2x2 -->
-        <div class="card">
-            <div>
-                <h3>مكعب 2x2 السريع</h3>
-                <p>طرق حل بسيطة للمبتدئين.</p>
-                <span class="badge">الأسعار المعروضة للأونلاين</span>
-                <p class="price-tag">السعر الأساسي: 90 ريال</p>
-            </div>
-            <div class="options-group">
-                <label>نوع الحضور:</label>
-                <select id="mode-2x2" onchange="toggleNeighborhood('2x2')">
-                    <option value="online">أونلاين (الأساسي)</option>
-                    <option value="onsite">حضوري (+50 ريال)</option>
-                </select>
-                <div id="neigh-box-2x2" style="display:none;">
-                    <input type="text" id="neigh-2x2" placeholder="أدخل اسم الحي الخاص بك">
+                <!-- 2x2 -->
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-border-all"></i></div>
+                        <h3>دورة المكعب السريع (2x2)</h3>
+                        <p class="desc">طرق حل بسيطة وسريعة جداً تناسب المبتدئين والأطفال.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">90 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-2x2" onchange="toggleNeigh('2x2')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-2x2" class="neigh-box">
+                                <input type="text" id="neigh-2x2" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('مكعب 2x2 السريع', 90, '2x2')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <button class="btn" onclick="addCourse('مكعب 2x2', 90, '2x2')">إضافة للسلة 🛒</button>
-        </div>
 
-        <!-- كرت دورة Pyraminx -->
-        <div class="card">
-            <div>
-                <h3>مكعب Pyraminx (الهرم)</h3>
-                <p>تحدي الهرم الممتع والسهل.</p>
-                <span class="badge">الأسعار المعروضة للأونلاين</span>
-                <p class="price-tag">السعر الأساسي: 90 ريال</p>
-            </div>
-            <div class="options-group">
-                <label>نوع الحضور:</label>
-                <select id="mode-pyra" onchange="toggleNeighborhood('pyra')">
-                    <option value="online">أونلاين (الأساسي)</option>
-                    <option value="onsite">حضوري (+50 ريال)</option>
-                </select>
-                <div id="neigh-box-pyra" style="display:none;">
-                    <input type="text" id="neigh-pyra" placeholder="أدخل اسم الحي الخاص بك">
+                <!-- Pyraminx -->
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-shapes"></i></div>
+                        <h3>دورة مكعب بايرامينكس (Pyraminx)</h3>
+                        <p class="desc">تحدي الهرم الممتع والسهل للاستيعاب وتحفيز التفكير الهندسي.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">90 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-pyra" onchange="toggleNeigh('pyra')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-pyra" class="neigh-box">
+                                <input type="text" id="neigh-pyra" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('مكعب Pyraminx الهرم', 90, 'pyra')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Mirror -->
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-vector-square"></i></div>
+                        <h3>دورة المكعب المرآة (Mirror)</h3>
+                        <p class="desc">تحدي حل المكعب اعتماداً على الأشكال والأحجام بدلاً من الألوان.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">110 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-mirror" onchange="toggleNeigh('mirror')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-mirror" class="neigh-box">
+                                <input type="text" id="neigh-mirror" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('مكعب المرآة Mirror', 110, 'mirror')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Megaminx -->
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-gem"></i></div>
+                        <h3>دورة ميجامينكس (Megaminx)</h3>
+                        <p class="desc">التحدي الأكبر والممتع مع المكعب ذو الـ 12 وجه لزيادة التركيز.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">130 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-mega" onchange="toggleNeigh('mega')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-mega" class="neigh-box">
+                                <input type="text" id="neigh-mega" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('دورة Megaminx', 130, 'mega')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+
             </div>
-            <button class="btn" onclick="addCourse('مكعب Pyraminx', 90, 'pyra')">إضافة للسلة 🛒</button>
-        </div>
+
+            <!-- 2. حزم ومجموعات المكعب -->
+            <div class="sub-header" style="margin-top: 40px;">
+                <i class="fa-solid fa-users"></i> ثانياً: حزم ومجموعات المكعب (العوائل والأخوة)
+            </div>
+            <div class="grid">
+
+                <div class="card" style="border: 2px solid var(--primary-accent);">
+                    <div>
+                        <div class="card-header-icon" style="color:var(--accent);"><i class="fa-solid fa-box-open"></i></div>
+                        <h3>📦 حزمة الشقيقين / الأصدقاء</h3>
+                        <p class="desc">تسجيل طالبين معاً في دورات المكعب والاستفادة من الخصم الجماعي.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">180 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-b1" onchange="toggleNeigh('b1')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-b1" class="neigh-box">
+                                <input type="text" id="neigh-b1" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('حزمة الشقيقين للمكعب', 180, 'b1')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة الحزمة
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card" style="border: 2px solid var(--primary-accent);">
+                    <div>
+                        <div class="card-header-icon" style="color:var(--accent);"><i class="fa-solid fa-trophy"></i></div>
+                        <h3>🏆 حزمة احتراف المكعب الشاملة</h3>
+                        <p class="desc">تعلم جميع أنواع المكعبات في برنامج مخصص ومكثف لضمان الاحتراف.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">320 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-b2" onchange="toggleNeigh('b2')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-b2" class="neigh-box">
+                                <input type="text" id="neigh-b2" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('حزمة احتراف المكعب الشاملة', 320, 'b2')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة الحزمة
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= قسم سكراتش ================= -->
+        <section id="scratch-section" style="margin-top: 50px;">
+            <div class="section-header">
+                <h2>💻 قسم برمجة سكراتش (Scratch)</h2>
+            </div>
+            <div class="grid">
+
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-code"></i></div>
+                        <h3>أساسيات البرمجة بسكراتش</h3>
+                        <p class="desc">تعلم المنطق البرمجي، المتغيرات، والحلقات التكرارية بشكل ممتع وتفاعلي.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">140 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-sc1" onchange="toggleNeigh('sc1')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-sc1" class="neigh-box">
+                                <input type="text" id="neigh-sc1" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('أساسيات سكراتش', 140, 'sc1')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="card-header-icon"><i class="fa-solid fa-gamepad"></i></div>
+                        <h3>برمجة ألعاب المنصات (Platformers)</h3>
+                        <p class="desc">تصميم وبناء لعبة قفز وحركة كاملة واحترافية باستخدام كتل سكراتش.</p>
+                        <span class="online-badge">الأسعار المعروضة للأونلاين</span>
+                        <div class="price-tag">160 ريال</div>
+                    </div>
+                    <div>
+                        <div class="options-box">
+                            <label>نوع الحضور:</label>
+                            <select id="mode-sc2" onchange="toggleNeigh('sc2')">
+                                <option value="online">أونلاين (الأساسي)</option>
+                                <option value="onsite">حضوري (+50 ريال)</option>
+                            </select>
+                            <div id="neigh-box-sc2" class="neigh-box">
+                                <input type="text" id="neigh-sc2" placeholder="يرجى كتابة اسم الحي">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addToCart('سكراتش - ألعاب المنصات', 160, 'sc2')">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
     </div>
 
-    <h3 style="margin-top: 30px;">👥 ثانياً: حزم ومجموعات المكعب (العوائل والأخوة)</h3>
-    <div class="grid">
-        <div class="card">
-            <div>
-                <h3>📦 حزمة الشقيقين / الأصدقاء</h3>
-                <p>تسجيل شخصين معاً في دورات المكعب.</p>
-                <span class="badge">الأسعار المعروضة للأونلاين</span>
-                <p class="price-tag">السعر الأساسي: 180 ريال</p>
-            </div>
-            <div class="options-group">
-                <label>نوع الحضور:</label>
-                <select id="mode-bundle" onchange="toggleNeighborhood('bundle')">
-                    <option value="online">أونلاين (الأساسي)</option>
-                    <option value="onsite">حضوري (+50 ريال)</option>
-                </select>
-                <div id="neigh-box-bundle" style="display:none;">
-                    <input type="text" id="neigh-bundle" placeholder="أدخل اسم الحي الخاص بك">
-                </div>
-            </div>
-            <button class="btn" onclick="addCourse('حزمة الشقيقين', 180, 'bundle')">إضافة الحزمة 🛒</button>
+    <!-- زر السلة الصغير العائم -->
+    <div id="cart-trigger" onclick="toggleCartModal()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>السلة</span>
+        <span class="badge-count" id="cart-count">0</span>
+    </div>
+
+    <!-- نافذة السلة (Modal) -->
+    <div id="cart-modal">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-cart-shopping"></i> سلة التسجيل</h3>
+            <button class="close-cart" onclick="toggleCartModal()">✖</button>
         </div>
-    </div>
 
-    <!-- قسم سكراتش -->
-    <div class="center"><h2 class="section-title">💻 قسم برمجة سكراتش</h2></div>
-    <div class="grid">
-        <div class="card">
-            <div>
-                <h3>أساسيات سكراتش</h3>
-                <p>تعلم المنطق البرمجي للأطفال.</p>
-                <span class="badge">الأسعار المعروضة للأونلاين</span>
-                <p class="price-tag">السعر الأساسي: 120 ريال</p>
-            </div>
-            <div class="options-group">
-                <label>نوع الحضور:</label>
-                <select id="mode-scratch1" onchange="toggleNeighborhood('scratch1')">
-                    <option value="online">أونلاين (الأساسي)</option>
-                    <option value="onsite">حضوري (+50 ريال)</option>
-                </select>
-                <div id="neigh-box-scratch1" style="display:none;">
-                    <input type="text" id="neigh-scratch1" placeholder="أدخل اسم الحي الخاص بك">
-                </div>
-            </div>
-            <button class="btn" onclick="addCourse('أساسيات سكراتش', 120, 'scratch1')">إضافة للسلة 🛒</button>
+        <div id="cart-items" class="cart-items-list">
+            السلة فارغة حالياً.
         </div>
-    </div>
-</div>
 
-<!-- السلة العائمة -->
-<div id="cart">
-    <div class="cart-header">
-        <h3 style="margin:0;">🛒 سلة التسجيل</h3>
-        <button onclick="clearCart()" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold;">تفريغ السلة 🗑️</button>
-    </div>
-    
-    <div id="cart-items" class="cart-items-list">السلة فارغة حالياً</div>
-    
-    <div class="summary">
-        <div>إجمالي السعر: <span id="total-price">0</span> ريال</div>
-        <div class="discount-text">الخصومات المطبقة (خصم الأخوة): <span id="discount-val">0</span> ريال</div>
-    </div>
-    
-    <button class="btn" style="background:#059669; margin-top:10px;" onclick="sendWhatsApp()">إرسال الطلب عبر الواتساب 💬</button>
-</div>
+        <div class="cart-summary">
+            <div>
+                <span>المجموع:</span>
+                <span><span id="raw-total">0</span> ريال</span>
+            </div>
+            <div style="color:var(--primary-accent);">
+                <span>خصم الأخوة:</span>
+                <span>-<span id="discount-val">0</span> ريال</span>
+            </div>
+            <div style="font-size: 0.95rem; border-top: 1px solid #fecdd3; padding-top: 4px; margin-top: 4px; color: var(--primary);">
+                <span>الصافي:</span>
+                <span><span id="net-total">0</span> ريال</span>
+            </div>
+        </div>
 
-<script>
-    let cart = [];
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">
+            <i class="fa-brands fa-whatsapp"></i> إرسال عبر الواتساب
+        </button>
+    </div>
 
-    // إظهار/إخفاء خانة الحي
-    function toggleNeighborhood(id) {
-        const mode = document.getElementById(`mode-${id}`).value;
-        const neighBox = document.getElementById(`neigh-box-${id}`);
-        if(mode === 'onsite') {
-            neighBox.style.display = 'block';
-        } else {
-            neighBox.style.display = 'none';
+    <script>
+        let cart = [];
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
         }
-    }
 
-    // إضافة دورة للسلة
-    function addCourse(title, basePrice, id) {
-        const mode = document.getElementById(`mode-${id}`).value;
-        let finalPrice = basePrice;
-        let neighborhood = "";
+        function toggleNeigh(id) {
+            const mode = document.getElementById(`mode-${id}`).value;
+            const neighBox = document.getElementById(`neigh-box-${id}`);
+            neighBox.style.display = (mode === 'onsite') ? 'block' : 'none';
+        }
 
-        if(mode === 'onsite') {
-            finalPrice += 50; // زيادة الحضوري تلقائياً
-            neighborhood = document.getElementById(`neigh-${id}`).value.trim();
-            if(!neighborhood) {
-                alert("يرجى كتابة اسم الحي للاشتراك الحضوري!");
+        function addToCart(title, basePrice, id) {
+            const mode = document.getElementById(`mode-${id}`).value;
+            let finalPrice = basePrice;
+            let neighborhood = "";
+
+            if (mode === 'onsite') {
+                finalPrice += 50;
+                neighborhood = document.getElementById(`neigh-${id}`).value.trim();
+                if (!neighborhood) {
+                    alert("⚠️ يرجى كتابة اسم الحي للاشتراك الحضوري!");
+                    return;
+                }
+            }
+
+            cart.push({
+                title: title,
+                mode: mode === 'onsite' ? 'حضوري 🏠' : 'أونلاين 💻',
+                price: finalPrice,
+                neighborhood: neighborhood
+            });
+
+            updateCartUI();
+            
+            // فتح السلة تلقائياً عند إضافة عنصر لتسهيل التجربة
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const countEl = document.getElementById('cart-count');
+            const rawTotalEl = document.getElementById('raw-total');
+            const discountEl = document.getElementById('discount-val');
+            const netTotalEl = document.getElementById('net-total');
+
+            countEl.innerText = cart.length;
+
+            if (cart.length === 0) {
+                container.innerHTML = "السلة فارغة حالياً.";
+                rawTotalEl.innerText = "0";
+                discountEl.innerText = "0";
+                netTotalEl.innerText = "0";
                 return;
             }
+
+            container.innerHTML = "";
+            let rawSum = 0;
+
+            cart.forEach((item, index) => {
+                rawSum += item.price;
+                let neighInfo = item.neighborhood ? ` (${item.neighborhood})` : '';
+                container.innerHTML += `
+                    <div class="cart-row">
+                        <span>
+                            <span class="remove-item" onclick="removeItem(${index})">✖</span>
+                            <b>${item.title}</b> (${item.mode}${neighInfo})
+                        </span>
+                        <span><b>${item.price}</b> ر.س</span>
+                    </div>
+                `;
+            });
+
+            let discount = cart.length > 1 ? (cart.length - 1) * 10 : 0;
+            let netTotal = rawSum - discount;
+
+            rawTotalEl.innerText = rawSum;
+            discountEl.innerText = discount;
+            netTotalEl.innerText = netTotal;
         }
 
-        cart.push({
-            title: title,
-            mode: mode === 'onsite' ? 'حضوري 🏠' : 'أونلاين 💻',
-            price: finalPrice,
-            neighborhood: neighborhood
-        });
-
-        updateCart();
-    }
-
-    // إزالة دورة
-    function removeCourse(index) {
-        cart.splice(index, 1);
-        updateCart();
-    }
-
-    // تفريغ السلة
-    function clearCart() {
-        cart = [];
-        updateCart();
-    }
-
-    // تحديث السلة والخصومات
-    function updateCart() {
-        const container = document.getElementById('cart-items');
-        const totalPriceEl = document.getElementById('total-price');
-        const discountEl = document.getElementById('discount-val');
-
-        if(cart.length === 0) {
-            container.innerHTML = "السلة فارغة حالياً";
-            totalPriceEl.innerText = "0";
-            discountEl.innerText = "0";
-            return;
-        }
-
-        container.innerHTML = "";
-        let sum = 0;
-
-        cart.forEach((item, index) => {
-            sum += item.price;
-            let neighInfo = item.neighborhood ? ` (${item.neighborhood})` : '';
-            container.innerHTML += `
-                <div class="cart-item-row">
-                    <span><b>${item.title}</b> - ${item.mode}${neighInfo}</span>
-                    <span>${item.price} ريال <a href="#" onclick="removeCourse(${index})" style="color:red; text-decoration:none;">✖</a></span>
-                </div>
-            `;
-        });
-
-        // حساب خصم الأخوة تلقائياً: 10 ريالات عن كل طالب/دورة بعد الدورة الأولى
-        let discount = (cart.length > 1) ? (cart.length - 1) * 10 : 0;
-        let finalTotal = sum - discount;
-
-        discountEl.innerText = discount;
-        totalPriceEl.innerText = finalTotal;
-    }
-
-    // إرسال الطلب المنسق للواتساب
-    function sendWhatsApp() {
-        if(cart.length === 0) {
-            alert("يرجى إضافة دورة واحدة على الأقل للسلة!");
-            return;
-        }
-
-        let rawSum = 0;
-        cart.forEach(item => rawSum += item.price);
-        let discount = (cart.length > 1) ? (cart.length - 1) * 10 : 0;
-        let netTotal = rawSum - discount;
-
-        // تنسيق رسالة الواتساب بشكل أنيق جداً
-        let msg = `*👋 طلب تسجيل جديد - أكاديمية المكعب والبرمجة*\n`;
-        msg += `------------------------------------\n\n`;
-        msg += `*📚 الدورات المختارة:*\n`;
-
-        cart.forEach((item, i) => {
-            msg += `*${i+1}. ${item.title}*\n`;
-            msg += `   • نوع الحضور: ${item.mode}\n`;
-            if(item.neighborhood) {
-                msg += `   • الحي: ${item.neighborhood}\n`;
+        function sendWhatsApp() {
+            if (cart.length === 0) {
+                alert("يرجى إضافة دورة واحدة على الأقل!");
+                return;
             }
-            msg += `   • السعر: ${item.price} ريال\n\n`;
-        });
 
-        msg += `------------------------------------\n`;
-        msg += `*💰 التفاصيل المالية:*\n`;
-        msg += `• المجموع قبل الخصم: ${rawSum} ريال\n`;
-        if(discount > 0) {
-            msg += `• ✨ خصم الأخوة التلقائي: -${discount} ريال\n`;
+            let rawSum = 0;
+            cart.forEach(item => rawSum += item.price);
+            let discount = cart.length > 1 ? (cart.length - 1) * 10 : 0;
+            let netTotal = rawSum - discount;
+
+            let message = `*👋 طلب تسجيل جديد - أكاديمية المكعب والبرمجة*\n`;
+            message += `------------------------------------\n\n`;
+            message += `*📚 الدورات المختارة:*\n`;
+
+            cart.forEach((item, i) => {
+                message += `*${i + 1}. ${item.title}*\n`;
+                message += `   • نوع الحضور: ${item.mode}\n`;
+                if (item.neighborhood) {
+                    message += `   • الحي: ${item.neighborhood}\n`;
+                }
+                message += `   • السعر: ${item.price} ريال\n\n`;
+            });
+
+            message += `------------------------------------\n`;
+            message += `*💰 التفاصيل المالية:* \n`;
+            message += `• المجموع: ${rawSum} ريال\n`;
+            if (discount > 0) {
+                message += `• ✨ خصم الأخوة التلقائي: -${discount} ريال\n`;
+            }
+            message += `• *الصافي النهائي: ${netTotal} ريال*\n`;
+            message += `------------------------------------\n`;
+            message += `يرجى تزويدي بالمواعيد المتاحة! 🚀`;
+
+            let phoneNumber = "966569749374";
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
-        msg += `• *الصافي النهائي للمبلغ: ${netTotal} ريال*\n`;
-        msg += `------------------------------------\n`;
-        msg += `يرجى تزويدي بتفاصيل الجدول والمواعيد المتاحة! 🚀`;
-
-        let phone = "966569749374";
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-</script>
-
+    </script>
 </body>
 </html>
