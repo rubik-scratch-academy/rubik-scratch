@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية تعليم الروبيك والبرمجة على سكراتش</title>
+    <title>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
@@ -33,41 +33,27 @@
             padding-bottom: 50px;
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
             color: white;
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 15px;
             line-height: 1.3;
         }
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 40px auto 0;
             padding: 0 20px;
         }
 
-        /* Section Titles */
         .section-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             font-size: 1.8rem;
             color: var(--text-main);
             margin-bottom: 25px;
@@ -76,15 +62,13 @@
             width: fit-content;
         }
 
-        /* Cards Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 25px;
             margin-bottom: 50px;
         }
 
-        /* Card Style */
         .card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -98,13 +82,12 @@
         }
 
         .card:hover {
-            transform: translateY(-50px);
             transform: translateY(-5px);
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
         }
 
         .card-header h3 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--primary-dark);
             margin-bottom: 10px;
         }
@@ -115,28 +98,18 @@
             margin-bottom: 20px;
         }
 
-        /* Badges & Details */
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 8px 14px;
+        .duration-badge {
+            display: inline-block;
+            background: #fff7ed;
+            color: var(--accent-orange);
+            padding: 6px 12px;
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-muted);
             margin-bottom: 15px;
+            border: 1px solid #ffedd5;
         }
 
-        .duration-badge {
-            color: var(--accent-orange);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Pricing Section */
         .price-box {
             display: flex;
             gap: 10px;
@@ -172,7 +145,6 @@
             font-weight: 800;
         }
 
-        /* Featured Card for Full Course */
         .card.featured {
             border: 2px solid var(--primary-color);
             background: linear-gradient(to bottom, #ffffff, #f0fdf4);
@@ -191,21 +163,11 @@
             font-weight: 700;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 40px;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.6rem;
-            }
-            .section-title {
-                font-size: 1.4rem;
-            }
         }
     </style>
 </head>
@@ -214,27 +176,20 @@
     <!-- Header -->
     <header>
         <h1>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</h1>
-        <p>منصتك الاحترافية لتنمية مهارات التفكير المنطقي، حل المشكلات، والإبداع البرمجي للأطفال والناشئة</p>
     </header>
 
     <div class="container">
 
-        <!-- Rubik's Cube Section -->
-        <h2 class="section-title">🎲 دورات مكعب روبيك (Rubik's Cube)</h2>
+        <!-- قسم دورات الروبيك -->
+        <h2 class="section-title">🎲 دورات مكعب روبيك</h2>
         <div class="grid">
 
-            <!-- Rubik 3x3 Beginners -->
             <div class="card">
                 <div>
                     <div class="card-header">
-                        <h3>مكعب روبيك 3x3 (للمبتدئين)</h3>
+                        <h3>تعليم حل مكعب روبيك 3x3 للمبتدئين</h3>
                     </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>تعلم طريقة الطبقات الأساسية لحل المكعب بالكامل خطوة بخطوة بطريقة ممتعة ومبسطة تضمن الفهم الكامل.</p>
-                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
                 </div>
                 <div class="price-box">
                     <div class="price-item online">
@@ -248,18 +203,12 @@
                 </div>
             </div>
 
-            <!-- Rubik CFOP -->
             <div class="card">
                 <div>
                     <div class="card-header">
-                        <h3>طريقة CFOP الاحترافية (3x3)</h3>
+                        <h3>طريقة CFOP الاحترافية للسرعة</h3>
                     </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>احترف السرعة في الحل من خلال تعلم مراحل Cross, F2L, OLL, PLL لتقليل زمن الحل بشكل ملحوظ.</p>
-                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
                 </div>
                 <div class="price-box">
                     <div class="price-item online">
@@ -273,18 +222,12 @@
                 </div>
             </div>
 
-            <!-- Rubik 2x2 -->
             <div class="card">
                 <div>
                     <div class="card-header">
-                        <h3>مكعب روبيك 2x2</h3>
+                        <h3>تعليم مكعب روبيك 2x2</h3>
                     </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>دورة سريعة وممتعة لتعلم خوارزميات حل مكعب 2x2 وتحسين المهارات الذهنية والتفكير التحليلي.</p>
-                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
                 </div>
                 <div class="price-box">
                     <div class="price-item online">
@@ -298,17 +241,96 @@
                 </div>
             </div>
 
-            <!-- Rubik 4x4 -->
             <div class="card">
                 <div>
                     <div class="card-header">
-                        <h3>مكعب روبيك 4x4</h3>
+                        <h3>تعليم مكعب روبيك 4x4</h3>
                     </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
                     </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- قسم دورات سكراتش -->
+        <h2 class="section-title">🎮 دورات سكراتش (Scratch)</h2>
+        <div class="grid">
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>1. صنع لعبة بلاتفورمر جميلة</h3>
+                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>2. برمجة لعبة كرة قدم</h3>
+                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>3. برمجة لعبة سيارات</h3>
+                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>4. برمجة آلة حاسبة بسيطة</h3>
+                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
                     <div class="card-body">
-                        <p>تعلم اختزال المكعب الكبير إلى 3x3 وحالات التكافؤ (Parity) المعقدة بأسلوب احترافي وسهل.</p>
+                        <p>تعلم الطالب الحسابات بشكل بسيط.</p>
                     </div>
                 </div>
                 <div class="price-box">
@@ -325,128 +347,16 @@
 
         </div>
 
-        <!-- Scratch Section -->
-        <h2 class="section-title">🎮 دورات البرمجة على سكراتش (Scratch)</h2>
-        
-        <!-- Individual Games -->
-        <div class="grid">
-
-            <!-- Platformer -->
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>1. لعبة بلاتفورمر (Platformer)</h3>
-                    </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>يتعلم الطالب برمجة الفيزياء الأساسية للعبة: حركة الشخصية، القفز والجاذبية، التفاعل مع المنصات، وتجاوز العقبات بين المستويات.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Football Game -->
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>2. لعبة كرة القدم</h3>
-                    </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>برمجة حركة اللاعبين، التمرير والتسديد، حركة الكرة التلقائية، وبناء نظام احتساب الأهداف والنتيجة على الشاشة.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Racing Game -->
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>3. لعبة السيارات</h3>
-                    </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>تصميم مسارات السباق، برمجة توجيه السيارة وحركتها السلسة، وإضافة التحديات مثل الاصطدام بالعوائق وزيادة السرعة.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Calculator -->
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>4. الآلة الحاسبة البسيطة</h3>
-                    </div>
-                    <div class="card-meta">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعة واحدة</span>
-                    </div>
-                    <div class="card-body">
-                        <p>تطبيق برمجي تعليمي يربط بين البرمجة والرياضيات؛ يتعلم فيه الطالب استخدام المتغيرات والأوامر الشرطية لإجراء العمليات الحسابية بشكل مبسط.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Featured Full Course -->
+        <!-- المجموعة النهائية -->
+        <h2 class="section-title">🚀 المجموعة النهائية</h2>
         <div class="grid" style="grid-template-columns: 1fr;">
             <div class="card featured">
-                <span class="featured-tag">المجموعة النهائية والشاملة 🚀</span>
+                <span class="featured-tag">المجموعة النهائية</span>
                 <div>
                     <div class="card-header">
-                        <h3>شرح كامل وشامل لكل بلوكات سكراتش + برمجة لعبة كرة قدم</h3>
+                        <h3>تعليم بلوكات سكراتش وشرح كامل وشامل لكل سكراتش مع طريقة صنع لعبة كرة قدم</h3>
                     </div>
-                    <div class="card-meta" style="max-width: 250px;">
-                        <span class="duration-badge">⏱️ المدة القصوى: ساعتان (2 ساعة)</span>
-                    </div>
-                    <div class="card-body">
-                        <p>تغطية مفصلة وشاملة لجميع أقسام اللبنات البرمجية (Blocks) والأوامر في منصة سكراتش من الصفر حتى التأسيس الكامل، مع تطبيق عملي وتفصيلي لبناء وبرمجة لعبة كرة قدم متكاملة لتثبيت واستيعاب المفاهيم بشكل كامل.</p>
-                    </div>
+                    <span class="duration-badge">⏱️ المدة القصوى: ساعتان (2 ساعة)</span>
                 </div>
                 <div class="price-box" style="max-width: 400px;">
                     <div class="price-item online">
@@ -464,7 +374,7 @@
     </div>
 
     <footer>
-        <p>جميع الحقوق محفوظة © أكاديمية تعليم الروبيك والبرمجة على سكراتش</p>
+        <p>© أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</p>
     </footer>
 
 </body>
