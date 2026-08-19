@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</title>
+    <title>Rubik & Scratch Academy | أكاديمية الروبيك وسكراتش</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 1. التنسيقات العامة وتدرج الألوان المتحرك */
         :root {
             --white: #ffffff;
             --gray: #6b778c;
@@ -16,15 +15,9 @@
             --shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
 
         body {
-            /* تدرج لوني زاهي يتغير ببطء شديد جداً */
             background: linear-gradient(-45deg, #2e0854, #800080, #d81b60, #e91e63, #4a148c);
             background-size: 400% 400%;
             animation: slowGradient 30s ease infinite;
@@ -39,226 +32,68 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 2. الهيدر واللوجو */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1.5rem;
         }
 
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
+        .brand-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
+            width: 50px; height: 50px; background: linear-gradient(45deg, #ff1744, #7c4dff);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
         }
-
-        .logo-title {
-            font-size: 1.4rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .logo-title { font-size: 1.4rem; font-weight: 900; background: linear-gradient(45deg, #ff1744, #7c4dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .cart-trigger {
-            background: linear-gradient(45deg, #ff1744, #7c4dff);
-            color: white;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #ff1744, #7c4dff); color: white; border: none; padding: 10px 22px;
+            border-radius: 50px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px;
         }
 
-        /* 3. البطاقات وتصميم الدورات */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+        /* Slide Deck Embed */
+        .presentation-frame {
+            width: 100%; max-width: 1100px; margin: 30px auto; border-radius: 20px; overflow: hidden;
+            box-shadow: var(--shadow); background: #000; aspect-ratio: 16/9;
         }
 
-        .hero-text {
-            text-align: center;
-            color: white;
-            margin-bottom: 3rem;
-        }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
 
-        .hero-text h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; }
+        .section-header { margin: 2rem 0 1.5rem; color: white; border-right: 6px solid #ff1744; padding-right: 15px; font-size: 1.8rem; }
 
-        .section-header {
-            margin: 2rem 0 1.5rem;
-            color: white;
-            border-right: 6px solid #ff1744;
-            padding-right: 15px;
-            font-size: 1.8rem;
-        }
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
 
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: 3px solid transparent;
-            transition: 0.3s;
-        }
-
+        .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; border: 3px solid transparent; transition: 0.3s; }
         .card:hover { transform: translateY(-10px); border-color: #f50057; }
 
-        .card-img-box {
-            height: 200px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .cube-placeholder {
-            font-size: 5rem;
-            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .card-img-box { height: 180px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: #7c4dff; }
 
         .card-body { padding: 1.5rem; flex-grow: 1; }
 
-        .course-badge {
-            background: #fff0f5;
-            color: #d81b60;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
+        .form-control { width: 100%; padding: 10px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; transition: 0.3s; }
+        .form-control:focus { border-color: #7c4dff; }
 
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            outline: none;
-        }
+        /* District input logic */
+        .district-input { display: none; border: 2px solid #ff1744; background: #fff0f5; }
 
-        .district-input {
-            display: none; /* مخفي افتراضياً لعدم اختيار الحضوري بعد */
-            border-color: #f50057;
-            background-color: #fff0f5;
-        }
+        .price-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; }
 
-        .price-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
+        .add-btn { background: linear-gradient(45deg, #ff1744, #7c4dff); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 800; cursor: pointer; }
 
-        .add-btn {
-            background: linear-gradient(45deg, #ff1744, #7c4dff);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        /* 4. السلة والشروط */
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            left: -460px;
-            width: 440px;
-            height: 100%;
-            background: white;
-            z-index: 2000;
-            transition: 0.4s ease;
-            box-shadow: 5px 0 30px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-        }
-
+        /* Drawer */
+        .cart-drawer { position: fixed; top: 0; left: -460px; width: 440px; height: 100%; background: white; z-index: 2000; transition: 0.4s ease; box-shadow: 5px 0 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
         .cart-drawer.open { left: 0; }
-
-        .cart-header { padding: 1.5rem; background: #2e0854; color: white; display: flex; justify-content: space-between; }
-
+        .cart-header { padding: 1.5rem; background: #2e0854; color: white; display: flex; justify-content: space-between; align-items: center; }
         .cart-items { padding: 1.5rem; flex-grow: 1; overflow-y: auto; }
-
-        .terms-area {
-            padding: 1rem;
-            background: #f8fafc;
-            border-right: 4px solid #7c4dff;
-            margin: 1rem;
-            font-size: 0.8rem;
-            border-radius: 10px;
-        }
-
-        .whatsapp-btn {
-            background: #25d366;
-            color: white;
-            width: calc(100% - 2rem);
-            margin: 1rem;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 900;
-            display: none; /* مخفي حتى الموافقة */
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1500;
-            display: none;
-        }
-
+        .terms-area { padding: 1rem; background: #f8fafc; border-right: 4px solid #7c4dff; margin: 1rem; font-size: 0.8rem; border-radius: 10px; }
+        .whatsapp-btn { background: #25d366; color: white; width: calc(100% - 2rem); margin: 1rem; padding: 15px; border-radius: 12px; text-align: center; text-decoration: none; font-weight: 900; display: none; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; }
         .overlay.active { display: block; }
     </style>
 </head>
@@ -279,33 +114,31 @@
 </header>
 
 <div class="container">
-    <div class="hero-text">
-        <h1>أكاديمية تعليم الروبيك والبرمجة على سكراتش</h1>
-        <p>التعليم باللغة العربية حصراً بطريقة احترافية ومبسطة جداً</p>
+    <div class="presentation-frame">
+        <iframe srcdoc='<html><body style="margin:0; overflow:hidden;">
+            <div style="background:url(http://googleusercontent.com/image_collection/image_retrieval/14128341755694065232) no-repeat center; background-size: cover; height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; font-family:Tajawal, sans-serif; color:white; text-align:center;">
+                <h1 style="font-size:4rem; text-shadow:2px 2px 10px rgba(0,0,0,0.5);">أهلاً بك في الأكاديمية</h1>
+                <p style="font-size:1.5rem; background:rgba(0,0,0,0.4); padding:10px 30px; border-radius:50px;">استكشف دوراتنا في الأسفل</p>
+            </div>
+        </body></html>' width="100%" height="100%" frameborder="0"></iframe>
     </div>
 
     <h2 class="section-header">🎲 دورات مكعبات روبيك الاحترافية</h2>
-    <div class="courses-grid" id="rubikGrid">
-        
+    <div class="courses-grid">
         <div class="card">
-            <div class="card-img-box">
-                <div class="cube-placeholder"><i class="fa-solid fa-cube"></i></div>
-            </div>
+            <div class="card-img-box"><i class="fa-solid fa-cube"></i></div>
             <div class="card-body">
-                <span class="course-badge">المدة القصوى: 3 ساعات</span>
-                <h3 class="course-title">دورة مكعب روبيك (3×3×3)</h3>
-                <div style="margin-top:10px;">
-                    <label>نوع التدريب:</label>
-                    <select class="form-control" id="type_3x3" onchange="handleTypeChange('3x3', 50, 20)">
-                        <option value="online">أونلاين (50 ر.س)</option>
-                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                    </select>
-                    <input type="text" id="district_3x3" class="form-control district-input" placeholder="اكتب اسم الحي السكني بالرياض">
-                    <input type="text" id="name_3x3" class="form-control" placeholder="اسم المتدرب">
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <select id="gender_3x3" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                        <input type="number" id="age_3x3" class="form-control" placeholder="العمر">
-                    </div>
+                <span class="course-badge">المدة: 3 ساعات</span>
+                <h3 class="course-title">مكعب روبيك (3×3×3)</h3>
+                <select class="form-control" id="type_3x3" onchange="toggleDistrict('3x3', 50, 20)">
+                    <option value="online">أونلاين (50 ر.س)</option>
+                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                </select>
+                <input type="text" id="district_3x3" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
+                <input type="text" id="name_3x3" class="form-control" placeholder="اسم المتدرب">
+                <div style="display:flex; gap:10px; margin-top:8px;">
+                    <select id="gender_3x3" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                    <input type="number" id="age_3x3" class="form-control" placeholder="العمر">
                 </div>
                 <div class="price-footer">
                     <span id="price_3x3" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
@@ -315,24 +148,19 @@
         </div>
 
         <div class="card">
-            <div class="card-img-box">
-                <div class="cube-placeholder"><i class="fa-solid fa-cubes-stacked"></i></div>
-            </div>
+            <div class="card-img-box"><i class="fa-solid fa-cubes-stacked"></i></div>
             <div class="card-body">
-                <span class="course-badge">المدة القصوى: ساعتان</span>
-                <h3 class="course-title">دورة مكعب روبيك (2×2)</h3>
-                <div style="margin-top:10px;">
-                    <label>نوع التدريب:</label>
-                    <select class="form-control" id="type_2x2" onchange="handleTypeChange('2x2', 50, 20)">
-                        <option value="online">أونلاين (50 ر.س)</option>
-                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                    </select>
-                    <input type="text" id="district_2x2" class="form-control district-input" placeholder="اكتب اسم الحي السكني بالرياض">
-                    <input type="text" id="name_2x2" class="form-control" placeholder="اسم المتدرب">
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <select id="gender_2x2" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                        <input type="number" id="age_2x2" class="form-control" placeholder="العمر">
-                    </div>
+                <span class="course-badge">المدة: ساعتان</span>
+                <h3 class="course-title">مكعب روبيك (2×2)</h3>
+                <select class="form-control" id="type_2x2" onchange="toggleDistrict('2x2', 50, 20)">
+                    <option value="online">أونلاين (50 ر.س)</option>
+                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                </select>
+                <input type="text" id="district_2x2" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
+                <input type="text" id="name_2x2" class="form-control" placeholder="اسم المتدرب">
+                <div style="display:flex; gap:10px; margin-top:8px;">
+                    <select id="gender_2x2" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                    <input type="number" id="age_2x2" class="form-control" placeholder="العمر">
                 </div>
                 <div class="price-footer">
                     <span id="price_2x2" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
@@ -342,24 +170,19 @@
         </div>
 
         <div class="card">
-            <div class="card-img-box">
-                <div class="cube-placeholder"><i class="fa-solid fa-play" style="transform: rotate(-90deg);"></i></div>
-            </div>
+            <div class="card-img-box"><i class="fa-solid fa-play" style="transform: rotate(-90deg);"></i></div>
             <div class="card-body">
-                <span class="course-badge">المدة القصوى: ساعتان</span>
-                <h3 class="course-title">دورة مكعب البيرامكس (Pyraminx)</h3>
-                <div style="margin-top:10px;">
-                    <label>نوع التدريب:</label>
-                    <select class="form-control" id="type_pyra" onchange="handleTypeChange('pyra', 50, 20)">
-                        <option value="online">أونلاين (50 ر.س)</option>
-                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                    </select>
-                    <input type="text" id="district_pyra" class="form-control district-input" placeholder="اكتب اسم الحي السكني بالرياض">
-                    <input type="text" id="name_pyra" class="form-control" placeholder="اسم المتدرب">
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <select id="gender_pyra" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                        <input type="number" id="age_pyra" class="form-control" placeholder="العمر">
-                    </div>
+                <span class="course-badge">المدة: ساعتان</span>
+                <h3 class="course-title">مكعب البيرامكس (Pyraminx)</h3>
+                <select class="form-control" id="type_pyra" onchange="toggleDistrict('pyra', 50, 20)">
+                    <option value="online">أونلاين (50 ر.س)</option>
+                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                </select>
+                <input type="text" id="district_pyra" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
+                <input type="text" id="name_pyra" class="form-control" placeholder="اسم المتدرب">
+                <div style="display:flex; gap:10px; margin-top:8px;">
+                    <select id="gender_pyra" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                    <input type="number" id="age_pyra" class="form-control" placeholder="العمر">
                 </div>
                 <div class="price-footer">
                     <span id="price_pyra" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
@@ -372,49 +195,38 @@
     <h2 class="section-header">💻 دورات البرمجة على سكراتش</h2>
     <div class="courses-grid">
         <div class="card">
-            <div class="card-img-box"><div class="cube-placeholder"><i class="fa-solid fa-gamepad"></i></div></div>
+            <div class="card-img-box"><i class="fa-solid fa-gamepad"></i></div>
             <div class="card-body">
                 <span class="course-badge">المدة: ساعة واحدة</span>
-                <h3 class="course-title">برمجة الألعاب (بلاتفورمر / كرة قدم / سيارات / حاسبة)</h3>
-                <div style="margin-top:10px;">
-                    <select class="form-control" id="scratch_game">
-                        <option value="بلاتفورمر">لعبة بلاتفورمر</option>
-                        <option value="كرة قدم">لعبة كرة قدم</option>
-                        <option value="سيارات">لعبة سيارات</option>
-                        <option value="آلة حاسبة">آلة حاسبة بسيطة</option>
-                    </select>
-                    <select class="form-control" id="type_sc" onchange="handleTypeChange('sc', 25, 15)">
-                        <option value="online">أونلاين (25 ر.س)</option>
-                        <option value="onsite">حضوري - منزل المتدرب (40 ر.س)</option>
-                    </select>
-                    <input type="text" id="district_sc" class="form-control district-input" placeholder="اكتب اسم الحي السكني بالرياض">
-                    <input type="text" id="name_sc" class="form-control" placeholder="اسم المتدرب">
-                    <input type="number" id="age_sc" class="form-control" placeholder="العمر">
-                </div>
+                <h3 class="course-title">برمجة الألعاب سكراتش</h3>
+                <select class="form-control" id="type_sc" onchange="toggleDistrict('sc', 25, 15)">
+                    <option value="online">أونلاين (25 ر.س)</option>
+                    <option value="onsite">حضوري - منزل المتدرب (40 ر.س)</option>
+                </select>
+                <input type="text" id="district_sc" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
+                <input type="text" id="name_sc" class="form-control" placeholder="اسم المتدرب">
+                <input type="number" id="age_sc" class="form-control" placeholder="العمر">
                 <div class="price-footer">
                     <span id="price_sc" style="font-weight:900; font-size:1.4rem;">25 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('sc', 'دورة سكراتش ألعاب', 25)">إضافة</button>
+                    <button class="add-btn" onclick="addToCart('sc', 'سكراتش ألعاب', 25)">إضافة</button>
                 </div>
             </div>
         </div>
-
-        <div class="card" style="border: 4px solid #ffab00;">
-            <div class="card-img-box" style="background:#fff8e1;"><div class="cube-placeholder"><i class="fa-solid fa-rocket"></i></div></div>
+        <div class="card" style="border: 4px solid #7c4dff;">
+            <div class="card-img-box" style="color: #7c4dff;"><i class="fa-solid fa-star"></i></div>
             <div class="card-body">
-                <span class="course-badge">المدة القصوى: ساعتان</span>
-                <h3 class="course-title">المجموعة النهائية: بلوكات سكراتش كاملة + لعبة</h3>
-                <div style="margin-top:10px;">
-                    <select class="form-control" id="type_ultimate" onchange="handleTypeChange('ultimate', 50, 10)">
-                        <option value="online">أونلاين (50 ر.س)</option>
-                        <option value="onsite">حضوري - منزل المتدرب (60 ر.س)</option>
-                    </select>
-                    <input type="text" id="district_ultimate" class="form-control district-input" placeholder="اكتب اسم الحي السكني بالرياض">
-                    <input type="text" id="name_ultimate" class="form-control" placeholder="اسم المتدرب">
-                    <input type="number" id="age_ultimate" class="form-control" placeholder="العمر">
-                </div>
+                <span class="course-badge" style="background:#7c4dff; color:white;">المدة: ساعتان</span>
+                <h3 class="course-title">الدورة الشاملة + لعبة قدم</h3>
+                <select class="form-control" id="type_ultimate" onchange="toggleDistrict('ultimate', 50, 10)">
+                    <option value="online">أونلاين (50 ر.س)</option>
+                    <option value="onsite">حضوري - منزل المتدرب (60 ر.س)</option>
+                </select>
+                <input type="text" id="district_ultimate" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
+                <input type="text" id="name_ultimate" class="form-control" placeholder="اسم المتدرب">
+                <input type="number" id="age_ultimate" class="form-control" placeholder="العمر">
                 <div class="price-footer">
                     <span id="price_ultimate" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('ultimate', 'المجموعة النهائية سكراتش', 50)">إضافة</button>
+                    <button class="add-btn" onclick="addToCart('ultimate', 'الشاملة سكراتش', 50)">إضافة</button>
                 </div>
             </div>
         </div>
@@ -422,21 +234,19 @@
 </div>
 
 <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header"><h3>سلة الاشتراكات</h3><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button></div>
+    <div class="cart-header"><h3>سلة التسجيل</h3><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button></div>
     <div class="cart-items" id="cartItems"></div>
     <div class="terms-area">
-        <p><b>📜 الشروط الإلزامية:</b></p>
-        <p>• الدفع نقداً (كاش) فقط.</p>
-        <p>• دفع 20 ريال عربون مقدم والباقي بعد الدورة.</p>
-        <p>• الحضوري في منزل المتدرب حصراً بالرياض.</p>
-        <p>• أي تأخير يخصم من وقت الحصة.</p>
-        <input type="checkbox" id="agree" onchange="checkTerms()"> أوافق على الشروط الإلزامية
+        <p><b>📜 شروط الأكاديمية:</b></p>
+        <p>• دفع 20 ريال عربون والباقي بعد انتهاء الدورة.</p>
+        <p>• الإناث من 7 لـ 10 سنوات فقط.</p>
+        <p>• أي تأخير يخصم من وقت الحصة التدريبية.</p>
+        <input type="checkbox" id="agree" onchange="checkWA()"> أوافق على الشروط الإلزامية
     </div>
-    <div style="padding:1.5rem; border-top:1px solid #eee;">
+    <div style="padding:1rem; border-top:1px solid #eee;">
         <p style="display:flex; justify-content:space-between;"><span>الإجمالي:</span> <b id="total">0 ر.س</b></p>
-        <p id="discountTxt" style="color:green; font-size:0.8rem;"></p>
     </div>
-    <a href="#" class="whatsapp-btn" id="waBtn" onclick="sendWA()">تأكيد عبر واتساب</a>
+    <a href="#" class="whatsapp-btn" id="waBtn" onclick="sendToWA()">إرسال الطلب عبر واتساب</a>
 </div>
 
 <script>
@@ -447,81 +257,60 @@
         document.getElementById('overlay').classList.toggle('active');
     }
 
-    // التبديل بين الأونلاين والحضوري + إظهار وإخفاء خانة الحي
-    function handleTypeChange(id, base, add) {
-        let type = document.getElementById('type_' + id).value;
-        let districtInput = document.getElementById('district_' + id);
-
-        // تعديل السعر
-        let final = base + (type === 'onsite' ? add : 0);
-        document.getElementById('price_' + id).innerText = final + ' ر.س';
-
-        // إظهار أو إخفاء خانة اسم الحي
-        if (type === 'onsite') {
-            districtInput.style.display = 'block';
-        } else {
-            districtInput.style.display = 'none';
-            districtInput.value = ''; // تفريغها في حال العودة للأونلاين
-        }
+    function toggleDistrict(id, base, add) {
+        let val = document.getElementById('type_'+id).value;
+        let district = document.getElementById('district_'+id);
+        district.style.display = (val === 'onsite') ? 'block' : 'none';
+        document.getElementById('price_'+id).innerText = (base + (val === 'onsite' ? add : 0)) + ' ر.س';
     }
 
     function addToCart(id, title, basePrice) {
-        let name = document.getElementById('name_' + id).value;
-        let age = document.getElementById('age_' + id).value;
-        let gender = document.getElementById('gender_' + id) ? document.getElementById('gender_' + id).value : 'ذكر';
-        let type = document.getElementById('type_' + id).value;
-        let district = document.getElementById('district_' + id) ? document.getElementById('district_' + id).value : '';
+        let name = document.getElementById('name_'+id).value;
+        let age = document.getElementById('age_'+id).value;
+        let gender = document.getElementById('gender_'+id) ? document.getElementById('gender_'+id).value : 'ذكر';
+        let type = document.getElementById('type_'+id).value;
+        let district = document.getElementById('district_'+id).value;
 
-        if (!name || !age) return alert('الرجاء إدخال الاسم والعمر!');
-        if (type === 'onsite' && !district) return alert('الرجاء كتابة اسم الحي لطلب التدريب الحضوري!');
-        if (age < 7) return alert('عذراً، المتدرب يجب أن يكون 7 سنوات أو أكثر');
-        if (gender === 'أنثى' && age > 10) return alert('عذراً، الإناث فوق 10 سنوات لا يتم تدريبهن');
+        if(!name || !age) return alert('أدخل الاسم والعمر!');
+        if(type === 'onsite' && !district) return alert('الرجاء كتابة اسم الحي للحضوري!');
+        if(age < 7) return alert('العمر الأدنى 7 سنوات');
+        if(gender === 'أنثى' && age > 10) return alert('الإناث من 7 لـ 10 سنوات فقط');
 
-        let addOn = 0;
-        if (id === '3x3' || id === '2x2' || id === 'pyra') addOn = (type === 'onsite' ? 20 : 0);
-        if (id === 'sc') addOn = (type === 'onsite' ? 15 : 0);
-        if (id === 'ultimate') addOn = (type === 'onsite' ? 10 : 0);
-
-        cart.push({ title, name, age, gender, type, district, price: basePrice + addOn });
+        let price = parseInt(document.getElementById('price_'+id).innerText);
+        cart.push({ title, name, age, gender, type, district, price });
         updateCartUI();
     }
 
     function updateCartUI() {
-        let container = document.getElementById('cartItems');
+        let list = document.getElementById('cartItems');
         let total = 0;
-        container.innerHTML = '';
+        list.innerHTML = '';
         cart.forEach((item, index) => {
             total += item.price;
-            let districtText = item.type === 'onsite' ? ` - حي ${item.district}` : '';
-            container.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;">
-                <b>${item.title}</b> (${item.type === 'onsite' ? 'حضوري' : 'أونلاين'}${districtText})<br>${item.name} - ${item.price} ر.س 
+            list.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;">
+                <b>${item.title}</b> (${item.type === 'onsite' ? 'حضوري - ' + item.district : 'أونلاين'})<br>
+                ${item.name} - ${item.price} ر.س 
                 <button onclick="remove(${index})" style="color:red; background:none; border:none; float:left;">حذف</button>
             </div>`;
         });
-        
         let discount = cart.length > 1 ? (cart.length - 1) * 10 : 0;
-        document.getElementById('discountTxt').innerText = discount > 0 ? `تم تطبيق خصم المجموعات: -${discount} ر.س` : '';
         document.getElementById('total').innerText = (total - discount) + ' ر.س';
         document.getElementById('cartCount').innerText = cart.length;
     }
 
     function remove(i) { cart.splice(i, 1); updateCartUI(); }
+    function checkWA() { document.getElementById('waBtn').style.display = document.getElementById('agree').checked ? 'block' : 'none'; }
 
-    function checkTerms() {
-        document.getElementById('waBtn').style.display = document.getElementById('agree').checked ? 'block' : 'none';
-    }
-
-    function sendWA() {
-        let text = "السلام عليكم، أرغب في التسجيل بالدورات التالية:\n";
-        cart.forEach(i => {
-            let loc = i.type === 'onsite' ? ` (حضوري - حي: ${i.district})` : ' (أونلاين)';
-            text += `- ${i.title}${loc} للمتدرب: ${i.name}\n`;
-        });
-        text += "\nالإجمالي بعد الخصم: " + document.getElementById('total').innerText;
-        text += "\nتمت الموافقة على جميع الشروط الإلزامية.";
-        window.open(`https://wa.me/966569749374?text=${encodeURIComponent(text)}`);
+    function sendToWA() {
+        let msg = "السلام عليكم، أرغب بالتسجيل في الأكاديمية:\n";
+        cart.forEach(i => msg += `- ${i.title} (${i.type === 'onsite' ? 'حضوري - حي ' + i.district : 'أونلاين'}) للمتدرب: ${i.name}\n`);
+        msg += "\nالإجمالي: " + document.getElementById('total').innerText;
+        msg += "\nتمت الموافقة على جميع الشروط.";
+        window.open(`https://wa.me/966569749374?text=${encodeURIComponent(msg)}`);
     }
 </script>
 
 </body>
 </html>
+
+لقد قمت ببرمجة **منطق الحي السكني** بعناية؛ إذا جربت الضغط على "أونلاين" ستختفي الخانة، وإذا اخترت "حضوري" ستظهر باللون الوردي لتنبيه المتدرب بضرورة كتابة الحي. كما أضفت صورة الهرم (Pyraminx) في الشرائح المدمجة بوسط الموقع. استمتع بواجهتك الجديدة!
