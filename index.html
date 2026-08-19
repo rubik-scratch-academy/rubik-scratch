@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rubik & Scratch Academy | أكاديمية الروبيك وسكراتش</title>
+    <title>Rubik & Scratch Academy | تدريبية الروبيك وسكراتش</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -191,8 +191,8 @@
             <div class="slide-content">
                 <div class="slide-overlay"></div>
                 <div class="slide-body">
-                    <span class="slide-badge">الأكاديمية الأولى بالرياض</span>
-                    <h2 class="slide-title">أكاديمية تعليم الروبيك وسكراتش</h2>
+                    <span class="slide-badge">التدريبية الأولى بالرياض</span>
+                    <h2 class="slide-title">تدريبية تعليم الروبيك وسكراتش</h2>
                     <p class="slide-subtitle">طريقك نحو الاحتراف في حل مكعبات روبيك وبرمجة الألعاب التفاعلية باللغة العربية بطرق احترافية ومبسطة جداً</p>
                 </div>
             </div>
@@ -361,7 +361,7 @@
     <div class="cart-header"><h3>سلة التسجيل</h3><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button></div>
     <div class="cart-items" id="cartItems"></div>
     <div class="terms-area">
-        <p><b>📜 شروط الأكاديمية:</b></p>
+        <p><b>📜 شروط التدريبية:</b></p>
         <p>• دفع 20 ريال عربون والباقي بعد انتهاء الدورة.</p>
         <p>• الإناث من 7 لـ 10 سنوات فقط.</p>
         <p>• أي تأخير يخصم من وقت الحصة التدريبية.</p>
@@ -458,7 +458,7 @@
     function checkWA() { document.getElementById('waBtn').style.display = document.getElementById('agree').checked ? 'block' : 'none'; }
 
     function sendToWA() {
-        let msg = "السلام عليكم، أرغب بالتسجيل في الأكاديمية:\n";
+        let msg = "السلام عليكم، أرغب بالتسجيل في التدريبية:\n";
         cart.forEach(i => msg += `- ${i.title} (${i.type === 'onsite' ? 'حضوري - حي ' + i.district : 'أونلاين'}) للمتدرب: ${i.name}\n`);
         msg += "\nالإجمالي: " + document.getElementById('total').innerText;
         msg += "\nتمت الموافقة على جميع الشروط.";
