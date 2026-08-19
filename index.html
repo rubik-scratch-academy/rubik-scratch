@@ -4,211 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</title>
-    
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
-        /* ==========================================================================
-           1. VARIABLES & SYSTEM SETUP
-           ========================================================================== */
         :root {
-            /* Color Palette */
             --primary-blue: #2563eb;
-            --primary-dark: #1e3a8a;
-            --primary-light: #3b82f6;
+            --primary-dark: #1e1b4b;
             --accent-purple: #7c3aed;
-            --accent-pink: #ec4899;
             --whatsapp-green: #25D366;
-            --whatsapp-hover: #128C7E;
-            --warning-orange: #f97316;
-            --success-green: #10b981;
-            
-            /* Backgrounds & Neutral Colors */
+            --whatsapp-dark: #128C7E;
+            --warning-orange: #ea580c;
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            --section-bg-light: #f8fafc;
-            --card-bg-white: #ffffff;
-            --card-bg-glass: rgba(255, 255, 255, 0.95);
-            --text-dark: #0f172a;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
             --text-muted: #475569;
-            --text-light: #f8fafc;
-            
-            /* Shadows & Borders */
-            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            --card-shadow-hover: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
             --border-color: #e2e8f0;
-            --border-accent: #cbd5e1;
-            
-            /* Transitions */
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 0.5s ease;
         }
 
-        /* ==========================================================================
-           2. GLOBAL RESETS & BASE STYLES
-           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Tajawal', sans-serif;
             scroll-behavior: smooth;
         }
 
         body {
             background-color: #f1f5f9;
-            color: var(--text-dark);
-            line-height: 1.7;
-            overflow-x: hidden;
-            padding-bottom: 80px;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 90px;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* ==========================================================================
-           3. HEADER & HERO SECTION
-           ========================================================================== */
+        /* Header */
         header {
             background: var(--bg-gradient);
-            color: var(--text-light);
-            padding: 90px 20px 70px;
+            color: white;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
-            animation: rotateBg 20s linear infinite;
-        }
-
-        @keyframes rotateBg {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
+            padding: 60px 20px 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-bottom: 5px solid #6366f1;
         }
 
         header h1 {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.3;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #ffffff, #93c5fd, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         header p {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            margin-bottom: 35px;
-            font-weight: 400;
-            line-height: 1.8;
+            font-size: 1.15rem;
+            color: #c7d2fe;
+            max-width: 800px;
+            margin: 0 auto 20px;
         }
 
-        .header-btn-whatsapp {
+        .btn-whatsapp-header {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background-color: var(--whatsapp-green);
-            color: #ffffff;
-            padding: 16px 36px;
-            border-radius: 50px;
-            font-size: 1.15rem;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
             font-weight: 800;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            transition: var(--transition-normal);
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
         }
 
-        .header-btn-whatsapp:hover {
-            background-color: var(--whatsapp-hover);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
+        .btn-whatsapp-header:hover {
+            background-color: var(--whatsapp-dark);
+            transform: translateY(-2px);
         }
 
-        /* ==========================================================================
-           4. MAIN CONTAINER & SECTION HEADINGS
-           ========================================================================== */
+        /* Container */
         .container {
-            max-width: 1280px;
-            margin: -40px auto 0;
+            max-width: 1200px;
+            margin: 40px auto 0;
             padding: 0 20px;
-            position: relative;
-            z-index: 10;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--card-bg-white);
-            padding: 20px 30px;
-            border-radius: 16px;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border-right: 8px solid var(--primary-blue);
+        /* Rules Box (شروط وقوانين الأكاديمية) */
+        .rules-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 2px solid #cbd5e1;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        .section-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-icon {
-            font-size: 1.8rem;
-            color: var(--primary-blue);
-        }
-
-        .section-title {
-            font-size: 1.75rem;
+        .rules-title {
+            font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-dark);
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
         }
 
-        /* ==========================================================================
-           5. CARDS GRID & CARDS DESIGN
-           ========================================================================== */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .rule-item {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            border-right: 4px solid var(--primary-blue);
+        }
+
+        .rule-item h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 6px;
+        }
+
+        .rule-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Titles */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-right: 6px solid var(--primary-blue);
+            width: fit-content;
+        }
+
+        /* Cards Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
+            margin-bottom: 45px;
         }
 
+        /* Course Cards */
         .card {
-            background: var(--card-bg-white);
+            background: var(--card-bg);
             border-radius: 20px;
             border: 1px solid var(--border-color);
-            padding: 28px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition-normal);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -220,435 +183,345 @@
             right: 0;
             width: 100%;
             height: 6px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-purple));
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--card-shadow-hover);
-            border-color: #93c5fd;
+            transform: translateY(-6px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .card-top {
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 1.35rem;
+        .card-header h3 {
+            font-size: 1.25rem;
             font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 12px;
-            line-height: 1.4;
+            color: #1e293b;
+            margin-bottom: 10px;
         }
 
-        .duration-tag {
+        .duration-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background-color: #fff7ed;
+            gap: 6px;
+            background: #fff7ed;
             color: var(--warning-orange);
-            border: 1px solid #ffedd5;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #ffedd5;
         }
 
-        .card-description {
+        .card-body p {
             color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 0.92rem;
+            margin-bottom: 18px;
         }
 
-        /* ==========================================================================
-           6. PRICING BOX
-           ========================================================================== */
-        .price-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding-top: 20px;
+        /* Prices */
+        .price-box {
+            display: flex;
+            gap: 10px;
             border-top: 2px dashed #f1f5f9;
+            padding-top: 15px;
         }
 
-        .price-card {
+        .price-item {
+            flex: 1;
             text-align: center;
-            padding: 12px 8px;
-            border-radius: 14px;
-            transition: var(--transition-fast);
+            padding: 8px;
+            border-radius: 10px;
         }
 
-        .price-card.online {
+        .price-item.online {
             background-color: #eff6ff;
+            color: var(--primary-blue);
             border: 1px solid #bfdbfe;
-            color: var(--primary-dark);
         }
 
-        .price-card.onsite {
+        .price-item.onsite {
             background-color: #f0fdf4;
+            color: #16a34a;
             border: 1px solid #bbf7d0;
-            color: #14532d;
         }
 
-        .price-type {
-            font-size: 0.82rem;
-            font-weight: 700;
+        .price-label {
             display: block;
-            margin-bottom: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
         }
 
-        .price-amount {
-            font-size: 1.25rem;
+        .price-value {
+            font-size: 1.15rem;
             font-weight: 900;
         }
 
-        /* ==========================================================================
-           7. FEATURED CARD (THE ULTIMATE GROUP)
-           ========================================================================== */
-        .featured-wrapper {
-            margin-bottom: 40px;
+        /* Featured Card */
+        .card.featured {
+            border: 2px solid #8b5cf6;
+            background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%);
         }
 
-        .card-featured {
-            background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
-            border: 2px solid var(--accent-purple);
-            position: relative;
-        }
-
-        .card-featured::before {
-            height: 8px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
-        }
-
-        .badge-featured {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
+        .featured-tag {
+            background: linear-gradient(90deg, #7c3aed, #c026d3);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 800;
-            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+            display: inline-block;
+            margin-bottom: 12px;
         }
 
-        /* ==========================================================================
-           8. FLOATING WHATSAPP BUTTON
-           ========================================================================== */
-        .whatsapp-float {
+        /* Floating WhatsApp Button */
+        .floating-whatsapp {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 65px;
-            height: 65px;
+            bottom: 25px;
+            left: 25px;
             background-color: var(--whatsapp-green);
-            color: #ffffff;
+            color: white;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            transition: var(--transition-normal);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
+            font-size: 30px;
+            transition: transform 0.3s ease;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.15) rotate(10deg);
-            background-color: var(--whatsapp-hover);
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
         }
 
-        /* ==========================================================================
-           9. FOOTER
-           ========================================================================== */
+        /* Footer */
         footer {
-            background-color: #ffffff;
-            border-top: 1px solid var(--border-color);
-            padding: 40px 20px;
             text-align: center;
-            margin-top: 80px;
-        }
-
-        footer p {
+            padding: 30px 20px;
             color: var(--text-muted);
             font-weight: 600;
-            font-size: 1.05rem;
-            margin-bottom: 10px;
-        }
-
-        footer .whatsapp-link {
-            color: var(--whatsapp-hover);
-            font-weight: 800;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        /* ==========================================================================
-           10. RESPONSIVE DESIGN
-           ========================================================================== */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            header p { font-size: 1.05rem; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .whatsapp-float { bottom: 20px; left: 20px; width: 55px; height: 55px; font-size: 26px; }
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+            background: #ffffff;
         }
     </style>
 </head>
 <body>
 
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/569749374" target="_blank" class="whatsapp-float" title="تواصل معنا فوراً على الواتساب">
-        <i class="fab font-awesome-ic-whatsapp fa-whatsapp"></i>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/569749374" target="_blank" class="floating-whatsapp" title="تواصل معنا عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- HEADER SECTION -->
+    <!-- Header -->
     <header>
-        <div class="header-content">
-            <h1>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</h1>
-            <p>منصة تدريبية متخصصة تهدف لتنمية التفكير البرمجي والمنطقي للأطفال والناشئين عبر أفضل المناهج التطبيقية</p>
-            <a href="https://wa.me/569749374" target="_blank" class="header-btn-whatsapp">
-                <i class="fab fa-whatsapp"></i> احجز دورتك الآن عبر الواتساب
-            </a>
-        </div>
+        <h1>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</h1>
+        <p>دليلك المتكامل لتعلم حل المكعبات المحددة وبرمجة الألعاب بسلاسة وسهولة</p>
+        <a href="https://wa.me/569749374" target="_blank" class="btn-whatsapp-header">
+            <i class="fab fa-whatsapp"></i> حجز وإستفسار مباشر عبر الواتساب
+        </a>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
 
-        <!-- ==========================================================================
-           SCRATCH COURSES SECTION
-           ========================================================================== -->
-        <div class="section-header">
-            <div class="section-title-wrap">
-                <i class="fas fa-code section-icon"></i>
-                <h2 class="section-title">دورات البرمجة على سكراتش (Scratch)</h2>
+        <!-- قسم الشروط والقوانين والسياسات -->
+        <div class="rules-card">
+            <div class="rules-title">
+                <i class="fas fa-clipboard-list" style="color: var(--primary-blue);"></i>
+                <span>شروط الأكاديمية وقوانين التسجيل والدفع</span>
             </div>
-        </div>
-
-        <div class="grid">
-            
-            <!-- SCRATCH COURSE 1 -->
-            <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">1. صنع لعبة بلاتفورمر جميلة</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
-                    </div>
-                    <p class="card-description">تعلم كيفية تصميم وإنشاء لعبة منصات (Platformer) احترافية مع البرمجة الفيزياء والقفز والتحكم بالحرية.</p>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <h4>👦 👧 الفئات العمرية المتاحة</h4>
+                    <p>• <b>الذكور:</b> متاح من عمر 7 سنوات فما فوق.<br>• <b>الإناث:</b> متاح من عمر 7 إلى 10 سنوات فقط.</p>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
-                    </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
-                    </div>
+                <div class="rule-item">
+                    <h4>💵 طرق وقوانين الدفع</h4>
+                    <p>• الدفع نقداً (كاش).<br>• دفع <b>20 ريال كعربون</b> عند القدوم، ويُسدد باقي المبلغ فور انتهاء الدورة.</p>
                 </div>
-            </div>
-
-            <!-- SCRATCH COURSE 2 -->
-            <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">2. طريقة برمجة لعبة كرة قدم</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
-                    </div>
-                    <p class="card-description">بناء لعبة كرة قدم تفاعلية ممتازة، برمجة حركة اللاعبين وركل الكرة وحساب الأهداف والنتيجة.</p>
+                <div class="rule-item">
+                    <h4>🎁 الخصومات والتخفيضات</h4>
+                    <p>• خصم تلقائي بقيمة <b>10 ريالات</b> عند التسجيل في أكثر من دورة.</p>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
-                    </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SCRATCH COURSE 3 -->
-            <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">3. برمجة لعبة سيارات</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
-                    </div>
-                    <p class="card-description">تصميم سباق سيارات مشوق، تعلم كيفية التحكم باتجاهات السيارة وتفادي العوائق وتطوير المضمار.</p>
-                </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
-                    </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SCRATCH COURSE 4 -->
-            <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">4. برمجة آلة حاسبة بسيطة</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
-                    </div>
-                    <p class="card-description">تعلم الطالب الحسابات بشكل بسيط وممتع عبر البرمجة وإنشاء الواجهات والعمليات الرياضياتية.</p>
-                </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
-                    </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ==========================================================================
-           FEATURED ULTIMATE GROUP COURSE
-           ========================================================================== -->
-        <div class="section-header" style="border-right-color: var(--accent-purple);">
-            <div class="section-title-wrap">
-                <i class="fas fa-star section-icon" style="color: var(--accent-purple);"></i>
-                <h2 class="section-title">المجموعة النهائية (الدورة الشاملة)</h2>
-            </div>
-        </div>
-
-        <div class="featured-wrapper">
-            <div class="card card-featured">
-                <span class="badge-featured">الأكثر طلباً ⭐</span>
-                <div class="card-top">
-                    <h3 class="card-title" style="font-size: 1.6rem; color: var(--accent-purple);">
-                        تعليم بلوكات سكراتش وشرح كامل وشامل لكل سكراتش مع طريقة صنع لعبة كرة قدم
-                    </h3>
-                    <div class="duration-tag" style="background-color: #f3e8ff; color: var(--accent-purple); border-color: #e9d5ff;">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعتان (2 ساعة)
-                    </div>
-                    <p class="card-description" style="font-size: 1.05rem;">
-                        دورة مكثفة وشاملة لجميع اللبنات البرمجية (Blocks) في سكراتش، تفهم الطالب الأساسيات بالكامل مع تطبيق عملي مباشر لصنع لعبة كرة قدم متكاملة من الصفر.
-                    </p>
-                </div>
-                <div class="price-container" style="max-width: 500px;">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount" style="font-size: 1.4rem;">50 ر.س</span>
-                    </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount" style="font-size: 1.4rem;">60 ر.س</span>
-                    </div>
+                <div class="rule-item">
+                    <h4>⏱️ قوانين المواعيد والوقت</h4>
+                    <p>• التدريب الحضوري في منزل المتدرب، والأونلاين عبر Google Meet.<br>• أي تأخير من المتدرب يُخصم من وقته المخصص للدورة.</p>
                 </div>
             </div>
         </div>
 
-        <!-- ==========================================================================
-           RUBIK'S CUBE COURSES SECTION
-           ========================================================================== -->
-        <div class="section-header" style="border-right-color: var(--warning-orange);">
-            <div class="section-title-wrap">
-                <i class="fas fa-cubes section-icon" style="color: var(--warning-orange);"></i>
-                <h2 class="section-title">دورات مكعب روبيك الاحترافية</h2>
-            </div>
-        </div>
-
+        <!-- قسم دورات سكراتش -->
+        <h2 class="section-title">🎮 دورات البرمجة على سكراتش</h2>
         <div class="grid">
 
-            <!-- RUBIK COURSE 1 -->
             <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">1. تعليم حل مكعب روبيك 3x3 للمبتدئين</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
+                <div>
+                    <div class="card-header">
+                        <h3>1. صنع لعبة بلاتفورمر جميلة</h3>
                     </div>
-                    <p class="card-description">تعلم الأساسيات والخوارزميات الجوهرية لحل المكعب الأساسي 3x3 خطوة بخطوة بكل يسر وسهولة.</p>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
                     </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
                     </div>
                 </div>
             </div>
 
-            <!-- RUBIK COURSE 2 -->
             <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">2. طريقة CFOP الاحترافية للسرعة</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
+                <div>
+                    <div class="card-header">
+                        <h3>2. طريقة برمجة لعبة كرة قدم</h3>
                     </div>
-                    <p class="card-description">دورة المتقدمين لتقليل زمن الحل وإتقان طريقة CFOP العالمية لحل مكعب روبيك بسرعة فائقة.</p>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
                     </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
                     </div>
                 </div>
             </div>
 
-            <!-- RUBIK COURSE 3 -->
             <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">3. تعليم حل مكعب روبيك 2x2</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
+                <div>
+                    <div class="card-header">
+                        <h3>3. برمجة لعبة سيارات</h3>
                     </div>
-                    <p class="card-description">تعلم خوارزميات مكعب 2x2 الثنائي وفهم طرق توجيه وترتيب القطع بسرعة ودقة عالية.</p>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
                     </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
                     </div>
                 </div>
             </div>
 
-            <!-- RUBIK COURSE 4 -->
             <div class="card">
-                <div class="card-top">
-                    <h3 class="card-title">4. تعليم حل مكعب روبيك 4x4</h3>
-                    <div class="duration-tag">
-                        <i class="far fa-clock"></i>المدة القصوى: ساعة واحدة
+                <div>
+                    <div class="card-header">
+                        <h3>4. برمجة آلة حاسبة بسيطة</h3>
                     </div>
-                    <p class="card-description">شرح متكامل لكيفية تجميع مراكز وحواف مكعب 4x4 وحل حالات التكافؤ (Parity) الخاصة به.</p>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
+                    <div class="card-body">
+                        <p>تعلم الطالب الحسابات بشكل بسيط وممتع.</p>
+                    </div>
                 </div>
-                <div class="price-container">
-                    <div class="price-card online">
-                        <span class="price-type">أونلاين</span>
-                        <span class="price-amount">25 ر.س</span>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
                     </div>
-                    <div class="price-card onsite">
-                        <span class="price-type">حضوري</span>
-                        <span class="price-amount">40 ر.س</span>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- قسم المجموعة النهائية -->
+        <h2 class="section-title">🚀 الدورة الشاملة (المجموعة النهائية)</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card featured">
+                <div>
+                    <span class="featured-tag">المجموعة النهائية 🎉</span>
+                    <div class="card-header">
+                        <h3>تعليم بلوكات سكراتش وشرح كامل وشامل لكل سكراتش مع طريقة صنع لعبة كرة قدم</h3>
+                    </div>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعتان (2 ساعة)</span>
+                </div>
+                <div class="price-box" style="max-width: 450px;">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">50 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">60 ر.س</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم دورات مكعب روبيك -->
+        <h2 class="section-title">🎲 دورات مكعب روبيك</h2>
+        <div class="grid">
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>1. تعليم حل مكعب روبيك 3x3</h3>
+                    </div>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>2. تعليم حل مكعب روبيك 2x2</h3>
+                    </div>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h3>3. تعليم حل مكعب الميجامينكس (Megaminx)</h3>
+                    </div>
+                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
+                    <div class="card-body">
+                        <p>تعلم الخوارزميات والخطوات الكاملة لحل مكعب الميجامينكس المضلع.</p>
+                    </div>
+                </div>
+                <div class="price-box">
+                    <div class="price-item online">
+                        <span class="price-label">أونلاين</span>
+                        <span class="price-value">25 ر.س</span>
+                    </div>
+                    <div class="price-item onsite">
+                        <span class="price-label">حضوري</span>
+                        <span class="price-value">40 ر.س</span>
                     </div>
                 </div>
             </div>
@@ -657,28 +530,15 @@
 
     </div>
 
-    <!-- FOOTER SECTION -->
+    <!-- Footer -->
     <footer>
-        <p>© جميع الحقوق محفوظة - أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</p>
-        <a href="https://wa.me/569749374" target="_blank" class="whatsapp-link">
-            <i class="fab fa-whatsapp"></i> تواصل معنا على الرقم: 569749374
-        </a>
+        <p>© أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</p>
+        <p style="margin-top: 8px;">
+            <a href="https://wa.me/569749374" target="_blank" style="color: var(--whatsapp-dark); text-decoration: none; font-weight: 800;">
+                🟢 للتواصل والتسجيل السريع عبر الواتساب: 569749374
+            </a>
+        </p>
     </footer>
 
-    <!-- JAVASCRIPT FOR INTERACTION -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Log confirmation
-            console.log("تم تحميل الصفحة بنجاح!");
-            
-            // Add subtle animation on card hover
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                });
-            });
-        });
-    </script>
 </body>
 </html>
