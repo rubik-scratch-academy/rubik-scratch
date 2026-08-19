@@ -4,24 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* 1. التنسيقات العامة وتدرج الألوان المتحرك */
         :root {
-            --primary-blue: #2563eb;
-            --primary-dark: #1e1b4b;
-            --accent-purple: #7c3aed;
-            --whatsapp-green: #25D366;
-            --whatsapp-dark: #128C7E;
-            --warning-orange: #ea580c;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #e2e8f0;
+            --white: #ffffff;
+            --gray: #6b778c;
+            --radius: 20px;
+            --shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -29,516 +21,480 @@
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            /* تدرج لوني زاهي يتغير ببطء شديد جداً */
+            background: linear-gradient(-45deg, #2e0854, #800080, #d81b60, #e91e63, #4a148c);
+            background-size: 400% 400%;
+            animation: slowGradient 30s ease infinite;
+            color: #2d3748;
             line-height: 1.6;
-            padding-bottom: 90px;
+            min-height: 100vh;
         }
 
-        /* Header */
+        @keyframes slowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. الهيدر واللوجو */
         header {
-            background: var(--bg-gradient);
-            color: white;
-            text-align: center;
-            padding: 60px 20px 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border-bottom: 5px solid #6366f1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
-        header p {
-            font-size: 1.15rem;
-            color: #c7d2fe;
-            max-width: 800px;
-            margin: 0 auto 20px;
-        }
-
-        .btn-whatsapp-header {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--whatsapp-green);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-        }
-
-        .btn-whatsapp-header:hover {
-            background-color: var(--whatsapp-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Container */
-        .container {
+        .nav-container {
             max-width: 1200px;
-            margin: 40px auto 0;
-            padding: 0 20px;
-        }
-
-        /* Rules Box (شروط وقوانين الأكاديمية) */
-        .rules-card {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 2px solid #cbd5e1;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-
-        .rules-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-            margin-bottom: 20px;
+            margin: 0 auto;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+            padding: 0.8rem 1.5rem;
         }
 
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .rule-item {
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 12px;
-            border-right: 4px solid var(--primary-blue);
-        }
-
-        .rule-item h4 {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 6px;
-        }
-
-        .rule-item p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* Section Titles */
-        .section-title {
+        .brand-logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1.7rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-            margin-bottom: 25px;
-            background: #ffffff;
-            padding: 12px 24px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            border-right: 6px solid var(--primary-blue);
-            width: fit-content;
-        }
-
-        /* Cards Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 25px;
-            margin-bottom: 45px;
-        }
-
-        /* Course Cards */
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header h3 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 10px;
-        }
-
-        .duration-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff7ed;
-            color: var(--warning-orange);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            border: 1px solid #ffedd5;
-        }
-
-        .card-body p {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            margin-bottom: 18px;
-        }
-
-        /* Prices */
-        .price-box {
-            display: flex;
-            gap: 10px;
-            border-top: 2px dashed #f1f5f9;
-            padding-top: 15px;
-        }
-
-        .price-item {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            border-radius: 10px;
-        }
-
-        .price-item.online {
-            background-color: #eff6ff;
-            color: var(--primary-blue);
-            border: 1px solid #bfdbfe;
-        }
-
-        .price-item.onsite {
-            background-color: #f0fdf4;
-            color: #16a34a;
-            border: 1px solid #bbf7d0;
-        }
-
-        .price-label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-
-        .price-value {
-            font-size: 1.15rem;
-            font-weight: 900;
-        }
-
-        /* Featured Card */
-        .card.featured {
-            border: 2px solid #8b5cf6;
-            background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%);
-        }
-
-        .featured-tag {
-            background: linear-gradient(90deg, #7c3aed, #c026d3);
-            color: white;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-
-        /* Floating WhatsApp Button */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background-color: var(--whatsapp-green);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            text-decoration: none;
-            font-size: 30px;
-            transition: transform 0.3s ease;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
         }
 
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
+        .logo-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Footer */
-        footer {
+        .cart-trigger {
+            background: linear-gradient(45deg, #ff1744, #7c4dff);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* 3. البطاقات وتصميم الدورات */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero-text {
             text-align: center;
-            padding: 30px 20px;
-            color: var(--text-muted);
-            font-weight: 600;
-            border-top: 1px solid var(--border-color);
-            margin-top: 40px;
-            background: #ffffff;
+            color: white;
+            margin-bottom: 3rem;
         }
+
+        .hero-text h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; }
+
+        .section-header {
+            margin: 2rem 0 1.5rem;
+            color: white;
+            border-right: 6px solid #ff1744;
+            padding-right: 15px;
+            font-size: 1.8rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-10px); border-color: #f50057; }
+
+        .card-img-box {
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .cube-placeholder {
+            font-size: 5rem;
+            background: linear-gradient(45deg, #ff1744, #f50057, #7c4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-body { padding: 1.5rem; flex-grow: 1; }
+
+        .course-badge {
+            background: #fff0f5;
+            color: #d81b60;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .price-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .add-btn {
+            background: linear-gradient(45deg, #ff1744, #7c4dff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* 4. السلة والشروط */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            left: -460px;
+            width: 440px;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            transition: 0.4s ease;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open { left: 0; }
+
+        .cart-header { padding: 1.5rem; background: #2e0854; color: white; display: flex; justify-content: space-between; }
+
+        .cart-items { padding: 1.5rem; flex-grow: 1; overflow-y: auto; }
+
+        .terms-area {
+            padding: 1rem;
+            background: #f8fafc;
+            border-right: 4px solid #7c4dff;
+            margin: 1rem;
+            font-size: 0.8rem;
+            border-radius: 10px;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            width: calc(100% - 2rem);
+            margin: 1rem;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 900;
+            display: none; /* مخفي حتى الموافقة */
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+            display: none;
+        }
+
+        .overlay.active { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/569749374" target="_blank" class="floating-whatsapp" title="تواصل معنا عبر واتساب">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
-    <!-- Header -->
-    <header>
-        <h1>أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</h1>
-        <p>دليلك المتكامل لتعلم حل المكعبات المحددة وبرمجة الألعاب بسلاسة وسهولة</p>
-        <a href="https://wa.me/569749374" target="_blank" class="btn-whatsapp-header">
-            <i class="fab fa-whatsapp"></i> حجز وإستفسار مباشر عبر الواتساب
+<header>
+    <div class="nav-container">
+        <a href="#" class="brand-logo">
+            <div class="logo-icon"><i class="fa-solid fa-cube"></i></div>
+            <span class="logo-title">Rubik & Scratch Academy</span>
         </a>
-    </header>
+        <button class="cart-trigger" onclick="toggleCart()">
+            <i class="fa-solid fa-shopping-cart"></i> السلة (<span id="cartCount">0</span>)
+        </button>
+    </div>
+</header>
 
-    <div class="container">
-
-        <!-- قسم الشروط والقوانين والسياسات -->
-        <div class="rules-card">
-            <div class="rules-title">
-                <i class="fas fa-clipboard-list" style="color: var(--primary-blue);"></i>
-                <span>شروط الأكاديمية وقوانين التسجيل والدفع</span>
-            </div>
-            <div class="rules-grid">
-                <div class="rule-item">
-                    <h4>👦 👧 الفئات العمرية المتاحة</h4>
-                    <p>• <b>الذكور:</b> متاح من عمر 7 سنوات فما فوق.<br>• <b>الإناث:</b> متاح من عمر 7 إلى 10 سنوات فقط.</p>
-                </div>
-                <div class="rule-item">
-                    <h4>💵 طرق وقوانين الدفع</h4>
-                    <p>• الدفع نقداً (كاش).<br>• دفع <b>20 ريال كعربون</b> عند القدوم، ويُسدد باقي المبلغ فور انتهاء الدورة.</p>
-                </div>
-                <div class="rule-item">
-                    <h4>🎁 الخصومات والتخفيضات</h4>
-                    <p>• خصم تلقائي بقيمة <b>10 ريالات</b> عند التسجيل في أكثر من دورة.</p>
-                </div>
-                <div class="rule-item">
-                    <h4>⏱️ قوانين المواعيد والوقت</h4>
-                    <p>• التدريب الحضوري في منزل المتدرب، والأونلاين عبر Google Meet.<br>• أي تأخير من المتدرب يُخصم من وقته المخصص للدورة.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- قسم دورات سكراتش -->
-        <h2 class="section-title">🎮 دورات البرمجة على سكراتش</h2>
-        <div class="grid">
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>1. صنع لعبة بلاتفورمر جميلة</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>2. طريقة برمجة لعبة كرة قدم</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>3. برمجة لعبة سيارات</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>4. برمجة آلة حاسبة بسيطة</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                    <div class="card-body">
-                        <p>تعلم الطالب الحسابات بشكل بسيط وممتع.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- قسم المجموعة النهائية -->
-        <h2 class="section-title">🚀 الدورة الشاملة (المجموعة النهائية)</h2>
-        <div class="grid" style="grid-template-columns: 1fr;">
-            <div class="card featured">
-                <div>
-                    <span class="featured-tag">المجموعة النهائية 🎉</span>
-                    <div class="card-header">
-                        <h3>تعليم بلوكات سكراتش وشرح كامل وشامل لكل سكراتش مع طريقة صنع لعبة كرة قدم</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعتان (2 ساعة)</span>
-                </div>
-                <div class="price-box" style="max-width: 450px;">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">50 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">60 ر.س</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- قسم دورات مكعب روبيك -->
-        <h2 class="section-title">🎲 دورات مكعب روبيك</h2>
-        <div class="grid">
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>1. تعليم حل مكعب روبيك 3x3</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>2. تعليم حل مكعب روبيك 2x2</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h3>3. تعليم حل مكعب الميجامينكس (Megaminx)</h3>
-                    </div>
-                    <span class="duration-badge"><i class="far fa-clock"></i>المدة القصوى: ساعة واحدة</span>
-                    <div class="card-body">
-                        <p>تعلم الخوارزميات والخطوات الكاملة لحل مكعب الميجامينكس المضلع.</p>
-                    </div>
-                </div>
-                <div class="price-box">
-                    <div class="price-item online">
-                        <span class="price-label">أونلاين</span>
-                        <span class="price-value">25 ر.س</span>
-                    </div>
-                    <div class="price-item onsite">
-                        <span class="price-label">حضوري</span>
-                        <span class="price-value">40 ر.س</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+<div class="container">
+    <div class="hero-text">
+        <h1>أكاديمية تعليم الروبيك والبرمجة على سكراتش</h1>
+        <p>التعليم باللغة العربية حصراً بطريقة احترافية ومبسطة جداً</p>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© أكاديمية تعليم الروبيك وتعليم البرمجة على سكراتش بطريقة احترافية ومبسطة</p>
-        <p style="margin-top: 8px;">
-            <a href="https://wa.me/569749374" target="_blank" style="color: var(--whatsapp-dark); text-decoration: none; font-weight: 800;">
-                🟢 للتواصل والتسجيل السريع عبر الواتساب: 569749374
-            </a>
-        </p>
-    </footer>
+    <h2 class="section-header">🎲 دورات مكعبات روبيك الاحترافية</h2>
+    <div class="courses-grid" id="rubikGrid">
+        <div class="card">
+            <div class="card-img-box">
+                <div class="cube-placeholder"><i class="fa-solid fa-cube"></i></div>
+                <div class="card-badge-icon">3×3×3</div>
+            </div>
+            <div class="card-body">
+                <span class="course-badge">المدة القصوى: 3 ساعات</span>
+                <h3 class="course-title">دورة مكعب روبيك (3×3×3)</h3>
+                <div style="margin-top:10px;">
+                    <label>نوع التدريب:</label>
+                    <select class="form-control" id="type_3x3" onchange="updatePrice('3x3', 50, 20)">
+                        <option value="online">أونلاين (50 ر.س)</option>
+                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                    </select>
+                    <input type="text" id="name_3x3" class="form-control" placeholder="اسم المتدرب">
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <select id="gender_3x3" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                        <input type="number" id="age_3x3" class="form-control" placeholder="العمر">
+                    </div>
+                </div>
+                <div class="price-footer">
+                    <span id="price_3x3" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
+                    <button class="add-btn" onclick="addToCart('3x3', 'مكعب 3×3×3', 50)">إضافة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img-box">
+                <div class="cube-placeholder"><i class="fa-solid fa-cubes-stacked"></i></div>
+                <div class="card-badge-icon">2×2</div>
+            </div>
+            <div class="card-body">
+                <span class="course-badge">المدة القصوى: ساعتان</span>
+                <h3 class="course-title">دورة مكعب روبيك (2×2)</h3>
+                <div style="margin-top:10px;">
+                    <label>نوع التدريب:</label>
+                    <select class="form-control" id="type_2x2" onchange="updatePrice('2x2', 50, 20)">
+                        <option value="online">أونلاين (50 ر.س)</option>
+                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                    </select>
+                    <input type="text" id="name_2x2" class="form-control" placeholder="اسم المتدرب">
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <select id="gender_2x2" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                        <input type="number" id="age_2x2" class="form-control" placeholder="العمر">
+                    </div>
+                </div>
+                <div class="price-footer">
+                    <span id="price_2x2" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
+                    <button class="add-btn" onclick="addToCart('2x2', 'مكعب 2×2', 50)">إضافة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img-box">
+                <div class="cube-placeholder"><i class="fa-solid fa-dice-d20"></i></div>
+                <div class="card-badge-icon">ميجامينكس</div>
+            </div>
+            <div class="card-body">
+                <span class="course-badge">المدة القصوى: ساعتان</span>
+                <h3 class="course-title">دورة مكعب الميجامينكس</h3>
+                <div style="margin-top:10px;">
+                    <select class="form-control" id="type_mega" onchange="updatePrice('mega', 50, 20)">
+                        <option value="online">أونلاين (50 ر.س)</option>
+                        <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
+                    </select>
+                    <input type="text" id="name_mega" class="form-control" placeholder="اسم المتدرب">
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <select id="gender_mega" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+                        <input type="number" id="age_mega" class="form-control" placeholder="العمر">
+                    </div>
+                </div>
+                <div class="price-footer">
+                    <span id="price_mega" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
+                    <button class="add-btn" onclick="addToCart('mega', 'مكعب ميجامينكس', 50)">إضافة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">💻 دورات البرمجة على سكراتش</h2>
+    <div class="courses-grid">
+        <div class="card">
+            <div class="card-img-box"><div class="cube-placeholder"><i class="fa-solid fa-gamepad"></i></div></div>
+            <div class="card-body">
+                <span class="course-badge">المدة: ساعة واحدة</span>
+                <h3 class="course-title">برمجة الألعاب (بلاتفورمر / كرة قدم / سيارات / حاسبة)</h3>
+                <div style="margin-top:10px;">
+                    <select class="form-control" id="scratch_game">
+                        <option value="بلاتفورمر">لعبة بلاتفورمر</option>
+                        <option value="كرة قدم">لعبة كرة قدم</option>
+                        <option value="سيارات">لعبة سيارات</option>
+                        <option value="آلة حاسبة">آلة حاسبة بسيطة</option>
+                    </select>
+                    <select class="form-control" id="type_sc" onchange="updatePrice('sc', 25, 15)">
+                        <option value="online">أونلاين (25 ر.س)</option>
+                        <option value="onsite">حضوري - منزل المتدرب (40 ر.س)</option>
+                    </select>
+                    <input type="text" id="name_sc" class="form-control" placeholder="اسم المتدرب">
+                    <input type="number" id="age_sc" class="form-control" placeholder="العمر">
+                </div>
+                <div class="price-footer">
+                    <span id="price_sc" style="font-weight:900; font-size:1.4rem;">25 ر.س</span>
+                    <button class="add-btn" onclick="addToCart('sc', 'دورة سكراتش ألعاب', 25)">إضافة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border: 4px solid #ffab00;">
+            <div class="card-img-box" style="background:#fff8e1;"><div class="cube-placeholder"><i class="fa-solid fa-rocket"></i></div></div>
+            <div class="card-body">
+                <span class="course-badge">المدة القصوى: ساعتان</span>
+                <h3 class="course-title">المجموعة النهائية: بلوكات سكراتش كاملة + لعبة</h3>
+                <div style="margin-top:10px;">
+                    <select class="form-control" id="type_ultimate" onchange="updatePrice('ultimate', 50, 10)">
+                        <option value="online">أونلاين (50 ر.س)</option>
+                        <option value="onsite">حضوري - منزل المتدرب (60 ر.س)</option>
+                    </select>
+                    <input type="text" id="name_ultimate" class="form-control" placeholder="اسم المتدرب">
+                    <input type="number" id="age_ultimate" class="form-control" placeholder="العمر">
+                </div>
+                <div class="price-footer">
+                    <span id="price_ultimate" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
+                    <button class="add-btn" onclick="addToCart('ultimate', 'المجموعة النهائية سكراتش', 50)">إضافة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header"><h3>سلة الاشتراكات</h3><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="terms-area">
+        <p><b>📜 الشروط الإلزامية:</b></p>
+        <p>• الدفع نقداً (كاش) فقط.</p>
+        <p>• دفع 20 ريال عربون مقدم والباقي بعد الدورة.</p>
+        <p>• الحضوري في منزل المتدرب حصراً بالرياض.</p>
+        <p>• أي تأخير يخصم من وقت الحصة.</p>
+        <input type="checkbox" id="agree" onchange="checkTerms()"> أوافق على الشروط الإلزامية
+    </div>
+    <div style="padding:1.5rem; border-top:1px solid #eee;">
+        <p style="display:flex; justify-content:space-between;"><span>الإجمالي:</span> <b id="total">0 ر.س</b></p>
+        <p id="discountTxt" style="color:green; font-size:0.8rem;"></p>
+    </div>
+    <a href="#" class="whatsapp-btn" id="waBtn" onclick="sendWA()">تأكيد عبر واتساب</a>
+</div>
+
+<script>
+    let cart = [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function updatePrice(id, base, add) {
+        let type = document.getElementById('type_'+id).value;
+        let final = base + (type === 'onsite' ? add : 0);
+        document.getElementById('price_'+id).innerText = final + ' ر.س';
+    }
+
+    function addToCart(id, title, basePrice) {
+        let name = document.getElementById('name_'+id).value;
+        let age = document.getElementById('age_'+id).value;
+        let gender = document.getElementById('gender_'+id) ? document.getElementById('gender_'+id).value : 'ذكر';
+        let type = document.getElementById('type_'+id).value;
+        
+        if(!name || !age) return alert('أدخل الاسم والعمر!');
+        if(age < 7) return alert('عذراً، المتدرب يجب أن يكون 7 سنوات أو أكثر');
+        if(gender === 'أنثى' && age > 10) return alert('عذراً، الإناث فوق 10 سنوات لا يتم تدريبهن');
+
+        let addOn = 0;
+        if(id==='3x3' || id==='2x2' || id==='mega') addOn = (type==='onsite' ? 20 : 0);
+        if(id==='sc') addOn = (type==='onsite' ? 15 : 0);
+        if(id==='ultimate') addOn = (type==='onsite' ? 10 : 0);
+
+        cart.push({ title, name, age, gender, type, price: basePrice + addOn });
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        let container = document.getElementById('cartItems');
+        let total = 0;
+        container.innerHTML = '';
+        cart.forEach((item, index) => {
+            total += item.price;
+            container.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;">
+                <b>${item.title}</b> (${item.type})<br>${item.name} - ${item.price} ر.س 
+                <button onclick="remove(${index})" style="color:red; background:none; border:none; float:left;">حذف</button>
+            </div>`;
+        });
+        
+        // خصم الأخوة/المجموعات: 10 ريال عن كل طلب بعد الأول
+        let discount = cart.length > 1 ? (cart.length - 1) * 10 : 0;
+        document.getElementById('discountTxt').innerText = discount > 0 ? `تم تطبيق خصم المجموعات: -${discount} ر.س` : '';
+        document.getElementById('total').innerText = (total - discount) + ' ر.س';
+        document.getElementById('cartCount').innerText = cart.length;
+    }
+
+    function remove(i) { cart.splice(i, 1); updateCartUI(); }
+
+    function checkTerms() {
+        document.getElementById('waBtn').style.display = document.getElementById('agree').checked ? 'block' : 'none';
+    }
+
+    function sendWA() {
+        let text = "السلام عليكم، أرغب في التسجيل بالدورات التالية:\n";
+        cart.forEach(i => text += `- ${i.title} (${i.type}) للمتدرب: ${i.name}\n`);
+        text += "\nالإجمالي بعد الخصم: " + document.getElementById('total').innerText;
+        text += "\nتمت الموافقة على جميع الشروط الإلزامية.";
+        window.open(`https://wa.me/966569749374?text=${encodeURIComponent(text)}`);
+    }
+</script>
 
 </body>
 </html>
