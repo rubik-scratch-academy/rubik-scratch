@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rubik Scratch Academy | أكاديمية روبيك وسكراتش للأطفال</title>
+    <title>Rubik Scratch Academy | أكاديمية روبيك وسكراتش</title>
     <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -62,12 +62,9 @@
             text-decoration: none;
         }
 
-        .logo span {
-            color: var(--accent);
-        }
+        .logo span { color: var(--accent); }
 
         .cart-icon-btn {
-            position: relative;
             background: var(--light);
             border: none;
             padding: 10px 16px;
@@ -81,9 +78,7 @@
             transition: 0.3s;
         }
 
-        .cart-icon-btn:hover {
-            background: #e4e6ea;
-        }
+        .cart-icon-btn:hover { background: #e4e6ea; }
 
         .cart-badge {
             background: var(--accent);
@@ -97,50 +92,38 @@
         .hero {
             background: linear-gradient(135deg, #0052cc 0%, #0747a6 100%);
             color: white;
-            padding: 4rem 1.5rem;
+            padding: 3.5rem 1.5rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            margin-bottom: 0.8rem;
         }
 
         .hero p {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
             opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .hero-btn {
-            background: var(--secondary);
-            color: var(--dark);
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
+        /* Discount Banner */
+        .discount-banner {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 12px;
+            text-align: center;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            display: inline-block;
+            border-radius: 12px;
+            margin: 1.5rem auto -1rem auto;
+            max-width: 1200px;
+            width: calc(100% - 3rem);
         }
 
-        .hero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 171, 0, 0.4);
-        }
-
-        /* Main Container */
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 3rem auto;
@@ -152,20 +135,12 @@
             margin-bottom: 2.5rem;
         }
 
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title p {
-            color: var(--gray);
-        }
+        .section-title h2 { font-size: 2rem; color: var(--dark); }
 
         /* Courses Grid */
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
@@ -174,22 +149,16 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
-            transition: 0.3s;
             display: flex;
             flex-direction: column;
             border: 1px solid #e3e8ee;
         }
 
-        .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(9, 30, 66, 0.12);
-        }
-
         .course-img {
             width: 100%;
-            height: 220px;
+            height: 230px;
             object-fit: cover;
-            background-color: #f8f9fa;
+            background-color: #fff;
         }
 
         .course-body {
@@ -216,11 +185,42 @@
             color: var(--dark);
         }
 
-        .course-desc {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
+        /* Form Inputs Inside Card */
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .inline-fields {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Terms Box */
+        .terms-box {
+            background: #f8f9fa;
+            border-right: 3px solid var(--primary);
+            padding: 10px;
+            font-size: 0.82rem;
+            color: #495057;
+            border-radius: 4px;
+            margin: 10px 0;
+            line-height: 1.4;
         }
 
         .course-footer {
@@ -229,18 +229,23 @@
             align-items: center;
             padding-top: 1rem;
             border-top: 1px solid #f0f2f5;
+            margin-top: auto;
         }
 
-        .course-price {
+        .price-tag {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-price {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--dark);
         }
 
-        .course-price span {
-            font-size: 0.9rem;
+        .sub-price {
+            font-size: 0.75rem;
             color: var(--gray);
-            font-weight: normal;
         }
 
         .add-cart-btn {
@@ -252,21 +257,16 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
-        .add-cart-btn:hover {
-            background: #0043a8;
-        }
+        .add-cart-btn:hover { background: #0043a8; }
 
         /* Drawer / Cart Sidebar */
         .cart-drawer {
             position: fixed;
             top: 0;
-            left: -400px;
-            width: 380px;
+            left: -420px;
+            width: 400px;
             height: 100%;
             background: var(--white);
             box-shadow: 5px 0 25px rgba(0,0,0,0.15);
@@ -276,12 +276,10 @@
             flex-direction: column;
         }
 
-        .cart-drawer.open {
-            left: 0;
-        }
+        .cart-drawer.open { left: 0; }
 
         .cart-header {
-            padding: 1.5rem;
+            padding: 1.2rem 1.5rem;
             background: var(--dark);
             color: white;
             display: flex;
@@ -304,12 +302,20 @@
         }
 
         .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #eee;
+            position: relative;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--accent);
+            background: none;
+            border: none;
+            cursor: pointer;
         }
 
         .cart-footer {
@@ -332,7 +338,6 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            text-decoration: none;
         }
 
         .overlay {
@@ -346,11 +351,8 @@
             display: none;
         }
 
-        .overlay.active {
-            display: block;
-        }
+        .overlay.active { display: block; }
 
-        /* Footer */
         footer {
             background: var(--dark);
             color: white;
@@ -360,14 +362,12 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
             .cart-drawer { width: 100%; left: -100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
     <!-- Header -->
@@ -386,114 +386,187 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>عالم المهارات والتفكير الذكي للأطفال</h1>
-            <p>دورات تفاعلية ومباشرة لتطوير مهارات حل مكعب روبيك وبرمجة الألعاب مع أكاديمية Rubik-Scratch بالرياض.</p>
-            <a href="#courses" class="hero-btn">استعرض الدورات والبرامج</a>
-        </div>
+        <h1>أكاديمية تدريب مكعب روبيك والبرمجة للأطفال</h1>
+        <p>احتراف حل جميع أنواع مكعبات روبيك بأسهل الطرق والأساليب التفاعلية في الرياض وعبر الأونلاين.</p>
     </section>
 
-    <!-- Courses Section -->
-    <div class="container" id="courses">
+    <!-- Discount Notification Banner -->
+    <div class="discount-banner">
+        🎉 **خصم الأخوة والمجموعات:** يتم خصم 10 ريال تلقائياً عن كل دورة إضافية أو طالب إضافي في السلة!
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
         <div class="section-title">
-            <h2>الدورات والبرامج المتاحة</h2>
-            <p>اختبر المهارات والمستويات المناسبة لبطلك الصغير</p>
+            <h2>دورات مكعبات روبيك الاحترافية</h2>
         </div>
 
         <div class="courses-grid">
 
-            <!-- Course 1 -->
+            <!-- Course 1: 3x3 -->
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1591994843349-f415893b3a6b?auto=format&fit=crop&w=600&q=80" alt="مكعب روبيك 3x3" class="course-img">
+                <img src="https://images.unsplash.com/photo-1591994843349-f415893b3a6b?auto=format&fit=crop&w=800&q=80" alt="مكعب روبيك 3x3" class="course-img">
                 <div class="course-body">
-                    <span class="course-tag">مكعب روبيك</span>
-                    <h3 class="course-title">دورة مكعب روبيك القياسي (3x3)</h3>
-                    <p class="course-desc">تعلم الخوارزميات الأساسية لحل المكعب الشهير من الصفر حتى الإتقان الكامل والتفكير السريع.</p>
+                    <span class="course-tag">المستوى الأساسي</span>
+                    <h3 class="course-title">دورة احتراف مكعب روبيك (3x3)</h3>
+                    
+                    <div class="form-group">
+                        <label>نوع التدريب:</label>
+                        <select class="form-control" id="type_3x3" onchange="toggleLocation('3x3')">
+                            <option value="online">أونلاين (50 ر.س)</option>
+                            <option value="onsite">حضوري (+20 ر.س)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="loc_group_3x3" style="display: none;">
+                        <label>حي / موقع الحضور بالرياض:</label>
+                        <input type="text" class="form-control" id="loc_3x3" placeholder="أدخل الحي والموقع">
+                    </div>
+
+                    <div class="form-group">
+                        <label>اسم الطالب:</label>
+                        <input type="text" class="form-control" id="name_3x3" placeholder="الاسم الكامل">
+                    </div>
+
+                    <div class="inline-fields">
+                        <div class="form-group" style="flex:1;">
+                            <label>العمر:</label>
+                            <input type="number" class="form-control" id="age_3x3" placeholder="مثال: 10">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>الجنس:</label>
+                            <select class="form-control" id="gender_3x3">
+                                <option value="ولد">ولد</option>
+                                <option value="بنت">بنت</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="terms-box">
+                        📌 <strong>تنبيه ونظام الدورة:</strong><br>
+                        • المدة الإجمالية المحددة للدورة هي <strong>3 ساعات</strong> مقسمة على 3 جلسات.<br>
+                        • إتمام الدورة بنجاح قبل النفاذ الزمني لا يترتب عليه أي رسوم إضافية.<br>
+                        • في حال عدم استكمال الدورة خلال الوقت المحدد ورغبة المتدرب بالتمديد، تضاف رسوم قدرها <strong>20 ر.س لكل ساعة إضافية</strong>.
+                    </div>
+
                     <div class="course-footer">
-                        <div class="course-price">99 <span>ر.س</span></div>
-                        <button class="add-cart-btn" onclick="addToCart('دورة مكعب روبيك 3x3', 99)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                        <div class="price-tag">
+                            <span class="main-price" id="price_display_3x3">50 ر.س</span>
+                            <span class="sub-price">السعر الافتراضي للأونلاين</span>
+                        </div>
+                        <button class="add-cart-btn" onclick="addCourseToCart('3x3', 'دورة مكعب روبيك 3x3', 50)">إضافة للسلة</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Course 2 -->
+            <!-- Course 2: 2x2 -->
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=600&q=80" alt="مكعب روبيك 2x2" class="course-img">
+                <img src="https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=800&q=80" alt="مكعب روبيك 2x2" class="course-img">
                 <div class="course-body">
-                    <span class="course-tag">مكعب روبيك</span>
-                    <h3 class="course-title">دورة مكعب روبيك الجيب (2x2)</h3>
-                    <p class="course-desc">المحطة الأولى الممتعة للأطفال الصغار لبناء الثقة والتعرف على أساسيات مكعبات روبيك بسهولة.</p>
+                    <span class="course-tag">المستوى المبتدئ</span>
+                    <h3 class="course-title">دورة احتراف مكعب روبيك الجيب (2x2)</h3>
+                    
+                    <div class="form-group">
+                        <label>نوع التدريب:</label>
+                        <select class="form-control" id="type_2x2" onchange="toggleLocation('2x2')">
+                            <option value="online">أونلاين (50 ر.س)</option>
+                            <option value="onsite">حضوري (+20 ر.س)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="loc_group_2x2" style="display: none;">
+                        <label>حي / موقع الحضور بالرياض:</label>
+                        <input type="text" class="form-control" id="loc_2x2" placeholder="أدخل الحي والموقع">
+                    </div>
+
+                    <div class="form-group">
+                        <label>اسم الطالب:</label>
+                        <input type="text" class="form-control" id="name_2x2" placeholder="الاسم الكامل">
+                    </div>
+
+                    <div class="inline-fields">
+                        <div class="form-group" style="flex:1;">
+                            <label>العمر:</label>
+                            <input type="number" class="form-control" id="age_2x2" placeholder="مثال: 8">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>الجنس:</label>
+                            <select class="form-control" id="gender_2x2">
+                                <option value="ولد">ولد</option>
+                                <option value="بنت">بنت</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="terms-box">
+                        📌 <strong>تنبيه ونظام الدورة:</strong><br>
+                        • المدة الإجمالية المحددة للدورة هي <strong>3 ساعات</strong> مقسمة على 3 جلسات.<br>
+                        • إتمام الدورة بنجاح قبل النفاذ الزمني لا يترتب عليه أي رسوم إضافية.<br>
+                        • في حال عدم استكمال الدورة خلال الوقت المحدد ورغبة المتدرب بالتمديد، تضاف رسوم قدرها <strong>20 ر.س لكل ساعة إضافية</strong>.
+                    </div>
+
                     <div class="course-footer">
-                        <div class="course-price">79 <span>ر.س</span></div>
-                        <button class="add-cart-btn" onclick="addToCart('دورة مكعب روبيك 2x2', 79)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                        <div class="price-tag">
+                            <span class="main-price" id="price_display_2x2">50 ر.س</span>
+                            <span class="sub-price">السعر الافتراضي للأونلاين</span>
+                        </div>
+                        <button class="add-cart-btn" onclick="addCourseToCart('2x2', 'دورة مكعب روبيك 2x2', 50)">إضافة للسلة</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Course 3 -->
+            <!-- Course 3: Pyraminx -->
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="مكعب روبيك 4x4" class="course-img">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="مكعب البيراميكس Pyraminx" class="course-img">
                 <div class="course-body">
-                    <span class="course-tag">مكعب روبيك</span>
-                    <h3 class="course-title">دورة مكعب روبيك المتقدم (4x4)</h3>
-                    <p class="course-desc">انتقل لمستوى التحدي الاحترافي وتعلّم حل المراكز وتجميع الحواف في المكعب الرباعي.</p>
-                    <div class="course-footer">
-                        <div class="course-price">120 <span>ر.س</span></div>
-                        <button class="add-cart-btn" onclick="addToCart('دورة مكعب روبيك 4x4', 120)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                    <span class="course-tag">المكعب الهرمي</span>
+                    <h3 class="course-title">دورة احتراف مكعب البيراميكس (Pyraminx)</h3>
+                    
+                    <div class="form-group">
+                        <label>نوع التدريب:</label>
+                        <select class="form-control" id="type_pyra" onchange="toggleLocation('pyra')">
+                            <option value="online">أونلاين (50 ر.س)</option>
+                            <option value="onsite">حضوري (+20 ر.س)</option>
+                        </select>
                     </div>
-                </div>
-            </div>
 
-            <!-- Course 4 -->
-            <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="برمجة سكراتش للمبتدئين" class="course-img">
-                <div class="course-body">
-                    <span class="course-tag">برمجة الألعاب</span>
-                    <h3 class="course-title">أساسيات برمجة سكراتش (Scratch)</h3>
-                    <p class="course-desc">صمم أول لعبة إلكترونية بنفسك! تعلم بناء اللبنات البرمجية وتحريك الشخصيات وتنمية التفكير المنطقي.</p>
-                    <div class="course-footer">
-                        <div class="course-price">149 <span>ر.س</span></div>
-                        <button class="add-cart-btn" onclick="addToCart('أساسيات برمجة سكراتش', 149)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                    <div class="form-group" id="loc_group_pyra" style="display: none;">
+                        <label>حي / موقع الحضور بالرياض:</label>
+                        <input type="text" class="form-control" id="loc_pyra" placeholder="أدخل الحي والموقع">
                     </div>
-                </div>
-            </div>
 
-            <!-- Course 5 -->
-            <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" alt="برمجة ألعاب متقدمة" class="course-img">
-                <div class="course-body">
-                    <span class="course-tag">برمجة الألعاب</span>
-                    <h3 class="course-title">ابتكار وتطوير الألعاب المتقدمة</h3>
-                    <p class="course-desc">دورة متقدمة لصناعة ألعاب متعددة المستويات وقواعد الشروط والنقاط المعقدة عبر سكراتش.</p>
-                    <div class="course-footer">
-                        <div class="course-price">199 <span>ر.س</span></div>
-                        <button class="add-cart-btn" onclick="addToCart('ابتكار الألعاب المتقدمة', 199)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                    <div class="form-group">
+                        <label>اسم الطالب:</label>
+                        <input type="text" class="form-control" id="name_pyra" placeholder="الاسم الكامل">
                     </div>
-                </div>
-            </div>
 
-            <!-- Course 6 (Package) -->
-            <div class="course-card" style="border: 2px solid var(--secondary);">
-                <img src="https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=600&q=80" alt="الباقة الشاملة" class="course-img">
-                <div class="course-body">
-                    <span class="course-tag" style="background: rgba(255,171,0,0.2); color: #b78103;">الباقة الشاملة</span>
-                    <h3 class="course-title">باقة الموهوب الشاملة (روبيك + سكراتش)</h3>
-                    <p class="course-desc">احصل على العرض المميز: دورة روبيك 3x3 + دورة برمجة سكراتش الكاملة مع متابعة شخصية بخصم خاص.</p>
+                    <div class="inline-fields">
+                        <div class="form-group" style="flex:1;">
+                            <label>العمر:</label>
+                            <input type="number" class="form-control" id="age_pyra" placeholder="مثال: 9">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>الجنس:</label>
+                            <select class="form-control" id="gender_pyra">
+                                <option value="ولد">ولد</option>
+                                <option value="بنت">بنت</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="terms-box">
+                        📌 <strong>تنبيه ونظام الدورة:</strong><br>
+                        • المدة الإجمالية المحددة للدورة هي <strong>3 ساعات</strong> مقسمة على 3 جلسات.<br>
+                        • إتمام الدورة بنجاح قبل النفاذ الزمني لا يترتب عليه أي رسوم إضافية.<br>
+                        • في حال عدم استكمال الدورة خلال الوقت المحدد ورغبة المتدرب بالتمديد، تضاف رسوم قدرها <strong>20 ر.س لكل ساعة إضافية</strong>.
+                    </div>
+
                     <div class="course-footer">
-                        <div class="course-price">219 <span>ر.س</span></div>
-                        <button class="add-cart-btn" style="background: var(--secondary); color: var(--dark);" onclick="addToCart('الباقة الشاملة (روبيك + سكراتش)', 219)">
-                            <i class="fa-solid fa-plus"></i> إضافة
-                        </button>
+                        <div class="price-tag">
+                            <span class="main-price" id="price_display_pyra">50 ر.س</span>
+                            <span class="sub-price">السعر الافتراضي للأونلاين</span>
+                        </div>
+                        <button class="add-cart-btn" onclick="addCourseToCart('pyra', 'دورة مكعب البيراميكس', 50)">إضافة للسلة</button>
                     </div>
                 </div>
             </div>
@@ -504,19 +577,20 @@
     <!-- Drawer / Cart Sidebar -->
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
-            <h3>سلة الاشتراكات</h3>
+            <h3>سلة التسجيل والدورات</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
         </div>
         <div class="cart-items" id="cartItems">
             <p style="text-align: center; color: var(--gray);">السلة فارغة حالياً</p>
         </div>
         <div class="cart-footer">
+            <div id="discountDetails" style="color:#28a745; font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:none;"></div>
             <div style="display:flex; justify-content:space-between; font-size: 1.2rem; font-weight:bold; margin-bottom: 1rem;">
-                <span>الإجمالي:</span>
+                <span>المبلغ الإجمالي:</span>
                 <span id="cartTotal">0 ر.س</span>
             </div>
             <button class="checkout-btn" onclick="sendToWhatsApp()">
-                <i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب
+                <i class="fa-brands fa-whatsapp"></i> إرسال الطلب عبر الواتساب
             </button>
         </div>
     </div>
@@ -524,10 +598,9 @@
     <!-- Footer -->
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2026 - Rubik-Scratch Academy 🧩💻</p>
-        <p style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">الرياض، المملكة العربية السعودية | للتواصل: 569749374</p>
     </footer>
 
-    <!-- JavaScript logic -->
+    <!-- JS Logic -->
     <script>
         let cart = [];
 
@@ -536,8 +609,49 @@
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        function addToCart(title, price) {
-            cart.push({ title, price });
+        function toggleLocation(id) {
+            let type = document.getElementById('type_' + id).value;
+            let locGroup = document.getElementById('loc_group_' + id);
+            let priceDisplay = document.getElementById('price_display_' + id);
+
+            if (type === 'onsite') {
+                locGroup.style.display = 'block';
+                priceDisplay.innerText = '70 ر.س';
+            } else {
+                locGroup.style.display = 'none';
+                priceDisplay.innerText = '50 ر.س';
+            }
+        }
+
+        function addCourseToCart(id, courseTitle, basePrice) {
+            let name = document.getElementById('name_' + id).value.trim();
+            let age = document.getElementById('age_' + id).value.trim();
+            let gender = document.getElementById('gender_' + id).value;
+            let type = document.getElementById('type_' + id).value;
+            let location = document.getElementById('loc_' + id).value.trim();
+
+            if (!name || !age) {
+                alert('يرجى كتابة اسم الطالب وعمره قبل الإضافة للسلة.');
+                return;
+            }
+
+            if (type === 'onsite' && !location) {
+                alert('يرجى تحديد الموقع/الحي للتدريب الحضوري.');
+                return;
+            }
+
+            let finalPrice = basePrice + (type === 'onsite' ? 20 : 0);
+
+            cart.push({
+                title: courseTitle,
+                name: name,
+                age: age,
+                gender: gender,
+                type: type === 'onsite' ? 'حضوري' : 'أونلاين',
+                location: type === 'onsite' ? location : 'عبر الإنترنت',
+                price: finalPrice
+            });
+
             updateCart();
             toggleCart();
         }
@@ -551,53 +665,71 @@
             const cartItemsContainer = document.getElementById('cartItems');
             const cartBadge = document.getElementById('cartBadge');
             const cartTotal = document.getElementById('cartTotal');
+            const discountDetails = document.getElementById('discountDetails');
 
             cartBadge.innerText = cart.length;
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--gray);">السلة فارغة حالياً</p>';
                 cartTotal.innerText = '0 ر.س';
+                discountDetails.style.display = 'none';
                 return;
             }
 
             let html = '';
-            let total = 0;
+            let rawTotal = 0;
 
             cart.forEach((item, index) => {
-                total += item.price;
+                rawTotal += item.price;
                 html += `
                     <div class="cart-item">
-                        <div>
-                            <div style="font-weight:bold;">${item.title}</div>
-                            <div style="color:var(--gray); font-size:0.9rem;">${item.price} ر.س</div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--accent); cursor:pointer;">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                        <div style="font-weight:bold; color:var(--primary);">${item.title}</div>
+                        <div style="font-size:0.9rem;"><strong>الطالب:</strong> ${item.name} (${item.gender} - ${item.age} سنة)</div>
+                        <div style="font-size:0.85rem; color:var(--gray);"><strong>النوع:</strong> ${item.type} ${item.type === 'حضوري' ? ' - ' + item.location : ''}</div>
+                        <div style="font-weight:bold; margin-top:3px;">${item.price} ر.س</div>
                     </div>
                 `;
             });
 
+            // الخصم التلقائي: 10 ريال خصم لكل طالب/دورة إضافية بعد الدورة الأولى
+            let discount = (cart.length > 1) ? (cart.length - 1) * 10 : 0;
+            let finalTotal = rawTotal - discount;
+
+            if (discount > 0) {
+                discountDetails.style.display = 'block';
+                discountDetails.innerText = `🎁 تم تطبيق خصم الأخوة/التسجيل المعدد: -${discount} ر.س`;
+            } else {
+                discountDetails.style.display = 'none';
+            }
+
             cartItemsContainer.innerHTML = html;
-            cartTotal.innerText = total + ' ر.س';
+            cartTotal.innerText = finalTotal + ' ر.س';
         }
 
         function sendToWhatsApp() {
-            if (cart.length === 0) {
-                alert('الرجاء إضافة دورة للسلة أولاً!');
-                return;
-            }
+            if (cart.length === 0) return;
 
             let phone = "966569749374";
-            let message = "السلام عليكم ورحمة الله، أرغب بالتسجيل في الدورات التالية عبر موقع RubikScratch:\n\n";
+            let message = "السلام عليكم ورحمة الله، أرغب بالتسجيل في دورات روبيك عبر موقع الأكاديمية:\n\n";
 
-            let total = 0;
+            let rawTotal = 0;
             cart.forEach((item, i) => {
-                message += `${i + 1}. ${item.title} - ${item.price} ر.س\n`;
-                total += item.price;
+                rawTotal += item.price;
+                message += `📌 *الدورة ${i + 1}:* ${item.title}\n`;
+                message += `• الطالب: ${item.name} (${item.gender} - ${item.age} سنة)\n`;
+                message += `• النظام: ${item.type} ${item.type === 'حضوري' ? '(' + item.location + ')' : ''}\n`;
+                message += `• السعر: ${item.price} ر.س\n------------------\n`;
             });
 
-            message += `\nالمجموع الإجمالي: ${total} ر.س\nأرجو تزويدي بمواعيد الدورات وآلية الدفع.`;
+            let discount = (cart.length > 1) ? (cart.length - 1) * 10 : 0;
+            let finalTotal = rawTotal - discount;
+
+            if (discount > 0) {
+                message += `🎁 *خصم التسجيل المتعدد:* -${discount} ر.س\n`;
+            }
+
+            message += `💰 *الإجمالي النهائي:* ${finalTotal} ر.س\n\nأرجو تزويدي بمواعيد الدورات المتاحة وحساب الدفع.`;
 
             let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
