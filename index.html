@@ -3,468 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دورات روبيك وسكراتش الاحترافية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>لوحة تحكم مشروع الروبوت | محمود</title>
     <style>
         :root {
-            --white: #ffffff;
-            --gray: #6b778c;
-            --radius: 20px;
-            --shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --success-color: #22c55e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+        }
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        header p {
+            margin: 0;
+            color: #e0f2fe;
+            font-size: 16px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-right: 5px solid var(--accent-color);
+        }
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .status-badge {
+            background-color: #334155;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        .status-badge.done {
+            background-color: rgba(34, 197, 94, 0.2);كلمة **"شاسييه" (Chassis)** تعني **الهيكل الأساسي أو الإطار الخارجي** الذي يُستخدم لحمل وتثبيت مكونات أي جهاز، آلة، سيارة، أو روبوت. في مشاريع الروبوتات والابتكارات الإلكترونية (مثل آلات العصائر أو الروبوتات التي تصنعها)، الشاسييه هو بمثابة "العظم أو الهيكل العظمي" الذي يمسك المحركات، البوردات (مثل ESP32)، الحساسات، والبطاريات لكي يتحركوا أو يعملوا معاً كقطعة واحدة متماسكة.
+
+---
+
+إليك كود متكامل لصفحة ويب شخصية احترافية (تصميم عصري ومتجاوب) تجمع اهتماماتك ومشاريعك (البرمجة، الروبوتات، ومكعب روبيك)، مصممة بلغات HTML و CSS و JavaScript لتنسخها وتلصقها مباشرة في ملف بصيغة `index.html` وتفتحها في متصفحك أو تعدل عليها في VS Code:
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale5.0">
+    <title>محمود | عالم البرمجة والابتكار</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
         body {
-            background: linear-gradient(-45deg, #2e0854, #800080, #d81b60, #e91e63, #4a148c);
-            background-size: 400% 400%;
-            animation: slowGradient 30s ease infinite;
-            color: #2d3748;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        @keyframes slowGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            padding: 20px;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 25px rgba(0,0,0,0.2);
-            position: sticky; top: 0; z-index: 1000;
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-bottom: 2px solid var(--accent);
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
 
-        .nav-container {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1.5rem;
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
         }
 
-        .brand-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon {
-            width: 50px; height: 50px; background: linear-gradient(45deg, #ff1744, #7c4dff);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
-            flex-shrink: 0;
-        }
-        .logo-title { font-size: 1.3rem; font-weight: 900; background: linear-gradient(45deg, #ff1744, #7c4dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .cart-trigger {
-            background: linear-gradient(45deg, #ff1744, #7c4dff); color: white; border: none; padding: 10px 22px;
-            border-radius: 50px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px;
-            white-space: nowrap;
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
         }
 
-        /* Slide Deck Carousel */
-        .slideshow-container {
-            width: 100%; max-width: 1100px; margin: 30px auto; border-radius: 20px; overflow: hidden;
-            box-shadow: var(--shadow); position: relative; aspect-ratio: 16/9; background: #1a0933;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .mySlides { display: none; height: 100%; width: 100%; position: absolute; top:0; left:0; }
-        .mySlides.active-slide { display: block; }
-
-        .slide-content {
-            width: 100%; height: 100%; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center; color: white;
-            padding: 2rem; background-size: cover; background-position: center; position: relative;
+        section {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .slide-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 5, 29, 0.75); z-index: 1;
+        h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
         }
 
-        .slide-body { position: relative; z-index: 2; max-width: 800px; }
-
-        .slide-title { font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; color: #ff4081; }
-        .slide-subtitle { font-size: 1.2rem; margin-bottom: 1.5rem; line-height: 1.8; color: #e0e0e0; }
-
-        .slide-badge {
-            background: linear-gradient(45deg, #ff1744, #7c4dff); color: white;
-            padding: 6px 18px; border-radius: 30px; font-weight: bold; font-size: 0.9rem;
-            display: inline-block; margin-bottom: 1rem;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        /* Navigation Arrows */
-        .prev-slide, .next-slide {
-            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 45px; height: 45px; color: white; font-weight: bold; font-size: 1.2rem;
-            transition: 0.3s ease; border-radius: 50%; background: rgba(255,255,255,0.2);
-            display: flex; align-items: center; justify-content: center; z-index: 3;
-            border: none; backdrop-filter: blur(5px);
+        .skill-card {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: 0.3s;
         }
-        .prev-slide:hover, .next-slide:hover { background: rgba(255,255,255,0.5); }
-        .prev-slide { right: 15px; }
-        .next-slide { left: 15px; }
 
-        /* Slide Dots */
-        .dots-container {
-            position: absolute; bottom: 15px; width: 100%; text-align: center; z-index: 3;
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
         }
-        .dot {
-            cursor: pointer; height: 10px; width: 10px; margin: 0 5px; background-color: rgba(255,255,255,0.4);
-            border-radius: 50%; display: inline-block; transition: 0.3s;
-        }
-        .dot.active-dot, .dot:hover { background-color: #ff4081; width: 25px; border-radius: 10px; }
 
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
-
-        .section-header { margin: 2rem 0 1.5rem; color: white; border-right: 6px solid #ff1744; padding-right: 15px; font-size: 1.8rem; }
-
-        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-
-        .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; border: 3px solid transparent; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: #f50057; }
-
-        .card-img-box { height: 180px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: #7c4dff; }
-
-        .card-body { padding: 1.5rem; flex-grow: 1; }
-
-        .form-control { width: 100%; padding: 10px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; transition: 0.3s; }
-        .form-control:focus { border-color: #7c4dff; }
-
-        /* District input logic */
-        .district-input { display: none; border: 2px solid #ff1744; background: #fff0f5; }
-
-        .price-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; }
-
-        .add-btn { background: linear-gradient(45deg, #ff1744, #7c4dff); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 800; cursor: pointer; }
-
-        /* Drawer */
-        .cart-drawer { position: fixed; top: 0; left: -100%; width: 440px; max-width: 100%; height: 100%; background: white; z-index: 2000; transition: 0.4s ease; box-shadow: 5px 0 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
-        .cart-drawer.open { left: 0; }
-        .cart-header { padding: 1.5rem; background: #2e0854; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { padding: 1.5rem; flex-grow: 1; overflow-y: auto; }
-        .terms-area { padding: 1rem; background: #f8fafc; border-right: 4px solid #7c4dff; margin: 1rem; font-size: 0.8rem; border-radius: 10px; }
-        .whatsapp-btn { background: #25d366; color: white; width: calc(100% - 2rem); margin: 1rem; padding: 15px; border-radius: 12px; text-align: center; text-decoration: none; font-weight: 900; display: none; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; }
-        .overlay.active { display: block; }
-
-        /* Mobile Optimization Rules */
-        @media (max-width: 768px) {
-            .nav-container { padding: 0.6rem 1rem; }
-            .logo-icon { width: 40px; height: 40px; font-size: 1.4rem; }
-            .logo-title { font-size: 1rem; }
-            .cart-trigger { padding: 8px 15px; font-size: 0.9rem; }
-            
-            .slideshow-container { margin: 15px auto; aspect-ratio: 4/3; }
-            .slide-content { padding: 1rem; }
-            .slide-title { font-size: 1.4rem; margin-bottom: 0.5rem; }
-            .slide-subtitle { font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.8rem; }
-            .slide-badge { font-size: 0.75rem; padding: 4px 12px; margin-bottom: 0.5rem; }
-            .prev-slide, .next-slide { width: 35px; height: 35px; font-size: 1rem; }
-            
-            .container { padding: 0 1rem; margin: 1rem auto; }
-            .section-header { font-size: 1.4rem; margin: 1.5rem 0 1rem; }
-            .courses-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-            
-            .cart-drawer { width: 100%; }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="container">
+        <header>
+            <h1>مرحباً، أنا محمود</h1>
+            <p>مطور برمجيات، صانع روبوتات، ومهتم بالتقنية والابتكار</p>
+        </header>
 
-<header>
-    <div class="nav-container">
-        <a href="#" class="brand-logo">
-            <div class="logo-icon"><i class="fa-solid fa-cube"></i></div>
-            <span class="logo-title">دورات روبيك وسكراتش الاحترافية</span>
-        </a>
-        <button class="cart-trigger" onclick="toggleCart()">
-            <i class="fa-solid fa-shopping-cart"></i> السلة (<span id="cartCount">0</span>)
-        </button>
-    </div>
-</header>
+        <section>
+            <h2>عن الموقع</h2>
+            <p>هذا الموقع هو مساحتي الخاصة لعرض مشارعي واهتماماتي في مجالات البرمجة المتقدمة، تطوير الويب، صناعة الروبوتات باستخدام المتحكمات الدقيقة، وحل مكعب روبيك.</p>
+        </section>
 
-<div class="container">
-    <!-- Interactive Presentation Slides Carousel -->
-    <div class="slideshow-container">
-        <!-- Slide 1 -->
-        <div class="mySlides active-slide">
-            <div class="slide-content">
-                <div class="slide-overlay"></div>
-                <div class="slide-body">
-                    <span class="slide-badge">التدريبية الأولى بالرياض</span>
-                    <h2 class="slide-title">تدريبية تعليم الروبيك وسكراتش</h2>
-                    <p class="slide-subtitle">طريقك نحو الاحتراف في حل مكعبات روبيك وبرمجة الألعاب التفاعلية باللغة العربية بطرق احترافية ومبسطة جداً</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="mySlides">
-            <div class="slide-content">
-                <div class="slide-overlay"></div>
-                <div class="slide-body">
-                    <span class="slide-badge">🎲 مسار مكعبات روبيك</span>
-                    <h2 class="slide-title">احتراف حل المكعبات القياسية والهرمية</h2>
-                    <p class="slide-subtitle">دورات متخصصة في مكعب (3×3×3)، (2×2)، ومكعب البيرامكس الهرمي (Pyraminx) بخطوات واضحة وبسيطة للوصول لأفضل الأوقات القياسية</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="mySlides">
-            <div class="slide-content">
-                <div class="slide-overlay"></div>
-                <div class="slide-body">
-                    <span class="slide-badge">💻 مسار البرمجة على سكراتش</span>
-                    <h2 class="slide-title">صناعة الألعاب والبرمجيات التفاعلية</h2>
-                    <p class="slide-subtitle">تعلم أساسيات البرمجة وبناء ألعاب البلاتفورمر، السيارات، كرة القدم، والآلات الحاسبة عبر منصة Scratch بكل سهولة</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4 -->
-        <div class="mySlides">
-            <div class="slide-content">
-                <div class="slide-overlay"></div>
-                <div class="slide-body">
-                    <span class="slide-badge">🔺 مكعب البيرامكس (Pyraminx)</span>
-                    <h2 class="slide-title">دورة البيرامكس الهرمية ثلاثية الأبعاد</h2>
-                    <p class="slide-subtitle">شرح كامل لاستراتيجيات وخوارزميات حل مكعب البيرامكس الهرمي مع تدريب عملي مكثف (أونلاين أو حضوري)</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <button class="prev-slide" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-right"></i></button>
-        <button class="next-slide" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-left"></i></button>
-
-        <!-- Dots -->
-        <div class="dots-container">
-            <span class="dot active-dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
-        </div>
-    </div>
-
-    <h2 class="section-header">🎲 دورات مكعبات روبيك الاحترافية</h2>
-    <div class="courses-grid">
-        <div class="card">
-            <div class="card-img-box"><i class="fa-solid fa-cube"></i></div>
-            <div class="card-body">
-                <span class="course-badge">المدة: 3 ساعات</span>
-                <h3 class="course-title">مكعب روبيك (3×3×3)</h3>
-                <select class="form-control" id="type_3x3" onchange="toggleDistrict('3x3', 50, 20)">
-                    <option value="online">أونلاين (50 ر.س)</option>
-                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                </select>
-                <input type="text" id="district_3x3" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
-                <input type="text" id="name_3x3" class="form-control" placeholder="اسم المتدرب">
-                <div style="display:flex; gap:10px; margin-top:8px;">
-                    <select id="gender_3x3" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                    <input type="number" id="age_3x3" class="form-control" placeholder="العمر">
-                </div>
-                <div class="price-footer">
-                    <span id="price_3x3" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('3x3', 'مكعب 3×3×3', 50)">إضافة</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-img-box"><i class="fa-solid fa-cubes-stacked"></i></div>
-            <div class="card-body">
-                <span class="course-badge">المدة: ساعتان</span>
-                <h3 class="course-title">مكعب روبيك (2×2)</h3>
-                <select class="form-control" id="type_2x2" onchange="toggleDistrict('2x2', 50, 20)">
-                    <option value="online">أونلاين (50 ر.س)</option>
-                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                </select>
-                <input type="text" id="district_2x2" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
-                <input type="text" id="name_2x2" class="form-control" placeholder="اسم المتدرب">
-                <div style="display:flex; gap:10px; margin-top:8px;">
-                    <select id="gender_2x2" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                    <input type="number" id="age_2x2" class="form-control" placeholder="العمر">
-                </div>
-                <div class="price-footer">
-                    <span id="price_2x2" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('2x2', 'مكعب 2×2', 50)">إضافة</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-img-box"><i class="fa-solid fa-play" style="transform: rotate(-90deg);"></i></div>
-            <div class="card-body">
-                <span class="course-badge">المدة: ساعتان</span>
-                <h3 class="course-title">مكعب البيرامكس (Pyraminx)</h3>
-                <select class="form-control" id="type_pyra" onchange="toggleDistrict('pyra', 50, 20)">
-                    <option value="online">أونلاين (50 ر.س)</option>
-                    <option value="onsite">حضوري - منزل المتدرب (70 ر.س)</option>
-                </select>
-                <input type="text" id="district_pyra" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
-                <input type="text" id="name_pyra" class="form-control" placeholder="اسم المتدرب">
-                <div style="display:flex; gap:10px; margin-top:8px;">
-                    <select id="gender_pyra" class="form-control"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-                    <input type="number" id="age_pyra" class="form-control" placeholder="العمر">
-                </div>
-                <div class="price-footer">
-                    <span id="price_pyra" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('pyra', 'مكعب البيرامكس', 50)">إضافة</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h2 class="section-header">💻 دورات البرمجة على سكراتش</h2>
-    <div class="courses-grid">
-        <div class="card">
-            <div class="card-img-box"><i class="fa-solid fa-gamepad"></i></div>
-            <div class="card-body">
-                <span class="course-badge">المدة: ساعة واحدة</span>
-                <h3 class="course-title">برمجة الألعاب سكراتش</h3>
-                <select class="form-control" id="type_sc" onchange="toggleDistrict('sc', 25, 15)">
-                    <option value="online">أونلاين (25 ر.س)</option>
-                    <option value="onsite">حضوري - منزل المتدرب (40 ر.س)</option>
-                </select>
-                <input type="text" id="district_sc" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
-                <input type="text" id="name_sc" class="form-control" placeholder="اسم المتدرب">
-                <input type="number" id="age_sc" class="form-control" placeholder="العمر">
-                <div class="price-footer">
-                    <span id="price_sc" style="font-weight:900; font-size:1.4rem;">25 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('sc', 'سكراتش ألعاب', 25)">إضافة</button>
-                </div>
-            </div>
-        </div>
-        <div class="card" style="border: 4px solid #7c4dff;">
-            <div class="card-img-box" style="color: #7c4dff;"><i class="fa-solid fa-star"></i></div>
-            <div class="card-body">
-                <span class="course-badge" style="background:#7c4dff; color:white;">المدة: ساعتان</span>
-                <h3 class="course-title">الدورة الشاملة + لعبة قدم</h3>
-                <select class="form-control" id="type_ultimate" onchange="toggleDistrict('ultimate', 50, 10)">
-                    <option value="online">أونلاين (50 ر.س)</option>
-                    <option value="onsite">حضوري - منزل المتدرب (60 ر.س)</option>
-                </select>
-                <input type="text" id="district_ultimate" class="form-control district-input" placeholder="اسم الحي السكني بالرياض">
-                <input type="text" id="name_ultimate" class="form-control" placeholder="اسم المتدرب">
-                <input type="number" id="age_ultimate" class="form-control" placeholder="العمر">
-                <div class="price-footer">
-                    <span id="price_ultimate" style="font-weight:900; font-size:1.4rem;">50 ر.س</span>
-                    <button class="add-btn" onclick="addToCart('ultimate', 'الشاملة سكراتش', 50)">إضافة</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header"><h3>سلة التسجيل</h3><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button></div>
-    <div class="cart-items" id="cartItems"></div>
-    <div class="terms-area">
-        <p><b>📜 شروط التدريبية:</b></p>
-        <p>• دفع 20 ريال عربون والباقي بعد انتهاء الدورة.</p>
-        <p>• الإناث من 7 لـ 10 سنوات فقط.</p>
-        <p>• أي تأخير يخصم من وقت الحصة التدريبية.</p>
-        <input type="checkbox" id="agree" onchange="checkWA()"> أوافق على الشروط الإلزامية
-    </div>
-    <div style="padding:1rem; border-top:1px solid #eee;">
-        <p style="display:flex; justify-content:space-between;"><span>الإجمالي:</span> <b id="total">0 ر.س</b></p>
-    </div>
-    <a href="#" class="whatsapp-btn" id="waBtn" onclick="sendToWA()">إرسال الطلب عبر واتساب</a>
-</div>
-
-<script>
-    let cart = [];
-    let slideIndex = 1;
-
-    showSlides(slideIndex);
-
-    // Automatic slideshow timer
-    setInterval(() => {
-        plusSlides(1);
-    }, 5000);
-
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].classList.remove("active-slide");
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].classList.remove("active-dot");
-        }
-        slides[slideIndex-1].classList.add("active-slide");
-        dots[slideIndex-1].classList.add("active-dot");
-    }
-
-    function toggleCart() {
-        document.getElementById('cartDrawer').classList.toggle('open');
-        document.getElementById('overlay').classList.toggle('active');
-    }
-
-    function toggleDistrict(id, base, add) {
-        let val = document.getElementById('type_'+id).value;
-        let district = document.getElementById('district_'+id);
-        district.style.display = (val === 'onsite') ? 'block' : 'none';
-        document.getElementById('price_'+id).innerText = (base + (val === 'onsite' ? add : 0)) + ' ر.س';
-    }
-
-    function addToCart(id, title, basePrice) {
-        let name = document.getElementById('name_'+id).value;
-        let age = document.getElementById('age_'+id).value;
-        let gender = document.getElementById('gender_'+id) ? document.getElementById('gender_'+id).value : 'ذكر';
-        let type = document.getElementById('type_'+id).value;
-        let district = document.getElementById('district_'+id).value;
-
-        if(!name || !age) return alert('أدخل الاسم والعمر!');
-        if(type === 'onsite' && !district) return alert('الرجاء كتابة اسم الحي للحضوري!');
-        if(age < 7) return alert('العمر الأدنى 7 سنوات');
-        if(gender === 'أنثى' && age > 10) return alert('الإناث من 7 لـ 10 سنوات فقط');
-
-        let price = parseInt(document.getElementById('price_'+id).innerText);
-        cart.push({ title, name, age, gender, type, district, price });
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        let list = document.getElementById('cartItems');
-        let total = 0;
-        list.innerHTML = '';
-        cart.forEach((item, index) => {
-            total += item.price;
-            list.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;">
-                <b>${item.title}</b> (${item.type === 'onsite' ? 'حضوري - ' + item.district : 'أونلاين'})<br>
-                ${item.name} - ${item.price} ر.س 
-                <button onclick="remove(${index})" style="color:red; background:none; border:none; float:left;">حذف</button>
-            </div>`;
-        });
-        let discount = cart.length > 1 ? (cart.length - 1) * 10 : 0;
-        document.getElementById('total').innerText = (total - discount) + ' ر.س';
-        document.getElementById('cartCount').innerText = cart.length;
-    }
-
-    function remove(i) { cart.splice(i, 1); updateCartUI(); }
-    function checkWA() { document.getElementById('waBtn').style.display = document.getElementById('agree').checked ? 'block' : 'none'; }
-
-    function sendToWA() {
-        let msg = "السلام عليكم، أرغب بالتسجيل في التدريبية:\n";
-        cart.forEach(i => msg += `- ${i.title} (${i.type === 'onsite' ? 'حضوري - حي ' + i.district : 'أونلاين'}) للمتدرب: ${i.name}\n`);
-        msg += "\nالإجمالي: " + document.getElementById('total').innerText;
-        msg += "\nتمت الموافقة على جميع الشروط.";
-        window.open(`https://wa.me/966569749374?text=${encodeURIComponent(msg)}`);
-    }
-</script>
-
-</body>
-</html>
+        <section>
+            <h2>مجالات الاهتمام والمهارات</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Scratch & Web</h3>
+                    <p>برمجة متقدمة وتحويل المشاريع ل
