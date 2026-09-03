@@ -3,180 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم مشروع الروبوت | محمود</title>
+    <title>لوحة تطوير روبوت الخدمات الخارق | محمود</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --success-color: #22c55e;
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-primary: #4f46e5;
+            --success-color: #10b981;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
         }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
         }
+
         header {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            padding: 25px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            padding: 30px 20px;
+            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             margin-bottom: 25px;
         }
+
         header h1 {
             margin: 0 0 10px 0;
-            font-size: 28px;
+            font-size: 2rem;
         }
+
         header p {
             margin: 0;
-            color: #e0f2fe;
-            font-size: 16px;
+            opacity: 0.9;
+            font-size: 1rem;
         }
+
+        .progress-box {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            background: #1f2937;
+            height: 12px;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--success-color);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
         .card {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 22px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            border-right: 5px solid var(--accent-color);
-        }
-        .card h2 {
-            margin-top: 0;
-            color: var(--accent-color);
-            font-size: 20px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            padding: 10px 0;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        li:last-child {
-            border-bottom: none;
-        }
-        .status-badge {
-            background-color: #334155;
-            color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-        .status-badge.done {
-            background-color: rgba(34, 197, 94, 0.2);كلمة **"شاسييه" (Chassis)** تعني **الهيكل الأساسي أو الإطار الخارجي** الذي يُستخدم لحمل وتثبيت مكونات أي جهاز، آلة، سيارة، أو روبوت. في مشاريع الروبوتات والابتكارات الإلكترونية (مثل آلات العصائر أو الروبوتات التي تصنعها)، الشاسييه هو بمثابة "العظم أو الهيكل العظمي" الذي يمسك المحركات، البوردات (مثل ESP32)، الحساسات، والبطاريات لكي يتحركوا أو يعملوا معاً كقطعة واحدة متماسكة.
-
----
-
-إليك كود متكامل لصفحة ويب شخصية احترافية (تصميم عصري ومتجاوب) تجمع اهتماماتك ومشاريعك (البرمجة، الروبوتات، ومكعب روبيك)، مصممة بلغات HTML و CSS و JavaScript لتنسخها وتلصقها مباشرة في ملف بصيغة `index.html` وتفتحها في متصفحك أو تعدل عليها في VS Code:
-
-```html
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale5.0">
-    <title>محمود | عالم البرمجة والابتكار</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom: 2px solid var(--accent);
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        section {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        h2 {
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .skill-card {
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #334155;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            position: relative;
             transition: 0.3s;
         }
 
-        .skill-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
+        .card.completed {
+            border-color: var(--success-color);
+            background-color: #064e3b15;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin: 0;
+            color: #38bdf8;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: #1f2937;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            user-select: none;
+        }
+
+        .checkbox-container input {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+
+        .details-item:last-child {
+            border-bottom: none;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .total-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 20px;
+            border-radius: 14px;
+            border: 2px solid #f59e0b;
+            text-align: center;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            margin-top: 30px;
             color: var(--text-muted);
             font-size: 0.9rem;
         }
@@ -186,18 +172,129 @@
 
     <div class="container">
         <header>
-            <h1>مرحباً، أنا محمود</h1>
-            <p>مطور برمجيات، صانع روبوتات، ومهتم بالتقنية والابتكار</p>
+            <h1>🚀 لوحة تطوير روبوت الخدمات الخارق</h1>
+            <p>المطور: محمود | المواصفات: سرعة 5 كم/س | حمولة 10 كغ | تسلق الدرج</p>
         </header>
 
-        <section>
-            <h2>عن الموقع</h2>
-            <p>هذا الموقع هو مساحتي الخاصة لعرض مشارعي واهتماماتي في مجالات البرمجة المتقدمة، تطوير الويب، صناعة الروبوتات باستخدام المتحكمات الدقيقة، وحل مكعب روبيك.</p>
-        </section>
+        <!-- شريط التقدم -->
+        <div class="progress-box">
+            <span>نسبة إنجاز المشروع:</span>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <span id="progressText">0%</span>
+        </div>
 
-        <section>
-            <h2>مجالات الاهتمام والمهارات</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Scratch & Web</h3>
-                    <p>برمجة متقدمة وتحويل المشاريع ل
+        <!-- بطاقة 1 -->
+        <div class="card" id="card-1">
+            <div class="card-header">
+                <h3 class="card-title">⚙️ 1. الشاسيه الخارق والجنازير</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                </label>
+            </div>
+            <p class="description">شاسيه جنازير معدني ثقيل الخدمة مزود بمحركات عالية العزم (12V) لتحمل الأوزان والصدمات على الدرج والتضاريس الوعرة.</p>
+            <ul class="details-list">
+                <details-item class="details-item"><span>القطعة الأساسية: شاسيه جنازير معدني ثقيل + محركات 12V</span><span class="price">~135 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: شاسيه روبوت عسكري 6WD</span><span>~140 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: هيكل ألومنيوم مع جنازير مطاطية</span><span>~100 ر.س</span></details-item>
+            </ul>
+        </div>
+
+        <!-- بطاقة 2 -->
+        <div class="card" id="card-2">
+            <div class="card-header">
+                <h3 class="card-title" style="color: #fb7185;">⚡ 2. درايفر المحركات ذو التيار العالي</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                </label>
+            </div>
+            <p class="description">درايفر يتحمل التيار العالي للمحركات أثناء صعود الدرج تحت حمولة 10 كغ دون أن يحترق.</p>
+            <ul class="details-list">
+                <details-item class="details-item"><span>القطعة الأساسية: درايفر BTS7960 (43A)</span><span class="price">~50 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: درايفر Dual MC33926</span><span>~70 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: درايفرين L298N بالتوازي</span><span>~30 ر.س</span></details-item>
+            </ul>
+        </div>
+
+        <!-- بطاقة 3 -->
+        <div class="card" id="card-3">
+            <div class="card-header">
+                <h3 class="card-title" style="color: #c084fc;">🦾 3. الذراع الآلية وقوالب التغيير (ATC)</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                </label>
+            </div>
+            <p class="description">ذراع ميكانيكية لرفع الأشياء ورمي النفايات، مزودة بمغناطيس قوي لتغيير القوالب أوتوماتيكياً.</p>
+            <ul class="details-list">
+                <details-item class="details-item"><span>القطعة الأساسية: ذراع ألومنيوم + سيرفو MG996R عزم عالي</span><span class="price">~95 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: ذراع معدنية كاملة بدون سيرفو</span><span>~90 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: ذراع خشبية خفيفة مدعومة بألومنيوم</span><span>~70 ر.س</span></details-item>
+            </ul>
+        </div>
+
+        <!-- بطاقة 4 -->
+        <div class="card" id="card-4">
+            <div class="card-header">
+                <h3 class="card-title" style="color: #34d399;">🧠 4. الدماغ ومعالج التحكم (ESP32)</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                </label>
+            </div>
+            <p class="description">لوحة تحكم ذكية تدير الواي فاي وتستقبل الأوامر، مع حساس ميل (MPU6050) لتوازن الدرج.</p>
+            <ul class="details-list">
+                <details-item class="details-item"><span>القطعة الأساسية: لوحة ESP32 NodeMCU + حساس MPU6050</span><span class="price">~70 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: لوحة ESP32-CAM بكاميرا مدمجة</span><span>~55 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: Arduino Mega + واي فاي ESP8266</span><span>~85 ر.س</span></details-item>
+            </ul>
+        </div>
+
+        <!-- بطاقة 5 -->
+        <div class="card" id="card-5">
+            <div class="card-header">
+                <h3 class="card-title" style="color: #fbbf24;">🔋 5. نظام الطاقة والبطاريات</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                </label>
+            </div>
+            <p class="description">بطاريات ليثيوم قوية ومستقرة لتشغيل المحركات الثقيلة وتقديم طاقة كافية أثناء الصعود.</p>
+            <ul class="details-list">
+                <details-item class="details-item"><span>القطعة الأساسية: حزمة بطاريات 12V عالية الأمبير + BMS</span><span class="price">~100 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: بطارية دراجة كهربائية صغرى (12V)</span><span>~130 ر.س</span></details-item>
+                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: 4 بطاريات 18650 مع منظم جهد XL4015</span><span>~60 ر.س</span></details-item>
+            </ul>
+        </div>
+
+        <!-- المجموع الكلي -->
+        <div class="total-card">
+            <h3 style="color: #fbbf24; margin-top: 0;">💰 التكلفة الإجمالية التقديرية</h3>
+            <p style="color: #fcd34d; font-size: 1.6rem; font-weight: bold; margin: 5px 0;">~400 إلى 480 ريال سعودي</p>
+        </div>
+
+        <footer>
+            <p>تم التصميم بابتكار واحترافية بواسطة محمود &copy; 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const cards = document.querySelectorAll('.card');
+            let checkedCount = 0;
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    checkedCount++;
+                    cards[index].classList.add('completed');
+                } else {
+                    cards[index].classList.remove('completed');
+                }
+            });
+
+            const percentage = Math.round((checkedCount / checkboxes.length) * 100);
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').innerText = percentage + '%';
+        }
+    </script>
+</body>
+</html>
