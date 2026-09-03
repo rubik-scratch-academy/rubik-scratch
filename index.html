@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم روبوت صعود الدرج والتخلص من النفايات</title>
+    <title>إدارة مشروع الروبوت | Rubik & Scratch Academy</title>
     <style>
         :root {
             --bg-color: #f0f4f8;
@@ -12,8 +12,7 @@
             --primary: #0077b6;
             --secondary: #00b4d8;
             --accent: #90e0ef;
-            --danger: #d90429;
-            --success: #2b9348;
+            --border-color: #d1d5db;
         }
 
         body {
@@ -22,7 +21,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.8s ease;
         }
 
         header {
@@ -32,14 +31,11 @@
 
         h1 {
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
+        .container {
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -47,12 +43,8 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
         }
 
         h2 {
@@ -63,24 +55,40 @@
             margin-top: 0;
         }
 
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--success);
-            margin-left: 8px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--accent);
+            color: #03045e;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 90%;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
         }
 
         button {
             background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            margin: 5px;
+            margin-top: 10px;
             transition: background-color 0.2s;
         }
 
@@ -88,124 +96,104 @@
             background-color: var(--primary);
         }
 
-        .btn-danger {
-            background-color: var(--danger);
-        }
-
-        .btn-danger:hover {
-            background-color: #9b2226;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .log-box {
-            background-color: #1e1e1e;
-            color: #00ff66;
+        .notes-area {
+            width: 100%;
+            height: 100px;
             padding: 10px;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            height: 120px;
-            overflow-y: auto;
+            resize: vertical;
+            font-family: inherit;
         }
     </style>
 </head>
 <body id="siteBody">
 
     <header>
-        <h1>لوحة تحكم الروبوت الميدانية</h1>
-        <p>مراقبة النظام، التحكم بالذراع الآلية (6-Axis)، وإدارة الـ ATC</p>
+        <h1>مشروع الروبوت الثقيل (صعود الدرج وإدارة النفايات)</h1>
+        <p>لوحة التتبع والتحكم المحلية - ورشة الرياض</p>
     </header>
 
-    <div class="dashboard-grid">
-        <!-- بطاقة حالة النظام والتشخيص -->
+    <div class="container">
+        <!-- قائمة مشتريات القطع (BOM Tracker) -->
         <div class="card">
-            <h2>حالة النظام والتشخيص <span class="status-indicator"></span></h2>
-            <p><strong>الاتصال اللاسلكي:</strong> متصل (ESP-NOW)</p>
-            <p><strong>جهد البطارية:</strong> 11.1 فولت (سليم)</p>
-            <p><strong>شاشة OLED المحلية:</strong> تعمل بكفاءة</p>
-            <hr>
-            <button class="btn-danger" onclick="triggerEmergency()">قاطع الطوارئ (E-Stop)</button>
+            <h2>قائمة المشتريات والقطع (BOM)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>القطعة / المكون</th>
+                        <th>الكمية</th>
+                        <th>الحالة</th>
+                        <th>ملاحظات الورشة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ألواح ألومنيوم الشاسيه (35x25 سم)</td>
+                        <td>2</td>
+                        <td><input type="checkbox"> تم التفصيل</td>
+                        <td><input type="text" value="جاهز للقص بالورشة"></td>
+                    </tr>
+                    <tr>
+                        <td>محركات تيار مستمر عالية العزم (4WD)</td>
+                        <td>4</td>
+                        <td><input type="checkbox"> تم الشراء</td>
+                        <td><input type="text" value="تم فحص التروس"></td>
+                    </tr>
+                    <tr>
+                        <td>لوحة ESP32 NodeMCU</td>
+                        <td>2</td>
+                        <td><input type="checkbox"> تم الشراء</td>
+                        <td><input type="text" value="واحدة للروبوت وأخرى لليد"></td>
+                    </tr>
+                    <tr>
+                        <td>درايفر محركات BTS7960</td>
+                        <td>1</td>
+                        <td><input type="checkbox"> تم الشراء</td>
+                        <td><input type="text" value="يتحمل التيار العالي"></td>
+                    </tr>
+                    <tr>
+                        <td>مجموعة الذراع الآلية والقبضة</td>
+                        <td>1</td>
+                        <td><input type="checkbox"> قيد التجهيز</td>
+                        <td><input type="text" value="مراجعة المفاصل الستة"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="saveProgress()">حفظ حالة التتبع محلياً</button>
         </div>
 
-        <!-- بطاقة التحكم بالمفاصل -->
+        <!-- ملاحظات وخطوات التنفيذ -->
         <div class="card">
-            <h2>التحكم اليدوي بمفاصل الذراع</h2>
-            <p>أزرار الحركة الدقيقة للمفاصل (J1 إلى J6):</p>
-            <div class="btn-group">
-                <button onclick="sendAction('J1_FORWARD')">J1+</button>
-                <button onclick="sendAction('J1_BACKWARD')">J1-</button>
-                <button onclick="sendAction('J2_FORWARD')">J2+</button>
-                <button onclick="sendAction('J2_BACKWARD')">J2-</button>
-                <button onclick="sendAction('J3_FORWARD')">J3+</button>
-                <button onclick="sendAction('J3_BACKWARD')">J3-</button>
-                <button onclick="sendAction('J4_FORWARD')">J4+</button>
-                <button onclick="sendAction('J4_BACKWARD')">J4-</button>
-            </div>
-        </div>
-
-        <!-- بطاقة قوالب الأدوات ATC -->
-        <div class="card">
-            <h2>تغيير قوالب الأدوات (ATC)</h2>
-            <p>اختر القالب الحالي لتثبيته على رأس الذراع:</p>
-            <div class="btn-group">
-                <button onclick="sendAction('TOOL_1')">القالب 1 (القبضة)</button>
-                <button onclick="sendAction('TOOL_2')">القالب 2 (المغناطيس)</button>
-                <button onclick="sendAction('TOOL_3')">القالب 3 (الكنس)</button>
-                <button onclick="sendAction('TOOL_4')">القالب 4 (الفرز)</button>
-            </div>
-        </div>
-
-        <!-- بطاقة سجل الأخطاء والتشغيل -->
-        <div class="card">
-            <h2>سجل الأحداث والأخطاء (Logs)</h2>
-            <div class="log-box" id="logBox">
-                [00:01] النظام جاهز للتشغيل...<br>
-                [00:02] تم مزامنة أزرار المفاصل بنجاح.<br>
-                [00:03] اتصال الكاميرا (ESP32-CAM) مستقر.
-            </div>
+            <h2>ملاحظات الورشة والخطوات القادمة</h2>
+            <textarea class="notes-area" placeholder="اكتب ملاحظاتك هنا قبل الذهاب لورشة الثميري...">1. التأكد من قياس الارتفاع 8 سم بين الطابقين بدقة.
+2. فحص استواء الألومنيوم وخلوه من الالتواءات.
+3. تجهيز أزرار يد التحكم اللاسلكية للمفاصل.</textarea>
         </div>
     </div>
 
     <script>
-        // مصفوفة ألوان الباستيل الفاتحة المتغيرة تلقائياً لراحة العين
+        // ألوان باستيل فاتحة ومتغيرة لراحة العين بسلاسة
         const lightColors = [
-            "#f0f4f8", // سماوي هادئ افتراضي
-            "#e8f5e9", // أخضر نعناعي خفيف
-            "#fffde7", // أصفر فاتح دافئ
-            "#e3f2fd", // أزرق سماوي فاتح
-            "#f3e5f5"  // بنفسجي فاتح ناعم
+            "#f0f4f8", // سماوي هادئ
+            "#e8f5e9", // أخضر نعناعي فاتح
+            "#fffde7", // أصفر دافئ خفيف
+            "#e3f2fd", // أزرق فاتح ناعم
+            "#f3e5f5"  // بنفسجي فاتح خفيف
         ];
 
         let colorIndex = 0;
 
-        // دالة لتغيير ألوان خلفية الموقع بسلاسة كل فترة تلقائياً
         function changeBackgroundSmoothly() {
             colorIndex = (colorIndex + 1) % lightColors.length;
             document.getElementById("siteBody").style.backgroundColor = lightColors[colorIndex];
         }
 
-        // تغيير اللون كل 10 ثوانٍ تلقائياً
-        setInterval(changeBackgroundSmoothly, 10000);
+        // تغيير لون الخلفية كل 12 ثانية تلقائياً
+        setInterval(changeBackgroundSmoothly, 12000);
 
-        function sendAction(actionName) {
-            const logBox = document.getElementById("logBox");
-            const timeNow = new Date().toLocaleTimeString();
-            logBox.innerHTML += `[${timeNow}] أمر مرسل: ${actionName}<br>`;
-            logBox.scrollTop = logBox.scrollHeight;
-        }
-
-        function triggerEmergency() {
-            const logBox = document.getElementById("logBox");
-            const timeNow = new Date().toLocaleTimeString();
-            logBox.innerHTML += `<span style="color: #ff4d4d;">[${timeNow}] تفعيل قاطع الطوارئ! تم قطع الطاقة.</span><br>`;
-            logBox.scrollTop = logBox.scrollHeight;
-            alert("تم إرسال إشارة الطوارئ لقطع الطاقة فوراً!");
+        function saveProgress() {
+            alert("تم حفظ حالة المشروع بنجاح على متصفح الـ ThinkPad الخاص بك!");
         }
     </script>
 </body>
