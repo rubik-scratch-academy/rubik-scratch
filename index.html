@@ -6,46 +6,50 @@
     <title>لوحة تطوير روبوت الخدمات الخارق | محمود</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --card-border: #1f2937;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent-primary: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #831843, #4c0519, #1f1f1f);
+            --card-bg: rgba(30, 27, 38, 0.85);
+            --card-border: #db2777;
+            --text-main: #fce7f3;
+            --text-muted: #f472b6;
+            --accent-pink: #ec4899;
             --success-color: #10b981;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
         }
 
         header {
-            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            background: linear-gradient(135deg, #db2777, #9d174d);
             padding: 30px 20px;
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             margin-bottom: 25px;
+            border: 1px solid #f472b6;
         }
 
         header h1 {
             margin: 0 0 10px 0;
-            font-size: 2rem;
+            font-size: 2.1rem;
+            color: #ffffff;
         }
 
         header p {
             margin: 0;
-            opacity: 0.9;
+            opacity: 0.95;
             font-size: 1rem;
+            color: #fbcfe8;
         }
 
         .progress-box {
@@ -57,11 +61,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .progress-bar-container {
             flex-grow: 1;
-            background: #1f2937;
+            background: #4c0519;
             height: 12px;
             border-radius: 6px;
             margin: 0 15px;
@@ -77,18 +82,19 @@
 
         .card {
             background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
             border-radius: 14px;
             padding: 22px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid #831843;
             position: relative;
             transition: 0.3s;
         }
 
         .card.completed {
             border-color: var(--success-color);
-            background-color: #064e3b15;
+            background-color: rgba(6, 78, 59, 0.3);
         }
 
         .card-header {
@@ -101,7 +107,7 @@
         .card-title {
             font-size: 1.25rem;
             margin: 0;
-            color: #38bdf8;
+            color: #f472b6;
         }
 
         .checkbox-container {
@@ -109,11 +115,13 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            background: #1f2937;
-            padding: 6px 12px;
+            background: #831843;
+            padding: 6px 14px;
             border-radius: 8px;
             font-size: 0.9rem;
             user-select: none;
+            color: #fff;
+            border: 1px solid #db2777;
         }
 
         .checkbox-container input {
@@ -123,23 +131,23 @@
         }
 
         .description {
-            color: var(--text-muted);
+            color: #fbcfe8;
             font-size: 0.95rem;
             margin-bottom: 15px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .details-list {
             list-style: none;
             padding: 0;
-            margin: 0;
+            margin: 0 0 15px 0;
         }
 
         .details-item {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #1f2937;
+            border-bottom: 1px solid rgba(219, 39, 119, 0.2);
             font-size: 0.9rem;
         }
 
@@ -152,18 +160,47 @@
             color: #fbbf24;
         }
 
+        .notes-section {
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed #db2777;
+        }
+
+        .notes-section label {
+            display: block;
+            font-size: 0.85rem;
+            color: #f472b6;
+            margin-bottom: 5px;
+        }
+
+        .notes-input {
+            width: 100%;
+            background: #1f1f1f;
+            border: 1px solid #4c0519;
+            color: #fff;
+            padding: 8px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
         .total-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            background: linear-gradient(135deg, #4c0519, #831843);
             padding: 20px;
             border-radius: 14px;
-            border: 2px solid #f59e0b;
+            border: 2px solid #db2777;
             text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
         footer {
             text-align: center;
             margin-top: 30px;
-            color: var(--text-muted);
+            color: #fbcfe8;
             font-size: 0.9rem;
         }
     </style>
@@ -173,7 +210,7 @@
     <div class="container">
         <header>
             <h1>🚀 لوحة تطوير روبوت الخدمات الخارق</h1>
-            <p>المطور: محمود | المواصفات: سرعة 5 كم/س | حمولة 10 كغ | تسلق الدرج</p>
+            <p>المطور: محمود | المواصفات: سرعة 5 كم/س | حمولة 10 كغ | تسلق الدرج صعوداً وهبوطاً</p>
         </header>
 
         <!-- شريط التقدم -->
@@ -185,94 +222,175 @@
             <span id="progressText">0%</span>
         </div>
 
-        <!-- بطاقة 1 -->
+        <!-- القطعة 1 -->
         <div class="card" id="card-1">
             <div class="card-header">
-                <h3 class="card-title">⚙️ 1. الشاسيه الخارق والجنازير</h3>
+                <h3 class="card-title">⚙️ شاسيه جنازير معدني ثقيل (Tank Chassis)</h3>
                 <label class="checkbox-container">
-                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
                 </label>
             </div>
-            <p class="description">شاسيه جنازير معدني ثقيل الخدمة مزود بمحركات عالية العزم (12V) لتحمل الأوزان والصدمات على الدرج والتضاريس الوعرة.</p>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> شاسيه روبوت معدني بالكامل مزود بجنازير مجنزرة ومحركات تيار مستمر (DC 12V High-Torque) قوية جداً ومخصصة لتحمل الصدمات والتحرك على التضاريس الجبلية وصعود الدرج بحمولة تصل إلى 10 كغ.</p>
             <ul class="details-list">
-                <details-item class="details-item"><span>القطعة الأساسية: شاسيه جنازير معدني ثقيل + محركات 12V</span><span class="price">~135 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: شاسيه روبوت عسكري 6WD</span><span>~140 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: هيكل ألومنيوم مع جنازير مطاطية</span><span>~100 ر.س</span></details-item>
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~135 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: شاسيه روبوت عسكري 6WD</span><span>~140 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: هيكل ألومنيوم مصمم يدوياً مع جنازير مطاطية</span><span>~100 ر.س</span></li>
             </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا (تُحفظ تلقائياً بدون إنترنت)..."></textarea>
+            </div>
         </div>
 
-        <!-- بطاقة 2 -->
+        <!-- القطعة 2 -->
         <div class="card" id="card-2">
             <div class="card-header">
-                <h3 class="card-title" style="color: #fb7185;">⚡ 2. درايفر المحركات ذو التيار العالي</h3>
+                <h3 class="card-title">⚡ درايفر محركات تيار عالي (BTS7960 43A)</h3>
                 <label class="checkbox-container">
-                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
                 </label>
             </div>
-            <p class="description">درايفر يتحمل التيار العالي للمحركات أثناء صعود الدرج تحت حمولة 10 كغ دون أن يحترق.</p>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> وحدة تحكم وسرعة للمحركات (BTS7960 Motor Driver) بقدرة تحمل عالية تصل إلى 43 أمبير، ضرورية جداً لئلا يحترق الدرايفر أثناء سحب المحركات تياراً عالياً عند صعود الدرج بالحمولة.</p>
             <ul class="details-list">
-                <details-item class="details-item"><span>القطعة الأساسية: درايفر BTS7960 (43A)</span><span class="price">~50 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: درايفر Dual MC33926</span><span>~70 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: درايفرين L298N بالتوازي</span><span>~30 ر.س</span></details-item>
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~50 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: درايفر Dual MC33926 عالي الأداء</span><span>~70 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: درايفرين L298N موصولين بالتوازي</span><span>~30 ر.س</span></li>
             </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
         </div>
 
-        <!-- بطاقة 3 -->
+        <!-- القطعة 3 -->
         <div class="card" id="card-3">
             <div class="card-header">
-                <h3 class="card-title" style="color: #c084fc;">🦾 3. الذراع الآلية وقوالب التغيير (ATC)</h3>
+                <h3 class="card-title">🦾 طقم ذراع ألومنيوم مع محركات سيرفو (MG996R)</h3>
                 <label class="checkbox-container">
-                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
                 </label>
             </div>
-            <p class="description">ذراع ميكانيكية لرفع الأشياء ورمي النفايات، مزودة بمغناطيس قوي لتغيير القوالب أوتوماتيكياً.</p>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> هيكل ذراع ميكانيكي مصنوع من الألومنيوم المقاوم مع محركات سيرفو قوية (MG996R للكتف والمفاصل) لتوفير عزم رفع صلب، ومحرك SG90 للتحقّق بقبضة التبديل الآلي (ATC) ورمي النفايات.</p>
             <ul class="details-list">
-                <details-item class="details-item"><span>القطعة الأساسية: ذراع ألومنيوم + سيرفو MG996R عزم عالي</span><span class="price">~95 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: ذراع معدنية كاملة بدون سيرفو</span><span>~90 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: ذراع خشبية خفيفة مدعومة بألومنيوم</span><span>~70 ر.س</span></details-item>
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~95 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: ذراع معدنية كاملة (Full Metal Arm بدون سيرفو)</span><span>~90 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: ذراع خشبية خفيفة مدعومة بشرائح ألومنيوم وسيرفو DS3218</span><span>~70 ر.س</span></li>
             </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
         </div>
 
-        <!-- بطاقة 4 -->
+        <!-- القطعة 4 -->
         <div class="card" id="card-4">
             <div class="card-header">
-                <h3 class="card-title" style="color: #34d399;">🧠 4. الدماغ ومعالج التحكم (ESP32)</h3>
+                <h3 class="card-title">🧲 مغناطيس نيوديميوم قوي للتبديل السريع (ATC Magnets)</h3>
                 <label class="checkbox-container">
-                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
                 </label>
             </div>
-            <p class="description">لوحة تحكم ذكية تدير الواي فاي وتستقبل الأوامر، مع حساس ميل (MPU6050) لتوازن الدرج.</p>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> قطع مغناطيس نيوديميوم أرضية نادر صغيرة الحجم وعالية الجهد والقوة، تُثبت في نهاية ذراع الروبوت وفي قوالب القبضات لتطبيق ميكانيزم تغيير الأدوات أتوماتيكياً (Magnetic Quick-Release).</p>
             <ul class="details-list">
-                <details-item class="details-item"><span>القطعة الأساسية: لوحة ESP32 NodeMCU + حساس MPU6050</span><span class="price">~70 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: لوحة ESP32-CAM بكاميرا مدمجة</span><span>~55 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: Arduino Mega + واي فاي ESP8266</span><span>~85 ر.س</span></details-item>
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~15 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: أقفال ميكانيكية كبس يدوية بسيطة</span><span>~10 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: مغناطيس مستخرج من ألعاب أو أجهزة إلكترونية قديمة</span><span>مجاناً</span></li>
             </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
         </div>
 
-        <!-- بطاقة 5 -->
+        <!-- القطعة 5 -->
         <div class="card" id="card-5">
             <div class="card-header">
-                <h3 class="card-title" style="color: #fbbf24;">🔋 5. نظام الطاقة والبطاريات</h3>
+                <h3 class="card-title">🧠 لوحة التحكم الذكية المعالج (ESP32 NodeMCU)</h3>
                 <label class="checkbox-container">
-                    <input type="checkbox" onclick="updateProgress()"> تم الإنجاز ✅
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
                 </label>
             </div>
-            <p class="description">بطاريات ليثيوم قوية ومستقرة لتشغيل المحركات الثقيلة وتقديم طاقة كافية أثناء الصعود.</p>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> لوحة تحكم إلكترونية مجهزة بمعالج قوي ومزودة باتصال لاسلكي (WiFi & Bluetooth) لإدارة الأوامر وتحکّم الروبوت عن بُعد وبرمجته.</p>
             <ul class="details-list">
-                <details-item class="details-item"><span>القطعة الأساسية: حزمة بطاريات 12V عالية الأمبير + BMS</span><span class="price">~100 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 1: بطارية دراجة كهربائية صغرى (12V)</span><span>~130 ر.س</span></details-item>
-                <details-item class="details-item" style="color: var(--text-muted);"><span>البديل 2: 4 بطاريات 18650 مع منظم جهد XL4015</span><span>~60 ر.س</span></details-item>
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~45 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: لوحة ESP32-CAM مزودة بكاميرا مدمجة للمراقبة</span><span>~55 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: لوحة Arduino Mega مع شريحة واي فاي ESP8266</span><span>~85 ر.س</span></li>
             </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
+        </div>
+
+        <!-- القطعة 6 -->
+        <div class="card" id="card-6">
+            <div class="card-header">
+                <h3 class="card-title">📐 حساس الميل والتوازن الجيروسكوب (MPU6050)</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
+                </label>
+            </div>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> حساس مخصص لقياس الزوايا والتسارع والميل (6-axis Accelerometer and Gyroscope)، يوضع على الروبوت ليعرف معالج ESP32 درجة ميلان الدرج وتعديل التوازن تلقائياً أثناء الصعود والنزول.</p>
+            <ul class="details-list">
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~20 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: حساس MPU9250 (أكثر دقة وتساعاً)</span><span>~35 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: حساس ميل رقمي بسيط (Tilt Switch)</span><span>~10 ر.س</span></li>
+            </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
+        </div>
+
+        <!-- القطعة 7 -->
+        <div class="card" id="card-7">
+            <div class="card-header">
+                <h3 class="card-title">🔋 حزمة بطاريات ليثيوم قوية + بورد حماية (12V BMS)</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
+                </label>
+            </div>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> حزمة بطاريات قابلة لإعادة الشحن بتيار مستمر 12 فولت مع دائرة حماية وشحن (BMS)، قادرة على إعطاء الأمبير العالي واللازم لتشغيل محركات التسلق والحمولة دون هبوط فجائي في الجهد.</p>
+            <ul class="details-list">
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~100 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: بطارية دراجة كهربائية صغرى (Mini E-Bike Battery 12V)</span><span>~130 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: تجميع 4 بطاريات 18650 عالية التفريغ مع منظم جهد XL4015</span><span>~60 ر.س</span></li>
+            </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
+        </div>
+
+        <!-- القطعة 8 -->
+        <div class="card" id="card-8">
+            <div class="card-header">
+                <h3 class="card-title">🔌 لوحة تجارب وأسلاك توصيل (Breadboard & Jumper Wires)</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" onclick="updateProgress()"> تم الشراء ✅
+                </label>
+            </div>
+            <p class="description"><strong>الوصف الدقيق للبائع:</strong> أسلاك توصيل مرنة (Male to Female, Male to Male) ولوحة تجارب صغيرة لتوصيل أطراف ESP32 بالدرايفر والحساسات وسيرفو الذراع بدون لحام أولي.</p>
+            <ul class="details-list">
+                <li class="details-item"><span>القطعة الأساسية الموصى بها</span><span class="price">~15 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الأول: شريط لحام وأسلاك كهربائية منزلية عادية</span><span>~10 ر.س</span></li>
+                <li class="details-item" style="color: #f472b6;"><span>البديل الثاني: لوحة لحام دائرية (PCB Prototype Board) للحام دائم</span><span>~12 ر.س</span></li>
+            </ul>
+            <div class="notes-section">
+                <label>📝 ملاحظات خاصة بهذه القطعة:</label>
+                <textarea class="notes-input" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
         </div>
 
         <!-- المجموع الكلي -->
         <div class="total-card">
-            <h3 style="color: #fbbf24; margin-top: 0;">💰 التكلفة الإجمالية التقديرية</h3>
-            <p style="color: #fcd34d; font-size: 1.6rem; font-weight: bold; margin: 5px 0;">~400 إلى 480 ريال سعودي</p>
+            <h3 style="color: #fbcfe8; margin-top: 0; font-size: 1.4rem;">💰 التكلفة الإجمالية التقديرية للقطع</h3>
+            <p style="color: #fbbf24; font-size: 1.8rem; font-weight: bold; margin: 10px 0;">~450 إلى 530 ريال سعودي</p>
+            <p style="color: #f472b6; font-size: 0.95rem; margin: 0;">(شاملة القوة العالية لتسلق الدرج، سرعة 5 كم/س، وحمولة 10 كغ)</p>
         </div>
 
         <footer>
-            <p>تم التصميم بابتكار واحترافية بواسطة محمود &copy; 2026</p>
+            <p>تم التصميم بكل دقة واحترافية بواسطة محمود &copy; 2026 (يعمل بدون إنترنت تماماً)</p>
         </footer>
     </div>
 
