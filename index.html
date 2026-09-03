@@ -3,44 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة المشتريات الشاملة - مشروع الروبوت (تعديل التغيير اليدوي)</title>
+    <title>المواصفات الهندسية الدقيقة للروبوت</title>
     <style>
-        :root {
-            --bg-color: #f0f4f8;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --primary: #0077b6;
-            --secondary: #00b4d8;
-            --accent: #90e0ef;
-            --border-color: #d1d5db;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #f0f4f8;
+            color: #333333;
             margin: 0;
             padding: 20px;
-            transition: background-color 0.8s ease;
+            transition: background-color 1.5s ease;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         h1 {
-            color: var(--primary);
+            color: #0077b6;
             margin-bottom: 5px;
+            font-size: 1.5rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .card {
-            background-color: var(--card-bg);
+            background-color: #ffffff;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
@@ -48,10 +39,10 @@
         }
 
         h2 {
-            font-size: 1.2rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 8px;
+            font-size: 1.1rem;
+            color: #0077b6;
+            border-bottom: 2px solid #90e0ef;
+            padding-bottom: 6px;
             margin-top: 0;
         }
 
@@ -59,189 +50,178 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         th, td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
+            border: 1px solid #d1d5db;
+            padding: 8px;
             text-align: center;
             vertical-align: middle;
         }
 
         th {
-            background-color: var(--accent);
+            background-color: #90e0ef;
             color: #03045e;
         }
 
         input[type="text"] {
-            width: 90%;
-            padding: 6px;
-            border: 1px solid var(--border-color);
+            width: 95%;
+            padding: 5px;
+            border: 1px solid #d1d5db;
             border-radius: 4px;
             text-align: center;
+            font-size: 0.85rem;
         }
 
-        button {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--primary);
-        }
-
-        .notes-area {
-            width: 100%;
-            height: 120px;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            resize: vertical;
-            font-family: inherit;
+        .my-note {
+            background-color: #fff9db;
         }
     </style>
 </head>
 <body id="siteBody">
 
     <header>
-        <h1>قائمة المشتريات والقطع الشاملة للروبوت</h1>
-        <p>المرجع الهندسي الكامل لمشروع صعود الدرج وإدارة النفايات (بدون تبديل آلي)</p>
+        <h1>المواصفات الهندسية الدقيقة لمشروع الروبوت</h1>
+        <p>المرجع التقني الخاص لمحمود (يعمل بدون إنترنت نهائياً)</p>
     </header>
 
     <div class="container">
         <div class="card">
-            <h2>جدول القطع والأدوات والمواصفات الكاملة</h2>
+            <h2>جدول المواصفات التقنية الدقيقة للقطع والمكونات</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>القطعة / المكون</th>
-                        <th>العدد المطلوب</th>
-                        <th>المواصفات المطلوبة</th>
+                        <th>القطعة الأساسية</th>
+                        <th>العدد</th>
+                        <th>المواصفات الدقيقة جداً</th>
                         <th>ماذا أقول للرجال (الورشة)؟</th>
-                        <th>بديل جيد ومماثل</th>
-                        <th>ملاحظات الورشة</th>
+                        <th>البديل الجيد المماثل</th>
+                        <th>ملاحظات محمود الخاصة</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- الهيكل -->
                     <tr>
                         <td><strong>ألواح ألومنيوم الشاسيه</strong></td>
                         <td>2</td>
-                        <td>طول 350 مم، عرض 250 مم، مسافة 8 سم بين الطابقين، تحمل درج 17 سم</td>
-                        <td>أبي تفصل لي شاسيه روبوت من طبقتين ألومنيوم؛ الطول 35 سم، والعرض 25 سم، والارتفاع 8 سم.</td>
-                        <td>ألواح أكريليك سميك (لكن الألومنيوم أفضل للتحمل)</td>
-                        <td><input type="text" value="جاهز للتسليم للورشة"></td>
+                        <td>سُمك 3 مم، أبعاد 350×250 مم، مسافة رأسية 8 سم بين الطابقين، تحمل صعود عتبات حتى 17 سم</td>
+                        <td>أبي تفصل لي لوحين ألومنيوم سُمك 3 مم؛ الطول 35 سم، العرض 25 سم، مع عمل فاصل ارتفاع 8 سم.</td>
+                        <td>ألواح أكريليك (أكريليك سميك)، لكن الألومنيوم أقوى للتحمل والصدمات.</td>
+                        <td><input type="text" class="my-note" value="تأكد من خلوه من الانحناءات"></td>
                     </tr>
+                    <!-- البطارية -->
+                    <tr>
+                        <td><strong>بطارية التشغيل الرئيسية</strong></td>
+                        <td>1</td>
+                        <td>نوع LiPo (ليثيوم بوليمر)، الجهد 11.1 فولت (3S)، السعة 5200 مللي أمبير، معدل تفريغ عالي 50C لتحمل سحب التيار اللحظي للمحركات.</td>
+                        <td>لا تحتاج ورشة، تركيب إلكتروني داخلي آمن.</td>
+                        <td>بطارية LiFePO4 بجهد 12 فولت أو بطاريتين ليثيوم 18650 على التوالي والتوازي.</td>
+                        <td><input type="text" class="my-note" value="احرص على وجود شاحن متوافق وحماية BMS"></td>
+                    </tr>
+                    <!-- محركات الشاسيه -->
                     <tr>
                         <td><strong>محركات الشاسيه (4WD)</strong></td>
                         <td>4</td>
-                        <td>عالية العزم مزودة بصناديق تروس معدنية (High-Torque DC Geared Motors)</td>
-                        <td>أبي أثبت 4 محركات دفع رباعي قوية لتحمل صعود الدرج وحمل الأثقال.</td>
-                        <td>محركات بندلر (BaneBots) أو محركات بلاستيكية قوية مخفضة</td>
-                        <td><input type="text" value="تم فحص التروس والعزم"></td>
+                        <td>جهد 12 فولت، سرعة دوران (RPM) من 150 إلى 200 دورة بالدقيقة بعد التخفيض، عزم دوران (Stall Torque) لا يقل عن 8 إلى 10 كغ.سم مزودة بصندوق تروس معدني كامل (All-Metal Gearbox).</td>
+                        <td>أبي أثبت 4 محركات تيار مستمر تروس معدنية قوية جداً لتحمل وزن الروبوت وصعود الدرج.</td>
+                        <td>محركات BaneBots أو محركات روبوتات صناعية مشابهة بعزم عالٍ.</td>
+                        <td><input type="text" class="my-note" value="فحص العزم باليد قبل التركيب النهائي"></td>
                     </tr>
+                    <!-- الجنازير -->
                     <tr>
                         <td><strong>الجنازير المطاطية والتروس</strong></td>
-                        <td>2 (يمين ويسار)</td>
-                        <td>جنازير مطاطية مع عجلات تروس (Sprockets) وعجلات توجيه خلفية (Idler)</td>
-                        <td>أبي أترك مساحة وفتحات جانبية لتثبيت عجلات الجنازير المطاطية.</td>
-                        <td>سير متزامن (Timing Belts) معدني أو مطاطي عريض</td>
-                        <td><input type="text" value="مراعاة حواف الدرج"></td>
+                        <td>2</td>
+                        <td>جنازير مطاطية مرنة وعريضة (عرض لا يقل عن 3 سم) مع عجلات مسننة (Sprockets) متوافقة مع محور المحركات.</td>
+                        <td>أبي أترك مساحة وفتحات جانبية لتثبيت محاور عجلات الجنازير المطاطية بدقة.</td>
+                        <td>سيور نقل متزامنة (Timing Belts) أو جنزير بلاستيكي متشابك.</td>
+                        <td><input type="text" class="my-note" value="تجنب الانزلاق على حواف الدرج"></td>
                     </tr>
+                    <!-- محركات الذراع -->
                     <tr>
-                        <td><strong>مجموعة الذراع الآلية (6-Axis)</strong></td>
-                        <td>1</td>
-                        <td>6 مفاصل (J1 إلى J6) مع محركات سيرفو وقبضة ثابتة للتغيير اليدوي</td>
-                        <td>أبي أثبت قاعدة الذراع في مقدمة اللوح العلوي بمسامير M4 متينة.</td>
-                        <td>ذراع بـ 4 مفاصل مبسطة في حال تقليل التعقيد</td>
-                        <td><input type="text" value="التغيير يدوي للرأس لتوفير التكلفة والتعقيد"></td>
+                        <td><strong>محركات الذراع (6 مفاصل)</strong></td>
+                        <td>6 محركات</td>
+                        <td>مفاصل القاعدة والكتف (J1, J2): سيرفو رقمي عزم عالي جداً (مثل DS3218 أو ما يعادله بعزم 20 كغ). المفاصل الفرعية والمعصم (J3 إلى J6): سيرفو معدني صغير دقيق (مثل MG996R أو MG90S حسب الحاجة).</td>
+                        <td>أبي أثبت قاعدة الذراع بمسامير متينة M4 في مقدمة الشاسيه العلوي.</td>
+                        <td>محركات خطوية (Stepper Motors) مع مخفضات حركية للمفاصل الكبيرة.</td>
+                        <td><input type="text" class="my-note" value="التأكد من توزيع الأحمال لكي لا يختل توازن الذراع"></td>
                     </tr>
+                    <!-- المتحكمات -->
                     <tr>
                         <td><strong>لوحات ESP32 NodeMCU</strong></td>
                         <td>2</td>
-                        <td>واحدة للروبوت وأخرى ليد التحكم اللاسلكية (تواصل ESP-NOW)</td>
-                        <td>لا تحتاج لقص ورشة، تركيب إلكتروني داخلي.</td>
-                        <td>لوحات Arduino Mega مع وحدة واي فاي ESP8266</td>
-                        <td><input type="text" value="تم فحص الاتصال اللاسلكي"></td>
+                        <td>المعالج Tensilica Dual-Core 32-bit، تردد 240 ميغاهرتز، يدعم Wi-Fi و Bluetooth 4.2 / ESP-NOW للاتصال السريع بدون راوتر.</td>
+                        <td>لا تحتاج لورشة، تركيب داخلي بداخل الشاسيه ويد التحكم.</td>
+                        <td>لوحات Arduino Due أو Raspberry Pi Pico W مع موديول واي فاي خارجي.</td>
+                        <td><input type="text" class="my-note" value="تثبيت الأكواد والتأكد من استقرار اتصال ESP-NOW"></td>
                     </tr>
+                    <!-- درايفر المحركات -->
                     <tr>
-                        <td><strong>درايفر محركات BTS7960</strong></td>
+                        <td><strong>درايفر المحركات (BTS7960)</strong></td>
                         <td>1</td>
-                        <td>عالي القدرة لتحمل تيار محركات الدفع الرباعي</td>
-                        <td>يثبت بقاعدة قاع الشاسيه قرب البطارية.</td>
-                        <td>درايفات L298N (لكنها أضعف ولا تحمل العزم العالي)</td>
-                        <td><input type="text" value="يتحمل التيار العالي بامتياز"></td>
+                        <td>درايفر ثنائي القناة (Dual High-Current DC Motor Driver)، يتحمل تيار حتى 43 أمبير، يعمل بجهد من 5 إلى 27 فولت، مزود بحماية كاملة من ارتفاع الحرارة والتيار الزائد.</td>
+                        <td>أبي أثبت هذا الدرافر في قاعدة الشاسيه السفلية بالقرب من البطارية والمحركات لتقصير الأسلاك.</td>
+                        <td>درايفرات سابقة مثل L298N (غير مناسب نهائياً لضعفه) أو درايفرات حصرية منفصلة لكل محرك.</td>
+                        <td><input type="text" class="my-note" value="مراقبة حرارة الدرافر عند التجربة المطولة"></td>
                     </tr>
+                    <!-- قاطع الطوارئ -->
                     <tr>
-                        <td><strong>كاميرا ESP32-CAM</strong></td>
+                        <td><strong>قاطع الطوارئ (E-Stop Switch)</strong></td>
                         <td>1</td>
-                        <td>بث لاسلكي مباشر ليد التحكم (FPV)</td>
-                        <td>أبي فتحة دائرية في مقدمة الدرع العلوي للرؤية الأمامية.</td>
-                        <td>كاميرا واي فاي مستقلة صغيرة (ESP8266 Cam)</td>
-                        <td><input type="text" value="التركيز على زاوية الرؤية"></td>
+                        <td>قاطع فيزيائي أحمر كبير (Mushroom Emergency Stop Button)، نوع (NC - Normally Closed)، يتحمل تيار عالي (حتى 10 أمبير أو أكثر)، قفل ميكانيكي بالضغط مع مفتاح لفك القفل.</td>
+                        <td>أبي فتحة دائرية واضحة في مكان بارز وخارجي بهيكل الروبوت لتثبيت زر الطوارئ الأحمر لقطع الكهرباء فوراً.</td>
+                        <td>مفتاح قاطع تيار بطارية سيارات ريموت أو قاطع تجاري منزلي مصغر.</td>
+                        <td><input type="text" class="my-note" value="اختبار القطع الفوري للكهرباء قبل تشغيل المحركات"></td>
                     </tr>
+                    <!-- مفتاح التشغيل -->
                     <tr>
-                        <td><strong>شاشة TFT لليد (3 بوصة)</strong></td>
+                        <td><strong>مفتاح التشغيل الرئيسي (Power Switch)</strong></td>
                         <td>1</td>
-                        <td>عرض بث الكاميرا الحي على يد التحكم</td>
-                        <td>أبي تترك مساحة لشاشة 3 بوصة في علبة يد التحكم.</td>
-                        <td>شاشة 2.4 أو 2.8 بوصة IPS</td>
-                        <td><input type="text" value="مخصصة ليد التحكم اللاسلكية"></td>
+                        <td>مفتاح هزاز (Rocker Switch) أو مفتاح قفل بمفتاح (Key Lock Switch) بدرجة تحمل لا تقل عن 15 أمبير / 12 فولت لضمان عدم حدوث شرار كهربائي عند الوصل.</td>
+                        <td>أبي فتحة جانبية بجانب قاطع الطوارئ لمفتاح التشغيل الرئيسي.</td>
+                        <td>قاطع تيار كهربائي صغير (MCB DC).</td>
+                        <td><input type="text" class="my-note" value="وضعه بجانب زر الطوارئ لسهولة الوصول"></td>
                     </tr>
+                    <!-- كاميرا والشاشات -->
                     <tr>
-                        <td><strong>شاشة OLED للروبوت (0.96 بوصة)</strong></td>
-                        <td>1</td>
-                        <td>عرض حالة التشخيص وأخطاء النظام محلياً</td>
-                        <td>أبي فتحة صغيرة لشاشة التشخيص على هيكل الروبوت.</td>
-                        <td>شاشة LCD 16x2 مع محول I2C</td>
-                        <td><input type="text" value="ممتازة لقراءة الأخطاء السريعة"></td>
+                        <td><strong>كاميرا وبث الشاشات</strong></td>
+                        <td>1 كاميرا + شاشتين</td>
+                        <td>كاميرا ESP32-CAM للبث المباشر، شاشة TFT مقاس 3 بوصة ليد التحكم، وشاشة OLED مقاس 0.96 بوصة (I2C) على جسم الروبوت للتشخيص.</td>
+                        <td>أبي فتحة دائرية لمقدمة الكاميرا، وفتحتي شاشات (واحدة على اليد والأخرى على الشاسيه).</td>
+                        <td>كاميرا واي فاي مستقلة وشاشات LCD بديلة 16x2.</td>
+                        <td><input type="text" class="my-note" value="التأكد من سلاسة تدفق الفيديو بدون تأخير (Lag)"></td>
                     </tr>
+                    <!-- يد التحكم -->
                     <tr>
                         <td><strong>أجزاء يد التحكم اللاسلكية</strong></td>
-                        <td>1 (طقم كامل)</td>
-                        <td>علبة ألومنيوم، جويستيك مزدوج، و8 أزرار مستقلة لمفاصل الذراع</td>
-                        <td>أبي تفصل لي علبة ألومنيوم صغيرة وخفيفة بفتحات الجويستيك والأزرار والشاشة.</td>
-                        <td>منصة بلاستيكية مطبوعة 3D (3D Printed Enclosure)</td>
-                        <td><input type="text" value="توزيع الأزرار بدقة للمفاصل (بدون أزرار ATC)"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>قاطع الطوارئ ومفتاح التشغيل والبطاريات</strong></td>
                         <td>1 طقم</td>
-                        <td>قاطع طوارئ فيزيائي (E-Stop)، مفتاح رئيسي، بطاريات LiPo قوية</td>
-                        <td>أبي فتحات بارزة وواضحة لمفتاح التشغيل وقاطع الطوارئ في مكان ظاهر وآمن بالخارج.</td>
-                        <td>مفتاح قاطع تيار منزلي مصغر أو قاطع بطارية سيارات ريموت</td>
-                        <td><input type="text" value="عنصر حماية أساسي وضروري جداً"></td>
+                        <td>علبة ألومنيوم خفيفة، جويستيك مزدوج (Potentiometer Joysticks) لحركة الروبوت والذراع، و8 أزرار ضغط رقمية (Push Buttons) للمفاصل.</td>
+                        <td>أبي تفصل لي علبة ألومنيوم خفيفة بفتحات دقيقة للجويستيك والأزرار والشاشة.</td>
+                        <td>منصة بلاستيكية مطبوعة بتقنية الطباعة الثلاثية (3D Printed Enclosure).</td>
+                        <td><input type="text" class="my-note" value="توزيع الأزرار براحة لكي تستخدمها اليدين بسهولة"></td>
                     </tr>
+                    <!-- التوصيلات -->
                     <tr>
-                        <td><strong>الأسلاك، القواطع، البوردات</strong></td>
+                        <td><strong>الأسلاك والإكسسوارات</strong></td>
                         <td>منوعة</td>
-                        <td>أسلاك توصيل (Jumpers)، برد بورد، أسلاك لحام وقواطع فرعية</td>
+                        <td>أسلاك سيليكون مرنة ذات مقاومة منخفضة للتيارات العالية (قياس 14 AWG للبطارية والمحركات، و 22 AWG للمنطق والتحكم)، بريدبورد، ومجموعة مسامير M3 و M4.</td>
                         <td>لا توجد أعمال ورشة ميكانيكية، التوصيل داخلي للإلكترونيات.</td>
-                        <td>شريط لحام حراري وأسلاك سيليكون مرنة</td>
-                        <td><input type="text" value="تنظيم الأسلاك داخل الشاسيه بدقة"></td>
+                        <td>شريط لحام حراري (Heat Shrink) وأسلاك توصيل عادية.</td>
+                        <td><input type="text" class="my-note" value="تنظيم الأسلاك وربطها بشكل مرتب لمنع احتكاكها بالحركة"></td>
                     </tr>
                 </tbody>
             </table>
-            <button onclick="saveProgress()">حفظ حالة التتبع محلياً</button>
         </div>
 
+        <!-- ملاحظات محمود الخاصة -->
         <div class="card">
-            <h2>ملاحظات الورشة والخطوات القادمة</h2>
-            <textarea class="notes-area" placeholder="اكتب ملاحظاتك هنا قبل الذهاب للورشة...">1. التأكد من قياس الارتفاع 8 سم بين الطابقين بدقة بالمليمتر.
-2. اعتماد التغيير اليدوي لرأس الذراع لتوفير التكلفة والبرمجة.
-3. التأكد من توفر فتحات قاطع الطوارئ ومفتاح التشغيل الرئيسي بالخارج.</textarea>
+            <h2>ملاحظات محمود الشخصية لتنفيذ المشروع</h2>
+            <textarea style="width: 100%; height: 100px; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; resize: vertical; font-family: inherit;" placeholder="اكتب ملاحظاتك الشخصية هنا..."></textarea>
         </div>
     </div>
 
     <script>
-        // ألوان باستيل فاتحة ومتغيرة لراحة العين بسلاسة
+        // ألوان زاهية وفاتحة تتدرج بسلاسة وتعمل بالكامل بدون إنترنت
         const lightColors = [
             "#f0f4f8", // سماوي هادئ
             "#e8f5e9", // أخضر نعناعي فاتح
@@ -257,12 +237,8 @@
             document.getElementById("siteBody").style.backgroundColor = lightColors[colorIndex];
         }
 
-        // تغيير لون الخلفية كل 12 ثانية تلقائياً
-        setInterval(changeBackgroundSmoothly, 12000);
-
-        function saveProgress() {
-            alert("تم حفظ حالة المشروع بنجاح على متصفح الـ ThinkPad الخاص بك!");
-        }
+        // تغيير لون الخلفية كل 10 ثوانٍ بسلاسة
+        setInterval(changeBackgroundSmoothly, 10000);
     </script>
 </body>
 </html>
