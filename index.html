@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المواصفات الهندسية الدقيقة للروبوت (5 محاور)</title>
+    <title>المواصفات الهندسية الدقيقة للروبوت (5 محاور + المحولات)</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -83,7 +83,7 @@
 
     <header>
         <h1>المواصفات الهندسية الدقيقة لمشروع الروبوت</h1>
-        <p>المرجع التقني الخاص بمحمود (ذراع 5 محاور - 10 أزرار تحكم)</p>
+        <p>المرجع التقني الخاص بمحمود (متضمنة محولات الطاقة ومنظمات الجهد)</p>
     </header>
 
     <div class="container">
@@ -119,6 +119,23 @@
                         <td>بطارية LiFePO4 بجهد 12 فولت أو بطاريتين ليثيوم 18650 على التوالي والتوازي.</td>
                         <td><input type="text" class="my-note" value="احرص على وجود شاحن متوافق وحماية BMS"></td>
                     </tr>
+                    <!-- محولات الطاقة -->
+                    <tr>
+                        <td><strong>محول جهد للـ ESP32 (Buck Converter)</strong></td>
+                        <td>1 أو 2</td>
+                        <td>محول خفض الجهد (LM2596 أو MP1584)، يحول جهد البطارية (11.1 فولت) إلى **5 فولت ثابتة** لتغذية لوحات الـ ESP32 والشاشات بدون احتراق.</td>
+                        <td>لا تحتاج ورشة، توصيل إلكتروني داخلي.</td>
+                        <td>منظم جهد خطي (مثل 7805 ولكن الـ Buck Converter أفر وأقل توليداً للحرارة).</td>
+                        <td><input type="text" class="my-note" value="ضبط المخرج بدقة على 5 فولت قبل التوصيل"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>محول/منظم جهد للسرفوات (محرك الذراع)</strong></td>
+                        <td>1</td>
+                        <td>مخرج منظم منفصل أو محول قدرة (UBEC) بقوة 5 فولت أو 6 فولت وتيار 3 أمبير على الأقل؛ لمنع هبوط الجهد عند حركة محركات الذراع.</td>
+                        <td>لا تحتاج ورشة، توصيل إلكتروني داخلي.</td>
+                        <td>محول Buck Converter إضافي مخصص للسرفوات وحدها.</td>
+                        <td><input type="text" class="my-note" value="حماية الـ ESP32 من الـ Voltage Drop"></td>
+                    </tr>
                     <!-- محركات الشاسيه -->
                     <tr>
                         <td><strong>محركات الشاسيه (4WD)</strong></td>
@@ -149,7 +166,7 @@
                     <!-- المتحكمات -->
                     <tr>
                         <td><strong>لوحات ESP32 NodeMCU</strong></td>
-                        <td>2</td>
+                        <td>2 (مع وجود قطعة ثالثة احتياطية)</td>
                         <td>المعالج Tensilica Dual-Core 32-bit، تردد 240 ميغاهرتز، يدعم Wi-Fi و Bluetooth 4.2 / ESP-NOW للاتصال السريع بدون راوتر.</td>
                         <td>لا تحتاج لورشة، تركيب داخلي بداخل الشاسيه ويد التحكم.</td>
                         <td>لوحات Arduino Due أو Raspberry Pi Pico W مع موديول واي فاي خارجي.</td>
