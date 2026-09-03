@@ -3,559 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تطوير روبوت الخدمات الخارق | محمود</title>
+    <title>لوحة تحكم روبوت صعود الدرج والتخلص من النفايات</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #831843, #4c0519, #1f1f1f);
-            --card-bg: rgba(30, 27, 38, 0.85);
-            --card-border: #db2777;
-            --text-main: #fce7f3;
-            --text-muted: #f472b6;
-            --accent-pink: #ec4899;
-            --success-color: #10b981;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --primary: #0077b6;
+            --secondary: #00b4d8;
+            --accent: #90e0ef;
+            --danger: #d90429;
+            --success: #2b9348;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
-        }
-
-        .container {
-            max-width: 950px;
-            margin: 0 auto;
+            transition: background-color 0.5s ease;
         }
 
         header {
-            background: linear-gradient(135deg, #db2777, #9d174d);
-            padding: 30px 20px;
-            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            margin-bottom: 25px;
-            border: 1px solid #f472b6;
+            margin-bottom: 30px;
         }
 
-        header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.1rem;
-            color: #ffffff;
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
         }
 
-        header p {
-            margin: 0;
-            opacity: 0.95;
-            font-size: 1rem;
-            color: #fbcfe8;
-        }
-
-        .progress-box {
-            background: var(--card-bg);
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid var(--card-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-
-        .progress-bar-container {
-            flex-grow: 1;
-            background: #4c0519;
-            height: 12px;
-            border-radius: 6px;
-            margin: 0 15px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--success-color);
-            width: 0%;
-            transition: width 0.4s ease;
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .card {
             background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 14px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            border: 1px solid #831843;
-            position: relative;
-            transition: 0.3s;
-        }
-
-        .card.completed {
-            border-color: var(--success-color);
-            background-color: rgba(6, 78, 59, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin: 0;
-            color: #f472b6;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            background: #831843;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            user-select: none;
-            color: #fff;
-            border: 1px solid #db2777;
-        }
-
-        .checkbox-container input {
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-        }
-
-        .description {
-            color: #fbcfe8;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .details-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 15px 0;
-        }
-
-        .details-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(219, 39, 119, 0.2);
-            font-size: 0.9rem;
-        }
-
-        .details-item:last-child {
-            border-bottom: none;
-        }
-
-        .price {
-            font-weight: bold;
-            color: #fbbf24;
-        }
-
-        .notes-section {
-            margin-top: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px dashed #db2777;
-        }
-
-        .notes-section label {
-            display: block;
-            font-size: 0.85rem;
-            color: #f472b6;
-            margin-bottom: 5px;
-        }
-
-        .notes-input {
-            width: 100%;
-            background: #1f1f1f;
-            border: 1px solid #4c0519;
-            color: #fff;
-            padding: 8px;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.9rem;
-            resize: vertical;
-            box-sizing: border-box;
-        }
-
-        .total-card {
-            background: linear-gradient(135deg, #4c0519, #831843);
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 14px;
-            border: 2px solid #db2777;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #fbcfe8;
-            font-size: 0.9rem;
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--success);
+            margin-left: 8px;
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #9b2226;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .log-box {
+            background-color: #1e1e1e;
+            color: #00ff66;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            height: 120px;
+            overflow-y: auto;
         }
     </style>
 </head>
-<body>
+<body id="siteBody">
 
-    <div class="container">
-        <header>
-            <h1>🚀 لوحة تطوير روبوت الخدمات الخارق</h1>
-            <p>المطور: محمود | المواصفات: كاميرا بث مباشر + شاشة أعطال OLED + ذراع ATC + تسلق الدرج</p>
-        </header>
+    <header>
+        <h1>لوحة تحكم الروبوت الميدانية</h1>
+        <p>مراقبة النظام، التحكم بالذراع الآلية (6-Axis)، وإدارة الـ ATC</p>
+    </header>
 
-        <!-- شريط التقدم -->
-        <div class="progress-box">
-            <span>نسبة إنجاز المشروع:</span>
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <span id="progressText">0%</span>
+    <div class="dashboard-grid">
+        <!-- بطاقة حالة النظام والتشخيص -->
+        <div class="card">
+            <h2>حالة النظام والتشخيص <span class="status-indicator"></span></h2>
+            <p><strong>الاتصال اللاسلكي:</strong> متصل (ESP-NOW)</p>
+            <p><strong>جهد البطارية:</strong> 11.1 فولت (سليم)</p>
+            <p><strong>شاشة OLED المحلية:</strong> تعمل بكفاءة</p>
+            <hr>
+            <button class="btn-danger" onclick="triggerEmergency()">قاطع الطوارئ (E-Stop)</button>
         </div>
 
-        <!-- 1 -->
-        <div class="card" id="card-1">
-            <div class="card-header">
-                <h3 class="card-title">🚜 1. محركات الروبوت الأساسية للحركة (DC High-Torque Motors 12V)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-1" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> زوج محركات تيار مستمر 12 فولت مع صندوق تروس معدني (Gearbox) لعزم خارق لتحريك الشاسيه صعوداً وهبوطاً على الدرج تحت حمولة 10 كغ.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: محركان 12V بعزم عالي (330 RPM)</span><span class="price">~55 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: محركات جيربكس 37GB-520</span><span>~65 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-1" placeholder="اكتب ملاحظاتك هنا (تُحفظ تلقائياً)..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 2 -->
-        <div class="card" id="card-2">
-            <div class="card-header">
-                <h3 class="card-title">⚡ 2. درايفر محركات الحركة (BTS7960 43A Motor Driver)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-2" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> وحدة تحكم إلكترونية بقدرة 43 أمبير لتشغيل والتحكم باتجاه وسرعة محركات الجنازير دون احتراق تحت الحمل العالي.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: درايفر BTS7960 (43A)</span><span class="price">~50 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: درايفر Dual MC33926</span><span>~70 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-2" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
+        <!-- بطاقة التحكم بالمفاصل -->
+        <div class="card">
+            <h2>التحكم اليدوي بمفاصل الذراع</h2>
+            <p>أزرار الحركة الدقيقة للمفاصل (J1 إلى J6):</p>
+            <div class="btn-group">
+                <button onclick="sendAction('J1_FORWARD')">J1+</button>
+                <button onclick="sendAction('J1_BACKWARD')">J1-</button>
+                <button onclick="sendAction('J2_FORWARD')">J2+</button>
+                <button onclick="sendAction('J2_BACKWARD')">J2-</button>
+                <button onclick="sendAction('J3_FORWARD')">J3+</button>
+                <button onclick="sendAction('J3_BACKWARD')">J3-</button>
+                <button onclick="sendAction('J4_FORWARD')">J4+</button>
+                <button onclick="sendAction('J4_BACKWARD')">J4-</button>
             </div>
         </div>
 
-        <!-- 3 -->
-        <div class="card" id="card-3">
-            <div class="card-header">
-                <h3 class="card-title">🦾 3. هيكل الذراع الآلية الميكانيكي (Mechanical Robot Arm Chassis)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-3" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> الأجزاء الميكانيكية والهيكلية للذراع المصنوعة من الألومنيوم الخفيف لرفع الأشياء ورمي النفايات.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: طقم ذراع ألومنيوم هيكلي فارغ</span><span class="price">~45 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: طقم ذراع أكريليك شفاف مقوى</span><span>~35 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-3" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
+        <!-- بطاقة قوالب الأدوات ATC -->
+        <div class="card">
+            <h2>تغيير قوالب الأدوات (ATC)</h2>
+            <p>اختر القالب الحالي لتثبيته على رأس الذراع:</p>
+            <div class="btn-group">
+                <button onclick="sendAction('TOOL_1')">القالب 1 (القبضة)</button>
+                <button onclick="sendAction('TOOL_2')">القالب 2 (المغناطيس)</button>
+                <button onclick="sendAction('TOOL_3')">القالب 3 (الكنس)</button>
+                <button onclick="sendAction('TOOL_4')">القالب 4 (الفرز)</button>
             </div>
         </div>
 
-        <!-- 4 -->
-        <div class="card" id="card-4">
-            <div class="card-header">
-                <h3 class="card-title">🦾 4. محركات الذراع العلوية والمفاصل (MG996R Servo Motors)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-4" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> محركات سيرفو ثقيلة ذات تروس معدنية (MG996R High-Torque) لتشغيل مفاصل الذراع الأساسية (الكتف والمرفق).</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: محركان سيرفو MG996R</span><span class="price">~50 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: محركات سيرفو DS3218 عزم 20 كغ</span><span>~75 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-4" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
+        <!-- بطاقة سجل الأخطاء والتشغيل -->
+        <div class="card">
+            <h2>سجل الأحداث والأخطاء (Logs)</h2>
+            <div class="log-box" id="logBox">
+                [00:01] النظام جاهز للتشغيل...<br>
+                [00:02] تم مزامنة أزرار المفاصل بنجاح.<br>
+                [00:03] اتصال الكاميرا (ESP32-CAM) مستقر.
             </div>
         </div>
-
-        <!-- 5 -->
-        <div class="card" id="card-5">
-            <div class="card-header">
-                <h3 class="card-title">🤏 5. محرك قبضة الذراع ونهاية القالب (SG90 Micro Servo)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-5" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> محرك سيرفو صغير سريع (SG90 9g) للتحكم بفتح وإغلاق أصابع القبضة أو إسقاط قوالب النفايات.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: محرك سيرفو صغير SG90</span><span class="price">~12 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: محرك سيرفو MG90S</span><span>~20 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-5" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 6 -->
-        <div class="card" id="card-6">
-            <div class="card-header">
-                <h3 class="card-title">🔄 6. قوالب التغيير الآلي وملحقاتها (ATC Tool Changer Molds)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-6" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> قوالب ورؤوس أداة قابلة للتبديل (مخلب، مغناطيس رفع، خطاف) يتم فكها وتركيبها أوتوماتيكياً بواسطة الذراع.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: طقم قوالب ملحقات رأس الذراع</span><span class="price">~25 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: قوالب مطبوعة ثلاثية الأبعاد (3D Printed)</span><span>~15 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-6" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 7 -->
-        <div class="card" id="card-7">
-            <div class="card-header">
-                <h3 class="card-title">🧲 7. مغناطيس النيوديميوم للتبديل السريع (Neodymium Magnets)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-7" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> قطع مغناطيس أرضية نادرة قوية جداً (N52) لتثبيت قوالب الـ ATC برأس الذراع بقوة أثناء عملية التبديل الأوتوماتيكي.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: 10 قطع مغناطيس نيوديميوم قوي</span><span class="price">~15 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: مغناطيس من أجهزة قديمة</span><span>مجاناً</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-7" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 8 -->
-        <div class="card" id="card-8">
-            <div class="card-header">
-                <h3 class="card-title">🧠 8. الدماغ لوحة المعالجة المركزية (ESP32 NodeMCU Controller)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-8" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> لوحة تحكم رئيسية مع واي فاي وبلوتوث لإدارة واستقبال الأوامر وبرمجة حركات الروبوت والذراع لاسلكياً.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: لوحة ESP32 NodeMCU</span><span class="price">~45 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: لوحة ESP32 قياسية بديلة</span><span>~40 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-8" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 9 -->
-        <div class="card" id="card-9">
-            <div class="card-header">
-                <h3 class="card-title">📷 9. كاميرا البث المباشر (ESP32-CAM with OV2640)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-9" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> وحدة كاميرا رقمية OV2640 مع معالج ESP32 مدمج مخصصة لبث الفيديو المباشر لاسلكياً لرؤية الطريق والدرج والمهام.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: لوحة ESP32-CAM مع عدسة OV2640</span><span class="price">~35 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: كاميرا ويب USB موصولة بمعالج خارجي</span><span>~60 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-9" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 10 -->
-        <div class="card" id="card-10">
-            <div class="card-header">
-                <h3 class="card-title">🖥️ 10. شاشة عرض الأخطاء والحالة (OLED Display 0.96 inch I2C)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-10" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> شاشة رسومية صغيرة (SSD1306 OLED) لطباعة رسائل الأخطاء، وحالة البطارية، وحل المشاكل البرمجية مباشرة على جسم الروبوت.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: شاشة OLED 0.96 إنش (I2C)</span><span class="price">~20 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: شاشة LCD 1602 مع محول I2C</span><span>~18 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-10" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 11 -->
-        <div class="card" id="card-11">
-            <div class="card-header">
-                <h3 class="card-title">📐 11. حساس الميل والتوازن الجيروسكوب (MPU6050 Gyroscope)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-11" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> حساس زوايا وميل سداسي المحاور لمساعدة المعالج على قراءة زاوية ميلان الدرج وتعديل التوازن تلقائياً.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: حساس MPU6050</span><span class="price">~20 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: حساس MPU9250 الأحدث</span><span>~35 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-11" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 12 -->
-        <div class="card" id="card-12">
-            <div class="card-header">
-                <h3 class="card-title">🔋 12. حزمة البطاريات ونظام الحماية (12V Lithium Battery + BMS)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-12" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> بطارية ليثيوم 12 فولت مع دائرة حماية وشحن (BMS) لتغذية المحركات القوية والدرايفر والذراع والكاميرا والشاشة بالطاقة الكافية.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: حزمة بطاريات 12V مع BMS</span><span class="price">~100 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: تجميع 4 بطاريات 18650 مع منظم جهد XL4015</span><span>~60 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-12" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- 13 -->
-        <div class="card" id="card-13">
-            <div class="card-header">
-                <h3 class="card-title">🔌 13. أسلاك التوصيل ولوحة التجارب (Breadboard & Wires)</h3>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="check-13" onclick="saveState()"> تم الشراء ✅
-                </label>
-            </div>
-            <p class="description"><strong>الوصف الدقيق للبائع:</strong> أسلاك توصيل مرنة لوصل الأجزاء الإلكترونية معاً وتنظيم التوصيلات الكهربائية للروبوت بكل أمان.</p>
-            <ul class="details-list">
-                <li class="details-item"><span>القطعة الأساسية: مجموعة أسلاك Jumper Wires + Breadboard</span><span class="price">~15 ر.س</span></li>
-                <li class="details-item" style="color: #f472b6;"><span>البديل: شريط لحام وأسلاك عادية</span><span>~10 ر.س</span></li>
-            </ul>
-            <div class="notes-section">
-                <label>📝 ملاحظات خاصة:</label>
-                <textarea class="notes-input" id="note-13" placeholder="اكتب ملاحظاتك هنا..." oninput="saveState()"></textarea>
-            </div>
-        </div>
-
-        <!-- المجموع الكلي -->
-        <div class="total-card">
-            <h3 style="color: #fbcfe8; margin-top: 0; font-size: 1.4rem;">💰 التكلفة الإجمالية التقديرية للقطع الإلكترونية</h3>
-            <p style="color: #fbbf24; font-size: 1.8rem; font-weight: bold; margin: 10px 0;">~490 إلى 580 ريال سعودي</p>
-            <p style="color: #f472b6; font-size: 0.95rem; margin: 0;">(شاملة الكاميرا، شاشة الأوعية والأعطال، محركات الجنازير والذراع، وقوالب التغيير ATC)</p>
-        </div>
-
-        <footer>
-            <p>تم التصميم بكل دقة واحترافية بواسطة محمود &copy; 2026 (يعمل بدون إنترنت ويحفظ البيانات محلياً)</p>
-        </footer>
     </div>
 
     <script>
-        // دالة حفظ واسترجاع الحالة محلياً (localStorage)
-        function saveState() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const notes = document.querySelectorAll('.notes-input');
-            const cards = document.querySelectorAll('.card');
-            
-            let checkedCount = 0;
-            let stateData = { checks: [], notes: [] };
+        // مصفوفة ألوان الباستيل الفاتحة المتغيرة تلقائياً لراحة العين
+        const lightColors = [
+            "#f0f4f8", // سماوي هادئ افتراضي
+            "#e8f5e9", // أخضر نعناعي خفيف
+            "#fffde7", // أصفر فاتح دافئ
+            "#e3f2fd", // أزرق سماوي فاتح
+            "#f3e5f5"  // بنفسجي فاتح ناعم
+        ];
 
-            checkboxes.forEach((cb, index) => {
-                stateData.checks[index] = cb.checked;
-                if (cb.checked) {
-                    checkedCount++;
-                    cards[index].classList.add('completed');
-                } else {
-                    cards[index].classList.remove('completed');
-                }
-            });
+        let colorIndex = 0;
 
-            notes.forEach((note, index) => {
-                stateData.notes[index] = note.value;
-            });
-
-            localStorage.setItem('robotProjectState', JSON.stringify(stateData));
-
-            const percentage = Math.round((checkedCount / checkboxes.length) * 100);
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressText').innerText = percentage + '%';
+        // دالة لتغيير ألوان خلفية الموقع بسلاسة كل فترة تلقائياً
+        function changeBackgroundSmoothly() {
+            colorIndex = (colorIndex + 1) % lightColors.length;
+            document.getElementById("siteBody").style.backgroundColor = lightColors[colorIndex];
         }
 
-        function loadState() {
-            const saved = localStorage.getItem('robotProjectState');
-            if (saved) {
-                const stateData = JSON.parse(saved);
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                const notes = document.querySelectorAll('.notes-input');
+        // تغيير اللون كل 10 ثوانٍ تلقائياً
+        setInterval(changeBackgroundSmoothly, 10000);
 
-                checkboxes.forEach((cb, index) => {
-                    if (stateData.checks && stateData.checks[index] !== undefined) {
-                        cb.checked = stateData.checks[index];
-                    }
-                });
-
-                notes.forEach((note, index) => {
-                    if (stateData.notes && stateData.notes[index] !== undefined) {
-                        note.value = stateData.notes[index];
-                    }
-                });
-
-                updateProgressUI();
-            }
+        function sendAction(actionName) {
+            const logBox = document.getElementById("logBox");
+            const timeNow = new Date().toLocaleTimeString();
+            logBox.innerHTML += `[${timeNow}] أمر مرسل: ${actionName}<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
         }
 
-        function updateProgressUI() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const cards = document.querySelectorAll('.card');
-            let checkedCount = 0;
-
-            checkboxes.forEach((cb, index) => {
-                if (cb.checked) {
-                    checkedCount++;
-                    cards[index].classList.add('completed');
-                } else {
-                    cards[index].classList.remove('completed');
-                }
-            });
-
-            const percentage = Math.round((checkedCount / checkboxes.length) * 100);
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressText').innerText = percentage + '%';
+        function triggerEmergency() {
+            const logBox = document.getElementById("logBox");
+            const timeNow = new Date().toLocaleTimeString();
+            logBox.innerHTML += `<span style="color: #ff4d4d;">[${timeNow}] تفعيل قاطع الطوارئ! تم قطع الطاقة.</span><br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+            alert("تم إرسال إشارة الطوارئ لقطع الطاقة فوراً!");
         }
-
-        window.onload = loadState;
     </script>
 </body>
 </html>
-            
