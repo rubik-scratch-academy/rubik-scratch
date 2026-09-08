@@ -1,261 +1,940 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المواصفات الهندسية الدقيقة للروبوت (5 محاور + المحولات)</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            color: #333333;
-            margin: 0;
-            padding: 20px;
-            transition: background-color 1.5s ease;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+<title>استغلال أوقات الفراغ | ثالث متوسط</title>
 
-        h1 {
-            color: #0077b6;
-            margin-bottom: 5px;
-            font-size: 1.5rem;
-        }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+body{
+    font-family:"Tahoma","Arial",sans-serif;
+    background:#08111f;
+    color:#fff;
+    overflow:hidden;
+}
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
+/* ===== العرض ===== */
 
-        h2 {
-            font-size: 1.1rem;
-            color: #0077b6;
-            border-bottom: 2px solid #90e0ef;
-            padding-bottom: 6px;
-            margin-top: 0;
-        }
+.presentation{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
+.slide{
+    position:absolute;
+    inset:0;
+    display:none;
+    padding:7vh 9vw;
+    background:
+        radial-gradient(circle at 90% 10%,rgba(205,164,76,.18),transparent 25%),
+        linear-gradient(135deg,#f8f5ed,#e9e2d2);
+    color:#16243a;
+}
 
-        th, td {
-            border: 1px solid #d1d5db;
-            padding: 8px;
-            text-align: center;
-            vertical-align: middle;
-        }
+.slide.active{
+    display:flex;
+    flex-direction:column;
+    animation:appear .45s ease;
+}
 
-        th {
-            background-color: #90e0ef;
-            color: #03045e;
-        }
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateX(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
 
-        input[type="text"] {
-            width: 95%;
-            padding: 5px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 0.85rem;
-        }
+/* ===== الغلاف ===== */
 
-        .my-note {
-            background-color: #fff9db;
-        }
-    </style>
+.cover{
+    background:
+        radial-gradient(circle at 50% 35%,rgba(207,169,83,.22),transparent 28%),
+        linear-gradient(135deg,#08111f,#132943);
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.cover .ornament{
+    width:150px;
+    height:150px;
+    border:2px solid #cba65a;
+    transform:rotate(45deg);
+    margin-bottom:50px;
+    position:absolute;
+    opacity:.45;
+}
+
+.cover h1{
+    font-size:clamp(42px,6vw,82px);
+    color:#fff;
+    margin-bottom:25px;
+    position:relative;
+}
+
+.cover h2{
+    color:#d6b66e;
+    font-size:clamp(20px,2.5vw,32px);
+    margin-bottom:20px;
+}
+
+.cover p{
+    color:#dfe5ec;
+    font-size:22px;
+}
+
+/* ===== العناوين ===== */
+
+.section{
+    color:#b48a39;
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:clamp(34px,4.8vw,62px);
+    color:#14253d;
+    margin-bottom:30px;
+}
+
+.subtitle{
+    font-size:18px;
+    color:#697384;
+    margin-bottom:25px;
+}
+
+/* ===== المحتوى ===== */
+
+.content{
+    max-width:1050px;
+    font-size:clamp(21px,2.25vw,31px);
+    line-height:2;
+}
+
+.content p{
+    margin-bottom:13px;
+}
+
+.quote{
+    margin-top:15px;
+    padding:25px 35px;
+    border-right:6px solid #bd9445;
+    background:rgba(255,255,255,.62);
+    border-radius:12px;
+    font-size:clamp(24px,2.6vw,36px);
+    line-height:1.9;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    max-width:1050px;
+}
+
+.card{
+    background:rgba(255,255,255,.68);
+    border:1px solid rgba(180,138,57,.25);
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(20,35,55,.08);
+    font-size:23px;
+    line-height:1.8;
+}
+
+.card strong{
+    display:block;
+    color:#a2782d;
+    margin-bottom:8px;
+}
+
+/* ===== ملاحظات المعلم ===== */
+
+.teacher-note{
+    display:none;
+    position:absolute;
+    bottom:90px;
+    right:9vw;
+    left:9vw;
+    background:#172940;
+    color:#fff;
+    padding:15px 22px;
+    border-radius:12px;
+    border-right:5px solid #cba65a;
+    font-size:16px;
+    line-height:1.7;
+}
+
+.teacher-mode .teacher-note{
+    display:block;
+}
+
+/* ===== التحكم ===== */
+
+.controls{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+    z-index:100;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    color:white;
+    background:#172940;
+    padding:12px 20px;
+    border-radius:30px;
+    font-size:16px;
+    transition:.2s;
+}
+
+button:hover{
+    background:#bd9445;
+    transform:translateY(-2px);
+}
+
+.gold{
+    background:#bd9445;
+}
+
+.top-controls{
+    position:fixed;
+    top:18px;
+    left:20px;
+    z-index:100;
+    display:flex;
+    gap:8px;
+}
+
+.progress{
+    position:fixed;
+    bottom:0;
+    right:0;
+    height:4px;
+    background:#bd9445;
+    width:0%;
+    transition:.3s;
+    z-index:200;
+}
+
+.counter{
+    position:fixed;
+    bottom:28px;
+    right:25px;
+    color:#737b86;
+    font-size:14px;
+    z-index:100;
+}
+
+/* ===== الجوال ===== */
+
+@media(max-width:750px){
+
+    .slide{
+        padding:7vh 7vw 13vh;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+
+    .card{
+        padding:15px;
+        font-size:18px;
+    }
+
+    .content{
+        font-size:19px;
+    }
+
+    .teacher-note{
+        font-size:12px;
+        bottom:85px;
+    }
+
+    .controls button{
+        padding:9px 13px;
+        font-size:13px;
+    }
+}
+
+@media print{
+    .controls,
+    .top-controls,
+    .counter,
+    .progress,
+    .teacher-note{
+        display:none!important;
+    }
+
+    .slide{
+        display:flex!important;
+        position:relative;
+        height:100vh;
+        page-break-after:always;
+    }
+}
+</style>
 </head>
-<body id="siteBody">
 
-    <header>
-        <h1>المواصفات الهندسية الدقيقة لمشروع الروبوت</h1>
-        <p>المرجع التقني الخاص بمحمود (متضمنة محولات الطاقة ومنظمات الجهد)</p>
-    </header>
+<body>
 
-    <div class="container">
-        <div class="card">
-            <h2>جدول المواصفات التقنية الدقيقة للقطع والمكونات</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>القطعة الأساسية</th>
-                        <th>العدد</th>
-                        <th>المواصفات الدقيقة جداً</th>
-                        <th>ماذا أقول للرجال (الورشة)؟</th>
-                        <th>البديل الجيد المماثل</th>
-                        <th>ملاحظات محمود الخاصة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- الهيكل -->
-                    <tr>
-                        <td><strong>ألواح ألومنيوم الشاسيه</strong></td>
-                        <td>2</td>
-                        <td>سُمك 3 مم، أبعاد 350×250 مم، مسافة رأسية 8 سم بين الطابقين، تحمل صعود عتبات حتى 17 سم</td>
-                        <td>أبي تفصل لي لوحين ألومنيوم سُمك 3 مم؛ الطول 35 سم، العرض 25 سم، مع عمل فاصل ارتفاع 8 سم.</td>
-                        <td>ألواح أكريليك (أكريليك سميك)، لكن الألومنيوم أقوى للتحمل والصدمات.</td>
-                        <td><input type="text" class="my-note" value="تأكد من خلوه من الانحناءات"></td>
-                    </tr>
-                    <!-- البطارية -->
-                    <tr>
-                        <td><strong>بطارية التشغيل الرئيسية</strong></td>
-                        <td>1</td>
-                        <td>نوع LiPo (ليثيوم بوليمر)، الجهد 11.1 فولت (3S)، السعة 5200 مللي أمبير، معدل تفريغ عالي 50C لتحمل سحب التيار اللحظي للمحركات.</td>
-                        <td>لا تحتاج ورشة، تركيب إلكتروني داخلي آمن.</td>
-                        <td>بطارية LiFePO4 بجهد 12 فولت أو بطاريتين ليثيوم 18650 على التوالي والتوازي.</td>
-                        <td><input type="text" class="my-note" value="احرص على وجود شاحن متوافق وحماية BMS"></td>
-                    </tr>
-                    <!-- محولات الطاقة -->
-                    <tr>
-                        <td><strong>محول جهد للـ ESP32 (Buck Converter)</strong></td>
-                        <td>1 أو 2</td>
-                        <td>محول خفض الجهد (LM2596 أو MP1584)، يحول جهد البطارية (11.1 فولت) إلى **5 فولت ثابتة** لتغذية لوحات الـ ESP32 والشاشات بدون احتراق.</td>
-                        <td>لا تحتاج ورشة، توصيل إلكتروني داخلي.</td>
-                        <td>منظم جهد خطي (مثل 7805 ولكن الـ Buck Converter أفر وأقل توليداً للحرارة).</td>
-                        <td><input type="text" class="my-note" value="ضبط المخرج بدقة على 5 فولت قبل التوصيل"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>محول/منظم جهد للسرفوات (محرك الذراع)</strong></td>
-                        <td>1</td>
-                        <td>مخرج منظم منفصل أو محول قدرة (UBEC) بقوة 5 فولت أو 6 فولت وتيار 3 أمبير على الأقل؛ لمنع هبوط الجهد عند حركة محركات الذراع.</td>
-                        <td>لا تحتاج ورشة، توصيل إلكتروني داخلي.</td>
-                        <td>محول Buck Converter إضافي مخصص للسرفوات وحدها.</td>
-                        <td><input type="text" class="my-note" value="حماية الـ ESP32 من الـ Voltage Drop"></td>
-                    </tr>
-                    <!-- محركات الشاسيه -->
-                    <tr>
-                        <td><strong>محركات الشاسيه (4WD)</strong></td>
-                        <td>4</td>
-                        <td>جهد 12 فولت، سرعة دوران (RPM) من 150 إلى 200 دورة بالدقيقة بعد التخفيض، عزم دوران (Stall Torque) لا يقل عن 8 إلى 10 كغ.سم مزودة بصندوق تروس معدني كامل (All-Metal Gearbox).</td>
-                        <td>أبي أثبت 4 محركات تيار مستمر تروس معدنية قوية جداً لتحمل وزن الروبوت وصعود الدرج.</td>
-                        <td>محركات BaneBots أو محركات روبوتات صناعية مشابهة بعزم عالٍ.</td>
-                        <td><input type="text" class="my-note" value="فحص العزم باليد قبل التركيب النهائي"></td>
-                    </tr>
-                    <!-- الجنازير -->
-                    <tr>
-                        <td><strong>الجنازير المطاطية والتروس</strong></td>
-                        <td>2</td>
-                        <td>جنازير مطاطية مرنة وعريضة (عرض لا يقل عن 3 سم) مع عجلات مسننة (Sprockets) متوافقة مع محور المحركات.</td>
-                        <td>أبي أترك مساحة وفتحات جانبية لتثبيت محاور عجلات الجنازير المطاطية بدقة.</td>
-                        <td>سيور نقل متزامنة (Timing Belts) أو جنزير بلاستيكي متشابك.</td>
-                        <td><input type="text" class="my-note" value="تجنب الانزلاق على حواف الدرج"></td>
-                    </tr>
-                    <!-- محركات الذراع -->
-                    <tr>
-                        <td><strong>محركات الذراع (5 مفاصل)</strong></td>
-                        <td>5 محركات</td>
-                        <td>مفاصل القاعدة والكتف والكوع: سيرفو رقمي عزم عالي (مثل DS3218 أو ما يعادله بعزم 20 كغ). معصم الذراع والقبضة: سيرفو معدني دقيق (مثل MG996R أو MG90S).</td>
-                        <td>أبي أثبت قاعدة الذراع بمسامير متينة M4 في مقدمة الشاسيه العلوي.</td>
-                        <td>محركات خطوية (Stepper Motors) مع مخفضات حركية للمفاصل الكبيرة.</td>
-                        <td><input type="text" class="my-note" value="التأكد من توزيع الأحمال لتجنب اختلال التوازن"></td>
-                    </tr>
-                    <!-- المتحكمات -->
-                    <tr>
-                        <td><strong>لوحات ESP32 NodeMCU</strong></td>
-                        <td>2 (مع وجود قطعة ثالثة احتياطية)</td>
-                        <td>المعالج Tensilica Dual-Core 32-bit، تردد 240 ميغاهرتز، يدعم Wi-Fi و Bluetooth 4.2 / ESP-NOW للاتصال السريع بدون راوتر.</td>
-                        <td>لا تحتاج لورشة، تركيب داخلي بداخل الشاسيه ويد التحكم.</td>
-                        <td>لوحات Arduino Due أو Raspberry Pi Pico W مع موديول واي فاي خارجي.</td>
-                        <td><input type="text" class="my-note" value="تثبيت الأكواد والتأكد من استقرار اتصال ESP-NOW"></td>
-                    </tr>
-                    <!-- درايفر المحركات -->
-                    <tr>
-                        <td><strong>درايفر المحركات (BTS7960)</strong></td>
-                        <td>1</td>
-                        <td>درايفر ثنائي القناة (Dual High-Current DC Motor Driver)، يتحمل تيار حتى 43 أمبير، يعمل بجهد من 5 إلى 27 فولت، مزود بحماية كاملة من ارتفاع الحرارة والتيار الزائد.</td>
-                        <td>أبي أثبت هذا الدرافر في قاعدة الشاسيه السفلية بالقرب من البطارية والمحركات لتقصير الأسلاك.</td>
-                        <td>درايفرات سابقة مثل L298N (غير مناسب نهائياً لضعفه) أو درايفرات حصرية منفصلة لكل محرك.</td>
-                        <td><input type="text" class="my-note" value="مراقبة حرارة الدرافر عند التجربة المطولة"></td>
-                    </tr>
-                    <!-- قاطع الطوارئ -->
-                    <tr>
-                        <td><strong>قاطع الطوارئ (E-Stop Switch)</strong></td>
-                        <td>1</td>
-                        <td>قاطع فيزيائي أحمر كبير (Mushroom Emergency Stop Button)، نوع (NC - Normally Closed)، يتحمل تيار عالي (حتى 10 أمبير أو أكثر)، قفل ميكانيكي بالضغط مع مفتاح لفك القفل.</td>
-                        <td>أبي فتحة دائرية واضحة في مكان بارز وخارجي بهيكل الروبوت لتثبيت زر الطوارئ الأحمر لقطع الكهرباء فوراً.</td>
-                        <td>مفتاح قاطع تيار بطارية سيارات ريموت أو قاطع تجاري منزلي مصغر.</td>
-                        <td><input type="text" class="my-note" value="اختبار القطع الفوري للكهرباء قبل تشغيل المحركات"></td>
-                    </tr>
-                    <!-- مفتاح التشغيل -->
-                    <tr>
-                        <td><strong>مفتاح التشغيل الرئيسي (Power Switch)</strong></td>
-                        <td>1</td>
-                        <td>مفتاح هزاز (Rocker Switch) أو مفتاح قفل بمفتاح (Key Lock Switch) بدرجة تحمل لا تقل عن 15 أمبير / 12 فولت لضمان عدم حدوث شرار كهربائي عند الوصل.</td>
-                        <td>أبي فتحة جانبية بجانب قاطع الطوارئ لمفتاح التشغيل الرئيسي.</td>
-                        <td>قاطع تيار كهربائي صغير (MCB DC).</td>
-                        <td><input type="text" class="my-note" value="وضعه بجانب زر الطوارئ لسهولة الوصول"></td>
-                    </tr>
-                    <!-- كاميرا والشاشات -->
-                    <tr>
-                        <td><strong>كاميرا وبث الشاشات</strong></td>
-                        <td>1 كاميرا + شاشتين</td>
-                        <td>كاميرا ESP32-CAM للبث المباشر، شاشة TFT مقاس 3 بوصة ليد التحكم، وشاشة OLED مقاس 0.96 بوصة (I2C) على جسم الروبوت للتشخيص.</td>
-                        <td>أبي فتحة دائرية لمقدمة الكاميرا، وفتحتي شاشات (واحدة على اليد والأخرى على الشاسيه).</td>
-                        <td>كاميرا واي فاي مستقلة وشاشات LCD بديلة 16x2.</td>
-                        <td><input type="text" class="my-note" value="التأكد من سلاسة تدفق الفيديو بدون تأخير (Lag)"></td>
-                    </tr>
-                    <!-- يد التحكم -->
-                    <tr>
-                        <td><strong>أجزاء يد التحكم اللاسلكية (10 أزرار)</strong></td>
-                        <td>1 طقم</td>
-                        <td>علبة ألومنيوم خفيفة، جويستيك مزدوج للحركة، و**10 أزرار ضغط رقمية (Push Buttons)** مخصصة للتحكم المستقل بالحركات الأربع للـ 5 محاور (زران لكل محور).</td>
-                        <td>أبي تفصل لي علبة ألومنيوم خفيفة بفتحات دقيقة للجويستيك والأزرار العشرة والشاشة.</td>
-                        <td>منصة بلاستيكية مطبوعة بتقنية الطباعة الثلاثية (3D Printed Enclosure).</td>
-                        <td><input type="text" class="my-note" value="توزيع الـ 10 أزرار بشكل مريح لليدين لسهولة التحكم بالمفاصل"></td>
-                    </tr>
-                    <!-- التوصيلات -->
-                    <tr>
-                        <td><strong>الأسلاك والإكسسوارات</strong></td>
-                        <td>منوعة</td>
-                        <td>أسلاك سيليكون مرنة ذات مقاومة منخفضة للتيارات العالية (قياس 14 AWG للبطارية والمحركات، و 22 AWG للمنطق والتحكم)، بريدبورد، ومجموعة مسامير M3 و M4.</td>
-                        <td>لا توجد أعمال ورشة ميكانيكية، التوصيل داخلي للإلكترونيات.</td>
-                        <td>شريط لحام حراري (Heat Shrink) وأسلاك توصيل عادية.</td>
-                        <td><input type="text" class="my-note" value="تنظيم الأسلاك وربطها بشكل مرتب لمنع احتكاكها بالحركة"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="presentation" id="presentation">
 
-        <!-- ملاحظات محمود الخاصة -->
-        <div class="card">
-            <h2>ملاحظات محمود الشخصية لتنفيذ المشروع</h2>
-            <textarea style="width: 100%; height: 100px; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; resize: vertical; font-family: inherit;" placeholder="اكتب ملاحظاتك الشخصية هنا..."></textarea>
-        </div>
-    </div>
+<!-- ==================== 1 ==================== -->
 
-    <script>
-        // ألوان زاهية وفاتحة تتدرج بسلاسة وتعمل بالكامل بدون إنترنت
-        const lightColors = [
-            "#f0f4f8", // سماوي هادئ
-            "#e8f5e9", // أخضر نعناعي فاتح
-            "#fffde7", // أصفر دافئ خفيف
-            "#e3f2fd", // أزرق فاتح ناعم
-            "#f3e5f5"  // بنفسجي فاتح خفيف
-        ];
+<section class="slide cover active">
 
-        let colorIndex = 0;
+<div class="ornament"></div>
 
-        function changeBackgroundSmoothly() {
-            colorIndex = (colorIndex + 1) % lightColors.length;
-            document.getElementById("siteBody").style.backgroundColor = lightColors[colorIndex];
-        }
+<h2>الدراسات الإسلامية • الحديث</h2>
 
-        // تغيير لون الخلفية كل 10 ثوانٍ بسلاسة
-        setInterval(changeBackgroundSmoothly, 10000);
-    </script>
+<h1>استغلال أوقات الفراغ</h1>
+
+<p>الصف الثالث المتوسط | الفصل الدراسي الأول</p>
+
+<p style="margin-top:35px;color:#cba65a;">
+«وقتك جزء من حياتك… فكيف تستثمره؟»
+</p>
+
+<div class="teacher-note">
+ابدأ بهدوء، عرّف بعنوان الدرس، ثم انتقل مباشرة إلى التمهيد.
+</div>
+
+</section>
+
+
+<!-- ==================== 2 ==================== -->
+
+<section class="slide">
+
+<div class="section">تمهيد</div>
+
+<h1>قبل أن نبدأ…</h1>
+
+<div class="content">
+
+<p>تخيّل أن لديك <strong>ساعة واحدة إضافية</strong> اليوم.</p>
+
+<p>ماذا ستفعل بها؟</p>
+
+<div class="quote">
+هل كل ما نفعله في وقت الفراغ يعود علينا بالنفع؟
+</div>
+
+</div>
+
+<div class="teacher-note">
+اسأل السؤال واترك للطلاب لحظات للتفكير، دون تحويل النشاط إلى مسابقة.
+</div>
+
+</section>
+
+
+<!-- ==================== 3 ==================== -->
+
+<section class="slide">
+
+<div class="section">قصة تمهيدية</div>
+
+<h1>عبدالله بن عمر رضي الله عنهما</h1>
+
+<div class="content">
+
+<p>
+كان عبدالله بن عمر رضي الله عنهما حريصًا على الاقتداء بالنبي ﷺ
+والعمل الصالح.
+</p>
+
+<p>
+ومن توجيه النبي ﷺ له:
+</p>
+
+<div class="quote">
+«كُنْ في الدنيا كأنك غريبٌ أو عابرُ سبيل»
+</div>
+
+<p>
+فكيف يؤثر هذا التوجيه في طريقة تعاملنا مع الوقت؟
+</p>
+
+</div>
+
+<div class="teacher-note">
+احك القصة باختصار، ثم اجعل السؤال جسرًا للانتقال إلى الحديث.
+</div>
+
+</section>
+
+
+<!-- ==================== 4 ==================== -->
+
+<section class="slide">
+
+<div class="section">أولًا: الحديث</div>
+
+<h1>حديث عبدالله بن عمر</h1>
+
+<div class="quote">
+
+«كُنْ في الدنيا كأنك غريبٌ أو عابرُ سبيل».
+
+<br><br>
+
+وقال ابن عمر رضي الله عنهما:
+
+«إذا أمسيت فلا تنتظر الصباح، وإذا أصبحت فلا تنتظر المساء،
+وخذ من صحتك لمرضك، ومن حياتك لموتك».
+
+</div>
+
+<div class="teacher-note">
+اقرأ الحديث أنت أولًا، ثم اطلب من أحد الطلاب قراءة الحديث.
+صحح القراءة بلطف ووضّح الكلمات التي تحتاج شرحًا.
+</div>
+
+</section>
+
+
+<!-- ==================== 5 ==================== -->
+
+<section class="slide">
+
+<div class="section">ثانيًا: التعريف بالراوي</div>
+
+<h1>عبدالله بن عمر رضي الله عنهما</h1>
+
+<div class="content">
+
+<p>هو عبدالله بن عمر بن الخطاب رضي الله عنهما.</p>
+
+<p>
+من صغار الصحابة، وعُرف بشدة اتباعه للنبي ﷺ
+وحرصه على العبادة والخير.
+</p>
+
+<p>
+وكان مثالًا في المحافظة على العمل الصالح والاقتداء بالنبي ﷺ.
+</p>
+
+</div>
+
+<div class="teacher-note">
+اطلب من طالب قراءة تعريف الراوي من الكتاب، ثم وضّح أهم النقاط.
+</div>
+
+</section>
+
+
+<!-- ==================== 6 ==================== -->
+
+<section class="slide">
+
+<div class="section">ثالثًا: معاني الكلمات</div>
+
+<h1>معاني الكلمات</h1>
+
+<div class="cards">
+
+<div class="card">
+<strong>غريب</strong>
+من كان في بلد ليس بلده، فيكون قصده الرحيل.
+</div>
+
+<div class="card">
+<strong>عابر سبيل</strong>
+المسافر الذي يمر بالمكان ولا يتخذه وطنًا.
+</div>
+
+<div class="card">
+<strong>خذ من صحتك لمرضك</strong>
+اغتنم صحتك قبل أن يمنعك المرض.
+</div>
+
+<div class="card">
+<strong>خذ من حياتك لموتك</strong>
+اعمل في حياتك ما ينفعك بعد الموت.
+</div>
+
+</div>
+
+<div class="teacher-note">
+اجعل كل طالب يقرأ معنى كلمة واحدة، وأنت وضّح أي معنى غير واضح.
+</div>
+
+</section>
+
+
+<!-- ==================== 7 ==================== -->
+
+<section class="slide">
+
+<div class="section">رابعًا: من معاني الحديث</div>
+
+<h1>الدنيا ليست دار إقامة دائمة</h1>
+
+<div class="content">
+
+<p>
+شبّه النبي ﷺ حال المؤمن في الدنيا بحال
+<strong>الغريب أو عابر السبيل.</strong>
+</p>
+
+<p>
+الغريب لا يتعامل مع المكان وكأنه سيبقى فيه إلى الأبد،
+بل يستعد للرحيل.
+</p>
+
+<p>
+لذلك يجعل المسلم حياته مجالًا للعمل الصالح،
+لا للغفلة والانشغال بما لا ينفع.
+</p>
+
+</div>
+
+<div class="teacher-note">
+اشرح التشبيه ببساطة: المسافر يعرف أنه سيمضي، وكذلك المؤمن يعرف أن الدنيا مؤقتة.
+</div>
+
+</section>
+
+
+<!-- ==================== 8 ==================== -->
+
+<section class="slide">
+
+<div class="section">من معاني الحديث</div>
+
+<h1>اغتنم الصحة والفراغ</h1>
+
+<div class="cards">
+
+<div class="card">
+<strong>الصحة نعمة</strong>
+استعمل صحتك في الأعمال النافعة قبل أن تتغير حالك.
+</div>
+
+<div class="card">
+<strong>الفراغ نعمة</strong>
+استثمر وقتك فيما يفيدك في دينك ودنياك.
+</div>
+
+<div class="card">
+<strong>الترفيه</strong>
+الترفيه المباح جائز، لكن لا يتحول إلى شيء يسرق الواجبات والوقت.
+</div>
+
+<div class="card">
+<strong>القاعدة</strong>
+الاعتدال والتوازن في استثمار الوقت.
+</div>
+
+</div>
+
+<div class="teacher-note">
+اربط المعنى بحياة الطلاب اليومية: الألعاب، الجوال، الدراسة، النوم، والرياضة.
+</div>
+
+</section>
+
+
+<!-- ==================== 9 ==================== -->
+
+<section class="slide">
+
+<div class="section">تطبيق عملي</div>
+
+<h1>كيف أستغل وقت فراغي؟</h1>
+
+<div class="cards">
+
+<div class="card">
+<strong>العبادة</strong>
+الطاعات والأعمال الصالحة.
+</div>
+
+<div class="card">
+<strong>التعلم</strong>
+القراءة وتعلم معلومات ومهارات جديدة.
+</div>
+
+<div class="card">
+<strong>الصحة</strong>
+الرياضة والمحافظة على الجسم.
+</div>
+
+<div class="card">
+<strong>الأسرة</strong>
+مساعدة الوالدين وقضاء وقت نافع مع الأسرة.
+</div>
+
+<div class="card">
+<strong>المهارات</strong>
+تعلم مهارة نافعة.
+</div>
+
+<div class="card">
+<strong>الترفيه</strong>
+الترفيه المباح باعتدال.
+</div>
+
+</div>
+
+<div class="teacher-note">
+اقرأ الأمثلة بسرعة، ويمكن سؤال طالب واحد عن مثال آخر لاستثمار الوقت.
+</div>
+
+</section>
+
+
+<!-- ==================== 10 ==================== -->
+
+<section class="slide">
+
+<div class="section">خامسًا: النشاط</div>
+
+<h1>النشاط الموجود في الكتاب</h1>
+
+<div class="content">
+
+<div class="quote">
+
+يقرأ أحد الطلاب السؤال من الكتاب،
+ثم يجيب طالب آخر،
+ونناقش الإجابة معًا.
+
+</div>
+
+<p>
+حديث عبدالله بن عمرو رضي الله عنهما يبين أهمية
+<strong>التوازن</strong> وعدم إرهاق النفس.
+</p>
+
+<p>
+فالجسد والعين والأسرة لها حقوق،
+والوقت ينبغي أن يوزع باعتدال.
+</p>
+
+</div>
+
+<div class="teacher-note">
+افتح الكتاب عند النشاط، واجعل الطلاب يقرؤون النص منه ثم ناقش العلاقة بموضوع الدرس.
+</div>
+
+</section>
+
+
+<!-- ==================== 11 ==================== -->
+
+<section class="slide">
+
+<div class="section">سادسًا: تطبيقات سلوكية</div>
+
+<h1>من المعرفة إلى العمل</h1>
+
+<div class="content">
+
+<p>✓ أستثمر وقت فراغي في شيء نافع.</p>
+
+<p>✓ أحدد وقتًا للترفيه ولا أتركه يسيطر على يومي.</p>
+
+<p>✓ أستغل صحتي قبل المرض.</p>
+
+<p>✓ لا أؤجل العمل الصالح بلا سبب.</p>
+
+<p>✓ أوازن بين الدراسة والعبادة والأسرة والراحة.</p>
+
+</div>
+
+<div class="teacher-note">
+اقرأ التطبيقات، وركز على تحويل الحديث إلى سلوك يومي.
+</div>
+
+</section>
+
+
+<!-- ==================== 12 ==================== -->
+
+<section class="slide">
+
+<div class="section">تأمل</div>
+
+<h1>فكّر في نفسك</h1>
+
+<div class="content">
+
+<div class="quote">
+ما أكثر شيء يسرق وقتي؟
+</div>
+
+<div class="quote">
+ما عمل نافع أستطيع أن أبدأ به من اليوم؟
+</div>
+
+<div class="quote">
+لو عاد إليّ وقت ضيعته بالأمس… ماذا كنت سأفعل؟
+</div>
+
+</div>
+
+<div class="teacher-note">
+لا تجعلها مسابقة ولا تطلب من الجميع الإجابة. الهدف هو التأمل الشخصي.
+</div>
+
+</section>
+
+
+<!-- ==================== 13 ==================== -->
+
+<section class="slide">
+
+<div class="section">مراجعة</div>
+
+<h1>ماذا تعلمنا؟</h1>
+
+<div class="content">
+
+<p>1. ما المقصود بعابر سبيل؟</p>
+
+<p>2. من راوي الحديث؟</p>
+
+<p>3. ماذا يعني: «خذ من صحتك لمرضك»؟</p>
+
+<p>4. ما أهمية استغلال أوقات الفراغ؟</p>
+
+<p>5. اذكر مثالين لاستغلال وقت الفراغ فيما ينفع.</p>
+
+</div>
+
+<div class="teacher-note">
+مراجعة شفوية سريعة قبل الانتقال إلى التقويم.
+</div>
+
+</section>
+
+
+<!-- ==================== 14 ==================== -->
+
+<section class="slide">
+
+<div class="section">سابعًا: التقويم</div>
+
+<h1>التقويم النهائي</h1>
+
+<div class="content">
+
+<p>
+نجيب عن الأسئلة الأساسية من الكتاب.
+</p>
+
+<p>
+نركز على:
+</p>
+
+<div class="quote">
+معنى الحديث • أهمية الوقت • الصحة والفراغ • التطبيقات السلوكية
+</div>
+
+<p>
+<strong>الواجب:</strong> إكمال بقية التقويم في الكتاب للحصة القادمة.
+</p>
+
+</div>
+
+<div class="teacher-note">
+اجعل التقويم هو الجزء الختامي للحصة، ثم حدد الواجب بوضوح.
+</div>
+
+</section>
+
+
+<!-- ==================== 15 ==================== -->
+
+<section class="slide cover">
+
+<h2>الخلاصة</h2>
+
+<h1>الصحة والفراغ نعمتان</h1>
+
+<div class="quote" style="color:white;background:rgba(255,255,255,.08);border-color:#cba65a;">
+والوقت إذا مضى لا يعود.
+<br>
+فاستغل وقتك فيما ينفعك في دينك ودنياك.
+</div>
+
+<p style="margin-top:30px;color:#d6b66e;font-size:25px;">
+«وقتك جزء من حياتك»
+</p>
+
+<div class="teacher-note">
+اختم بجملة قصيرة مؤثرة، ثم اشكر الطلاب وحدد الواجب.
+</div>
+
+</section>
+
+</div>
+
+
+<!-- ===== التحكم ===== -->
+
+<div class="top-controls">
+
+<button onclick="toggleTeacher()" class="gold">
+👨‍🏫 وضع المعلم
+</button>
+
+<button onclick="fullscreen()">
+⛶ ملء الشاشة
+</button>
+
+</div>
+
+<div class="controls">
+
+<button onclick="previousSlide()">→ السابق</button>
+
+<button onclick="nextSlide()" class="gold">
+التالي ←
+</button>
+
+</div>
+
+<div class="counter" id="counter">
+1 / 15
+</div>
+
+<div class="progress" id="progress"></div>
+
+
+<script>
+
+let current = 0;
+
+const slides =
+document.querySelectorAll(".slide");
+
+const counter =
+document.getElementById("counter");
+
+const progress =
+document.getElementById("progress");
+
+function showSlide(index){
+
+    if(index < 0)
+        index = slides.length - 1;
+
+    if(index >= slides.length)
+        index = 0;
+
+    slides.forEach(slide =>
+        slide.classList.remove("active")
+    );
+
+    slides[index].classList.add("active");
+
+    current = index;
+
+    counter.textContent =
+        `${current + 1} / ${slides.length}`;
+
+    progress.style.width =
+        `${((current + 1) / slides.length) * 100}%`;
+}
+
+function nextSlide(){
+    showSlide(current + 1);
+}
+
+function previousSlide(){
+    showSlide(current - 1);
+}
+
+function toggleTeacher(){
+
+    document.body.classList.toggle("teacher-mode");
+
+}
+
+function fullscreen(){
+
+    if(!document.fullscreenElement){
+
+        document.documentElement.requestFullscreen();
+
+    }else{
+
+        document.exitFullscreen();
+
+    }
+
+}
+
+
+/* لوحة المفاتيح */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key === "ArrowLeft")
+        nextSlide();
+
+    if(e.key === "ArrowRight")
+        previousSlide();
+
+    if(e.key === " ")
+        nextSlide();
+
+    if(e.key === "Home")
+        showSlide(0);
+
+    if(e.key === "End")
+        showSlide(slides.length - 1);
+
+});
+
+
+/* لمس الجوال */
+
+let startX = 0;
+
+document.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
+
+document.addEventListener("touchend",e=>{
+
+    let endX=e.changedTouches[0].clientX;
+
+    if(startX-endX>60)
+        nextSlide();
+
+    if(endX-startX>60)
+        previousSlide();
+
+});
+
+
+showSlide(0);
+
+</script>
+
 </body>
 </html>
