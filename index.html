@@ -3,235 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظمي اليومي الذكي</title>
+    <title>ScratchAcademy - خطة الدراسية التفصيلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-math: #38bdf8;
-            --accent-lang: #34d399;
-            --accent-mem: #f472b6;
-            --accent-quran: #fbbf24;
-            --accent-rest: #a78bfa;
+            --accent-blue: #38bdf8;
+            --accent-purple: #818cf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --border-color: #334155;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 20px;
+            color: var(--text-main);
+            padding: 2rem;
             display: flex;
             justify-content: center;
         }
 
         .container {
+            max-width: 900px;
             width: 100%;
-            max-width: 650px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 25px;
+        /* Header & Dashboard */
+        .dashboard {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
-        header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #38bdf8, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        header p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        .timeline {
+        .dashboard-header {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .progress-bar-bg {
+            background: var(--border-color);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            height: 100%;
+            width: 25%; /* نسبة التقدم الحالية */
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        /* Schedule Section */
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .task-card {
-            background-color: var(--card-bg);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 16px 20px;
-            border-right: 5px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: border-color 0.2s ease;
         }
 
         .task-card:hover {
-            transform: translateY(-2px);
+            border-color: var(--accent-blue);
         }
 
-        /* تخصيص الألوان لكل فئة */
-        .card-math { border-right-color: var(--accent-math); }
-        .card-lang { border-right-color: var(--accent-lang); }
-        .card-mem { border-right-color: var(--accent-mem); }
-        .card-quran { border-right-color: var(--accent-quran); }
-        .card-rest { border-right-color: var(--accent-rest); }
-
-        .time-badge {
-            display: inline-block;
-            font-size: 0.85rem;
-            font-weight: bold;
-            padding: 3px 10px;
-            border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-            margin-bottom: 8px;
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .task-title {
             font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-time {
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .subtasks-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .subtask-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        ul.task-details {
-            margin: 0;
-            padding-right: 20px;
-            color: var(--text-secondary);
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 0.95rem;
-            line-height: 1.6;
         }
 
-        ul.task-details li {
-            margin-bottom: 4px;
+        .subtask-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
+        .subtask-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-blue);
+            cursor: pointer;
+        }
+
+        .time-estimate {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>خطة إنجاز اليوم 🚀</h1>
-            <p>ابدأ خطوة بخطوة.. كل ما تنجزه يقربك من هدفك والراحة المبكرة</p>
-        </header>
+<div class="container">
 
-        <div class="timeline">
-
-            <!-- رياضيات -->
-            <div class="task-card card-math">
-                <span class="time-badge">03:15 م – 05:15 م</span>
-                <div class="task-title">📐 جلسة الرياضيات المكثفة</div>
-                <ul class="task-details">
-                    <li>أداء صلاة العصر في أول الوقت</li>
-                    <li>حل واجب الرياضيات ودراسة وفهم آخر 4 دروس</li>
-                    <li>حل جميع الأسئلة الناقصة وتلخيص القوانين على الدفتر</li>
-                    <li>تطبيق طريقة حل الدروس بالآلة الحاسبة وكتابتها كملاحظة</li>
-                </ul>
-            </div>
-
-            <!-- استراحة -->
-            <div class="task-card card-rest">
-                <span class="time-badge">05:15 م – 05:30 م</span>
-                <div class="task-title">☕ استراحة قصيرة</div>
-                <ul class="task-details">
-                    <li>تمديد الجسم، شرب الماء، وفصل الذهن قليلاً</li>
-                </ul>
-            </div>
-
-            <!-- لغات -->
-            <div class="task-card card-lang">
-                <span class="time-badge">05:30 م – 06:15 م</span>
-                <div class="task-title">🌍 اللغات والواجبات المدرسية</div>
-                <ul class="task-details">
-                    <li>دراسة وفهم درس الإنجليزي وحل واجبه الخاص</li>
-                </ul>
-            </div>
-
-            <!-- واجبات سريعة -->
-            <div class="task-card card-lang">
-                <span class="time-badge">06:15 م – 07:00 م</span>
-                <div class="task-title">📚 الواجبات السريعة والعلوم</div>
-                <ul class="task-details">
-                    <li>حل واجبات: (لغتي، إسلامية، علوم)</li>
-                    <li>مراجعة سريعة لدرس العلوم</li>
-                </ul>
-            </div>
-
-            <!-- عشاء -->
-            <div class="task-card card-rest">
-                <span class="time-badge">07:00 م – 07:30 م</span>
-                <div class="task-title">🍽️ استراحة وعشاء خفيف</div>
-                <ul class="task-details">
-                    <li>راحة ذهنية وجسدية وتناول وجبة خفيفة</li>
-                </ul>
-            </div>
-
-            <!-- حفظ -->
-            <div class="task-card card-mem">
-                <span class="time-badge">07:30 م – 08:15 م</span>
-                <div class="task-title">📖 الحفظ السريع (الشرعية والاجتماعية)</div>
-                <ul class="task-details">
-                    <li>حل وحفظ آخر درسين من التوحيد</li>
-                    <li>حل وحفظ آخر درسين من الاجتماعيات</li>
-                </ul>
-            </div>
-
-            <!-- قدرات -->
-            <div class="task-card card-mem">
-                <span class="time-badge">08:15 م – 09:00 م</span>
-                <div class="task-title">✍️ قدرات (اللفظي)</div>
-                <ul class="task-details">
-                    <li>كتابة 20 صفحة قدرات لفظي</li>
-                    <li>حل تدريبات القدرات اللفظي المطلوبة</li>
-                </ul>
-            </div>
-
-            <!-- قرآن -->
-            <div class="task-card card-quran">
-                <span class="time-badge">09:00 م – 09:45 م</span>
-                <div class="task-title">🌙 الورد القرآني والبركة</div>
-                <ul class="task-details">
-                    <li>قراءة 3 أجزاء ونصف اليومية بهدوء</li>
-                    <li>مراجعة الأمس (صفحة بـ 5 تكرارات) ومراجعة ما قبل الأمس</li>
-                </ul>
-            </div>
-
-            <!-- ختام -->
-            <div class="task-card card-rest">
-                <span class="time-badge">09:45 م – 10:00 م</span>
-                <div class="task-title">🎒 الختام والاستعداد</div>
-                <ul class="task-details">
-                    <li>تجهيز الحقيبة المدرسية للغد</li>
-                    <li>إغلاق الشاشات والاسترخاء التام</li>
-                </ul>
-            </div>
-
-            <!-- نوم -->
-            <div class="task-card card-math">
-                <span class="time-badge">10:00 م</span>
-                <div class="task-title">🛏️ النوم المبكر</div>
-                <ul class="task-details">
-                    <li>نوم عميق ومريح للاستيقاظ بنشاط عند الساعة 4:40 فجراً</li>
-                </ul>
-            </div>
-
+    <!-- لوحة المتابعة والتقدم -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <div class="dashboard-title">ScratchAcademy Dashboard</div>
+            <span class="badge">المستوى: متقدم</span>
         </div>
-
-        <footer>
-            <p>صُمم خصيصاً لإنجاز يومي مريح ومرتب ✨</p>
-        </footer>
+        <div class="progress-container">
+            <div class="progress-info">
+                <span>نسبة الإنجاز الإجمالية</span>
+                <span>25% (2 / 8 مهام أكملت)</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
     </div>
+
+    <!-- جدول المهام التفصيلي -->
+    <div class="section-title">📌 جدول المهام اليومي الدقيق</div>
+
+    <!-- بطاقة الدرس الأول: رياضيات -->
+    <div class="task-card">
+        <div class="task-header">
+            <div class="task-title">الدرس الأول: الرياضيات (المعادلات الخطية)</div>
+            <span class="badge badge-time">الوقت الكلي المقدر: 45 دقيقة</span>
+        </div>
+        
+        <ul class="subtasks-list">
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox" checked>
+                    <span>مراجعة قانون حل المعادلة الخطية بمجهول واحد</span>
+                </div>
+                <span class="time-estimate">⏱️ 10 دقائق</span>
+            </li>
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox" checked>
+                    <span>حل المسألة رقم 1 ورقم 2 في الصفحة 14</span>
+                </div>
+                <span class="time-estimate">⏱️ 15 دقيقة</span>
+            </li>
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox">
+                    <span>التحقق من صحة الناتج باستخدام الآلة الحاسبة (وظيفة SOLVE)</span>
+                </div>
+                <span class="time-estimate">⏱️ 10 دقائق</span>
+            </li>
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox">
+                    <span>كتابة ملخص القانون في دفتر الملاحظات</span>
+                </div>
+                <span class="time-estimate">⏱️ 10 دقائق</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- بطاقة الدرس الثاني: برمجة سكراتش -->
+    <div class="task-card">
+        <div class="task-header">
+            <div class="task-title">الدرس الثاني: سكراتش (ربط القوائم والمتغيرات)</div>
+            <span class="badge badge-time">الوقت الكلي المقدر: 50 دقيقة</span>
+        </div>
+        
+        <ul class="subtasks-list">
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox">
+                    <span>إنشاء قائمة (List) باسم "أسماء اللاعبين" وتحديد الخصائص</span>
+                </div>
+                <span class="time-estimate">⏱️ 10 دقائق</span>
+            </li>
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox">
+                    <span>برمجة كود إضافة العنصر تلقائياً عند الضغط على زر التشغيل</span>
+                </div>
+                <span class="time-estimate">⏱️ 20 دقيقة</span>
+            </li>
+            <li class="subtask-item">
+                <div class="subtask-left">
+                    <input type="checkbox">
+                    <span>تصدير المشروع ومعاينته عبر TurboWarp</span>
+                </div>
+                <span class="time-estimate">⏱️ 20 دقيقة</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
 
 </body>
 </html>
