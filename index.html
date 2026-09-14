@@ -1,940 +1,237 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظمي اليومي الذكي</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-math: #38bdf8;
+            --accent-lang: #34d399;
+            --accent-mem: #f472b6;
+            --accent-quran: #fbbf24;
+            --accent-rest: #a78bfa;
+            --border-color: #334155;
+        }
 
-<title>استغلال أوقات الفراغ | ثالث متوسط</title>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
 
-body{
-    font-family:"Tahoma","Arial",sans-serif;
-    background:#08111f;
-    color:#fff;
-    overflow:hidden;
-}
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-/* ===== العرض ===== */
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.presentation{
-    width:100vw;
-    height:100vh;
-    position:relative;
-}
+        header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
 
-.slide{
-    position:absolute;
-    inset:0;
-    display:none;
-    padding:7vh 9vw;
-    background:
-        radial-gradient(circle at 90% 10%,rgba(205,164,76,.18),transparent 25%),
-        linear-gradient(135deg,#f8f5ed,#e9e2d2);
-    color:#16243a;
-}
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-.slide.active{
-    display:flex;
-    flex-direction:column;
-    animation:appear .45s ease;
-}
+        .task-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border-right: 5px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
 
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateX(25px);
-    }
-    to{
-        opacity:1;
-        transform:translateX(0);
-    }
-}
+        .task-card:hover {
+            transform: translateY(-2px);
+        }
 
-/* ===== الغلاف ===== */
+        /* تخصيص الألوان لكل فئة */
+        .card-math { border-right-color: var(--accent-math); }
+        .card-lang { border-right-color: var(--accent-lang); }
+        .card-mem { border-right-color: var(--accent-mem); }
+        .card-quran { border-right-color: var(--accent-quran); }
+        .card-rest { border-right-color: var(--accent-rest); }
 
-.cover{
-    background:
-        radial-gradient(circle at 50% 35%,rgba(207,169,83,.22),transparent 28%),
-        linear-gradient(135deg,#08111f,#132943);
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
+        .time-badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
 
-.cover .ornament{
-    width:150px;
-    height:150px;
-    border:2px solid #cba65a;
-    transform:rotate(45deg);
-    margin-bottom:50px;
-    position:absolute;
-    opacity:.45;
-}
+        .task-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.cover h1{
-    font-size:clamp(42px,6vw,82px);
-    color:#fff;
-    margin-bottom:25px;
-    position:relative;
-}
+        ul.task-details {
+            margin: 0;
+            padding-right: 20px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
 
-.cover h2{
-    color:#d6b66e;
-    font-size:clamp(20px,2.5vw,32px);
-    margin-bottom:20px;
-}
+        ul.task-details li {
+            margin-bottom: 4px;
+        }
 
-.cover p{
-    color:#dfe5ec;
-    font-size:22px;
-}
-
-/* ===== العناوين ===== */
-
-.section{
-    color:#b48a39;
-    font-weight:bold;
-    font-size:18px;
-    margin-bottom:15px;
-}
-
-h1{
-    font-size:clamp(34px,4.8vw,62px);
-    color:#14253d;
-    margin-bottom:30px;
-}
-
-.subtitle{
-    font-size:18px;
-    color:#697384;
-    margin-bottom:25px;
-}
-
-/* ===== المحتوى ===== */
-
-.content{
-    max-width:1050px;
-    font-size:clamp(21px,2.25vw,31px);
-    line-height:2;
-}
-
-.content p{
-    margin-bottom:13px;
-}
-
-.quote{
-    margin-top:15px;
-    padding:25px 35px;
-    border-right:6px solid #bd9445;
-    background:rgba(255,255,255,.62);
-    border-radius:12px;
-    font-size:clamp(24px,2.6vw,36px);
-    line-height:1.9;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-    max-width:1050px;
-}
-
-.card{
-    background:rgba(255,255,255,.68);
-    border:1px solid rgba(180,138,57,.25);
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(20,35,55,.08);
-    font-size:23px;
-    line-height:1.8;
-}
-
-.card strong{
-    display:block;
-    color:#a2782d;
-    margin-bottom:8px;
-}
-
-/* ===== ملاحظات المعلم ===== */
-
-.teacher-note{
-    display:none;
-    position:absolute;
-    bottom:90px;
-    right:9vw;
-    left:9vw;
-    background:#172940;
-    color:#fff;
-    padding:15px 22px;
-    border-radius:12px;
-    border-right:5px solid #cba65a;
-    font-size:16px;
-    line-height:1.7;
-}
-
-.teacher-mode .teacher-note{
-    display:block;
-}
-
-/* ===== التحكم ===== */
-
-.controls{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:10px;
-    z-index:100;
-}
-
-button{
-    border:none;
-    cursor:pointer;
-    color:white;
-    background:#172940;
-    padding:12px 20px;
-    border-radius:30px;
-    font-size:16px;
-    transition:.2s;
-}
-
-button:hover{
-    background:#bd9445;
-    transform:translateY(-2px);
-}
-
-.gold{
-    background:#bd9445;
-}
-
-.top-controls{
-    position:fixed;
-    top:18px;
-    left:20px;
-    z-index:100;
-    display:flex;
-    gap:8px;
-}
-
-.progress{
-    position:fixed;
-    bottom:0;
-    right:0;
-    height:4px;
-    background:#bd9445;
-    width:0%;
-    transition:.3s;
-    z-index:200;
-}
-
-.counter{
-    position:fixed;
-    bottom:28px;
-    right:25px;
-    color:#737b86;
-    font-size:14px;
-    z-index:100;
-}
-
-/* ===== الجوال ===== */
-
-@media(max-width:750px){
-
-    .slide{
-        padding:7vh 7vw 13vh;
-    }
-
-    .cards{
-        grid-template-columns:1fr;
-        gap:10px;
-    }
-
-    .card{
-        padding:15px;
-        font-size:18px;
-    }
-
-    .content{
-        font-size:19px;
-    }
-
-    .teacher-note{
-        font-size:12px;
-        bottom:85px;
-    }
-
-    .controls button{
-        padding:9px 13px;
-        font-size:13px;
-    }
-}
-
-@media print{
-    .controls,
-    .top-controls,
-    .counter,
-    .progress,
-    .teacher-note{
-        display:none!important;
-    }
-
-    .slide{
-        display:flex!important;
-        position:relative;
-        height:100vh;
-        page-break-after:always;
-    }
-}
-</style>
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="presentation" id="presentation">
-
-<!-- ==================== 1 ==================== -->
-
-<section class="slide cover active">
-
-<div class="ornament"></div>
-
-<h2>الدراسات الإسلامية • الحديث</h2>
-
-<h1>استغلال أوقات الفراغ</h1>
-
-<p>الصف الثالث المتوسط | الفصل الدراسي الأول</p>
-
-<p style="margin-top:35px;color:#cba65a;">
-«وقتك جزء من حياتك… فكيف تستثمره؟»
-</p>
-
-<div class="teacher-note">
-ابدأ بهدوء، عرّف بعنوان الدرس، ثم انتقل مباشرة إلى التمهيد.
-</div>
-
-</section>
-
-
-<!-- ==================== 2 ==================== -->
-
-<section class="slide">
-
-<div class="section">تمهيد</div>
-
-<h1>قبل أن نبدأ…</h1>
-
-<div class="content">
-
-<p>تخيّل أن لديك <strong>ساعة واحدة إضافية</strong> اليوم.</p>
-
-<p>ماذا ستفعل بها؟</p>
-
-<div class="quote">
-هل كل ما نفعله في وقت الفراغ يعود علينا بالنفع؟
-</div>
-
-</div>
-
-<div class="teacher-note">
-اسأل السؤال واترك للطلاب لحظات للتفكير، دون تحويل النشاط إلى مسابقة.
-</div>
-
-</section>
-
-
-<!-- ==================== 3 ==================== -->
-
-<section class="slide">
-
-<div class="section">قصة تمهيدية</div>
-
-<h1>عبدالله بن عمر رضي الله عنهما</h1>
-
-<div class="content">
-
-<p>
-كان عبدالله بن عمر رضي الله عنهما حريصًا على الاقتداء بالنبي ﷺ
-والعمل الصالح.
-</p>
-
-<p>
-ومن توجيه النبي ﷺ له:
-</p>
-
-<div class="quote">
-«كُنْ في الدنيا كأنك غريبٌ أو عابرُ سبيل»
-</div>
-
-<p>
-فكيف يؤثر هذا التوجيه في طريقة تعاملنا مع الوقت؟
-</p>
-
-</div>
-
-<div class="teacher-note">
-احك القصة باختصار، ثم اجعل السؤال جسرًا للانتقال إلى الحديث.
-</div>
-
-</section>
-
-
-<!-- ==================== 4 ==================== -->
-
-<section class="slide">
-
-<div class="section">أولًا: الحديث</div>
-
-<h1>حديث عبدالله بن عمر</h1>
-
-<div class="quote">
-
-«كُنْ في الدنيا كأنك غريبٌ أو عابرُ سبيل».
-
-<br><br>
-
-وقال ابن عمر رضي الله عنهما:
-
-«إذا أمسيت فلا تنتظر الصباح، وإذا أصبحت فلا تنتظر المساء،
-وخذ من صحتك لمرضك، ومن حياتك لموتك».
-
-</div>
-
-<div class="teacher-note">
-اقرأ الحديث أنت أولًا، ثم اطلب من أحد الطلاب قراءة الحديث.
-صحح القراءة بلطف ووضّح الكلمات التي تحتاج شرحًا.
-</div>
-
-</section>
-
-
-<!-- ==================== 5 ==================== -->
-
-<section class="slide">
-
-<div class="section">ثانيًا: التعريف بالراوي</div>
-
-<h1>عبدالله بن عمر رضي الله عنهما</h1>
-
-<div class="content">
-
-<p>هو عبدالله بن عمر بن الخطاب رضي الله عنهما.</p>
-
-<p>
-من صغار الصحابة، وعُرف بشدة اتباعه للنبي ﷺ
-وحرصه على العبادة والخير.
-</p>
-
-<p>
-وكان مثالًا في المحافظة على العمل الصالح والاقتداء بالنبي ﷺ.
-</p>
-
-</div>
-
-<div class="teacher-note">
-اطلب من طالب قراءة تعريف الراوي من الكتاب، ثم وضّح أهم النقاط.
-</div>
-
-</section>
-
-
-<!-- ==================== 6 ==================== -->
-
-<section class="slide">
-
-<div class="section">ثالثًا: معاني الكلمات</div>
-
-<h1>معاني الكلمات</h1>
-
-<div class="cards">
-
-<div class="card">
-<strong>غريب</strong>
-من كان في بلد ليس بلده، فيكون قصده الرحيل.
-</div>
-
-<div class="card">
-<strong>عابر سبيل</strong>
-المسافر الذي يمر بالمكان ولا يتخذه وطنًا.
-</div>
-
-<div class="card">
-<strong>خذ من صحتك لمرضك</strong>
-اغتنم صحتك قبل أن يمنعك المرض.
-</div>
-
-<div class="card">
-<strong>خذ من حياتك لموتك</strong>
-اعمل في حياتك ما ينفعك بعد الموت.
-</div>
-
-</div>
-
-<div class="teacher-note">
-اجعل كل طالب يقرأ معنى كلمة واحدة، وأنت وضّح أي معنى غير واضح.
-</div>
-
-</section>
-
-
-<!-- ==================== 7 ==================== -->
-
-<section class="slide">
-
-<div class="section">رابعًا: من معاني الحديث</div>
-
-<h1>الدنيا ليست دار إقامة دائمة</h1>
-
-<div class="content">
-
-<p>
-شبّه النبي ﷺ حال المؤمن في الدنيا بحال
-<strong>الغريب أو عابر السبيل.</strong>
-</p>
-
-<p>
-الغريب لا يتعامل مع المكان وكأنه سيبقى فيه إلى الأبد،
-بل يستعد للرحيل.
-</p>
-
-<p>
-لذلك يجعل المسلم حياته مجالًا للعمل الصالح،
-لا للغفلة والانشغال بما لا ينفع.
-</p>
-
-</div>
-
-<div class="teacher-note">
-اشرح التشبيه ببساطة: المسافر يعرف أنه سيمضي، وكذلك المؤمن يعرف أن الدنيا مؤقتة.
-</div>
-
-</section>
-
-
-<!-- ==================== 8 ==================== -->
-
-<section class="slide">
-
-<div class="section">من معاني الحديث</div>
-
-<h1>اغتنم الصحة والفراغ</h1>
-
-<div class="cards">
-
-<div class="card">
-<strong>الصحة نعمة</strong>
-استعمل صحتك في الأعمال النافعة قبل أن تتغير حالك.
-</div>
-
-<div class="card">
-<strong>الفراغ نعمة</strong>
-استثمر وقتك فيما يفيدك في دينك ودنياك.
-</div>
-
-<div class="card">
-<strong>الترفيه</strong>
-الترفيه المباح جائز، لكن لا يتحول إلى شيء يسرق الواجبات والوقت.
-</div>
-
-<div class="card">
-<strong>القاعدة</strong>
-الاعتدال والتوازن في استثمار الوقت.
-</div>
-
-</div>
-
-<div class="teacher-note">
-اربط المعنى بحياة الطلاب اليومية: الألعاب، الجوال، الدراسة، النوم، والرياضة.
-</div>
-
-</section>
-
-
-<!-- ==================== 9 ==================== -->
-
-<section class="slide">
-
-<div class="section">تطبيق عملي</div>
-
-<h1>كيف أستغل وقت فراغي؟</h1>
-
-<div class="cards">
-
-<div class="card">
-<strong>العبادة</strong>
-الطاعات والأعمال الصالحة.
-</div>
-
-<div class="card">
-<strong>التعلم</strong>
-القراءة وتعلم معلومات ومهارات جديدة.
-</div>
-
-<div class="card">
-<strong>الصحة</strong>
-الرياضة والمحافظة على الجسم.
-</div>
-
-<div class="card">
-<strong>الأسرة</strong>
-مساعدة الوالدين وقضاء وقت نافع مع الأسرة.
-</div>
-
-<div class="card">
-<strong>المهارات</strong>
-تعلم مهارة نافعة.
-</div>
-
-<div class="card">
-<strong>الترفيه</strong>
-الترفيه المباح باعتدال.
-</div>
-
-</div>
-
-<div class="teacher-note">
-اقرأ الأمثلة بسرعة، ويمكن سؤال طالب واحد عن مثال آخر لاستثمار الوقت.
-</div>
-
-</section>
-
-
-<!-- ==================== 10 ==================== -->
-
-<section class="slide">
-
-<div class="section">خامسًا: النشاط</div>
-
-<h1>النشاط الموجود في الكتاب</h1>
-
-<div class="content">
-
-<div class="quote">
-
-يقرأ أحد الطلاب السؤال من الكتاب،
-ثم يجيب طالب آخر،
-ونناقش الإجابة معًا.
-
-</div>
-
-<p>
-حديث عبدالله بن عمرو رضي الله عنهما يبين أهمية
-<strong>التوازن</strong> وعدم إرهاق النفس.
-</p>
-
-<p>
-فالجسد والعين والأسرة لها حقوق،
-والوقت ينبغي أن يوزع باعتدال.
-</p>
-
-</div>
-
-<div class="teacher-note">
-افتح الكتاب عند النشاط، واجعل الطلاب يقرؤون النص منه ثم ناقش العلاقة بموضوع الدرس.
-</div>
-
-</section>
-
-
-<!-- ==================== 11 ==================== -->
-
-<section class="slide">
-
-<div class="section">سادسًا: تطبيقات سلوكية</div>
-
-<h1>من المعرفة إلى العمل</h1>
-
-<div class="content">
-
-<p>✓ أستثمر وقت فراغي في شيء نافع.</p>
-
-<p>✓ أحدد وقتًا للترفيه ولا أتركه يسيطر على يومي.</p>
-
-<p>✓ أستغل صحتي قبل المرض.</p>
-
-<p>✓ لا أؤجل العمل الصالح بلا سبب.</p>
-
-<p>✓ أوازن بين الدراسة والعبادة والأسرة والراحة.</p>
-
-</div>
-
-<div class="teacher-note">
-اقرأ التطبيقات، وركز على تحويل الحديث إلى سلوك يومي.
-</div>
-
-</section>
-
-
-<!-- ==================== 12 ==================== -->
-
-<section class="slide">
-
-<div class="section">تأمل</div>
-
-<h1>فكّر في نفسك</h1>
-
-<div class="content">
-
-<div class="quote">
-ما أكثر شيء يسرق وقتي؟
-</div>
-
-<div class="quote">
-ما عمل نافع أستطيع أن أبدأ به من اليوم؟
-</div>
-
-<div class="quote">
-لو عاد إليّ وقت ضيعته بالأمس… ماذا كنت سأفعل؟
-</div>
-
-</div>
-
-<div class="teacher-note">
-لا تجعلها مسابقة ولا تطلب من الجميع الإجابة. الهدف هو التأمل الشخصي.
-</div>
-
-</section>
-
-
-<!-- ==================== 13 ==================== -->
-
-<section class="slide">
-
-<div class="section">مراجعة</div>
-
-<h1>ماذا تعلمنا؟</h1>
-
-<div class="content">
-
-<p>1. ما المقصود بعابر سبيل؟</p>
-
-<p>2. من راوي الحديث؟</p>
-
-<p>3. ماذا يعني: «خذ من صحتك لمرضك»؟</p>
-
-<p>4. ما أهمية استغلال أوقات الفراغ؟</p>
-
-<p>5. اذكر مثالين لاستغلال وقت الفراغ فيما ينفع.</p>
-
-</div>
-
-<div class="teacher-note">
-مراجعة شفوية سريعة قبل الانتقال إلى التقويم.
-</div>
-
-</section>
-
-
-<!-- ==================== 14 ==================== -->
-
-<section class="slide">
-
-<div class="section">سابعًا: التقويم</div>
-
-<h1>التقويم النهائي</h1>
-
-<div class="content">
-
-<p>
-نجيب عن الأسئلة الأساسية من الكتاب.
-</p>
-
-<p>
-نركز على:
-</p>
-
-<div class="quote">
-معنى الحديث • أهمية الوقت • الصحة والفراغ • التطبيقات السلوكية
-</div>
-
-<p>
-<strong>الواجب:</strong> إكمال بقية التقويم في الكتاب للحصة القادمة.
-</p>
-
-</div>
-
-<div class="teacher-note">
-اجعل التقويم هو الجزء الختامي للحصة، ثم حدد الواجب بوضوح.
-</div>
-
-</section>
-
-
-<!-- ==================== 15 ==================== -->
-
-<section class="slide cover">
-
-<h2>الخلاصة</h2>
-
-<h1>الصحة والفراغ نعمتان</h1>
-
-<div class="quote" style="color:white;background:rgba(255,255,255,.08);border-color:#cba65a;">
-والوقت إذا مضى لا يعود.
-<br>
-فاستغل وقتك فيما ينفعك في دينك ودنياك.
-</div>
-
-<p style="margin-top:30px;color:#d6b66e;font-size:25px;">
-«وقتك جزء من حياتك»
-</p>
-
-<div class="teacher-note">
-اختم بجملة قصيرة مؤثرة، ثم اشكر الطلاب وحدد الواجب.
-</div>
-
-</section>
-
-</div>
-
-
-<!-- ===== التحكم ===== -->
-
-<div class="top-controls">
-
-<button onclick="toggleTeacher()" class="gold">
-👨‍🏫 وضع المعلم
-</button>
-
-<button onclick="fullscreen()">
-⛶ ملء الشاشة
-</button>
-
-</div>
-
-<div class="controls">
-
-<button onclick="previousSlide()">→ السابق</button>
-
-<button onclick="nextSlide()" class="gold">
-التالي ←
-</button>
-
-</div>
-
-<div class="counter" id="counter">
-1 / 15
-</div>
-
-<div class="progress" id="progress"></div>
-
-
-<script>
-
-let current = 0;
-
-const slides =
-document.querySelectorAll(".slide");
-
-const counter =
-document.getElementById("counter");
-
-const progress =
-document.getElementById("progress");
-
-function showSlide(index){
-
-    if(index < 0)
-        index = slides.length - 1;
-
-    if(index >= slides.length)
-        index = 0;
-
-    slides.forEach(slide =>
-        slide.classList.remove("active")
-    );
-
-    slides[index].classList.add("active");
-
-    current = index;
-
-    counter.textContent =
-        `${current + 1} / ${slides.length}`;
-
-    progress.style.width =
-        `${((current + 1) / slides.length) * 100}%`;
-}
-
-function nextSlide(){
-    showSlide(current + 1);
-}
-
-function previousSlide(){
-    showSlide(current - 1);
-}
-
-function toggleTeacher(){
-
-    document.body.classList.toggle("teacher-mode");
-
-}
-
-function fullscreen(){
-
-    if(!document.fullscreenElement){
-
-        document.documentElement.requestFullscreen();
-
-    }else{
-
-        document.exitFullscreen();
-
-    }
-
-}
-
-
-/* لوحة المفاتيح */
-
-document.addEventListener("keydown",function(e){
-
-    if(e.key === "ArrowLeft")
-        nextSlide();
-
-    if(e.key === "ArrowRight")
-        previousSlide();
-
-    if(e.key === " ")
-        nextSlide();
-
-    if(e.key === "Home")
-        showSlide(0);
-
-    if(e.key === "End")
-        showSlide(slides.length - 1);
-
-});
-
-
-/* لمس الجوال */
-
-let startX = 0;
-
-document.addEventListener("touchstart",e=>{
-    startX=e.touches[0].clientX;
-});
-
-document.addEventListener("touchend",e=>{
-
-    let endX=e.changedTouches[0].clientX;
-
-    if(startX-endX>60)
-        nextSlide();
-
-    if(endX-startX>60)
-        previousSlide();
-
-});
-
-
-showSlide(0);
-
-</script>
+    <div class="container">
+        <header>
+            <h1>خطة إنجاز اليوم 🚀</h1>
+            <p>ابدأ خطوة بخطوة.. كل ما تنجزه يقربك من هدفك والراحة المبكرة</p>
+        </header>
+
+        <div class="timeline">
+
+            <!-- رياضيات -->
+            <div class="task-card card-math">
+                <span class="time-badge">03:15 م – 05:15 م</span>
+                <div class="task-title">📐 جلسة الرياضيات المكثفة</div>
+                <ul class="task-details">
+                    <li>أداء صلاة العصر في أول الوقت</li>
+                    <li>حل واجب الرياضيات ودراسة وفهم آخر 4 دروس</li>
+                    <li>حل جميع الأسئلة الناقصة وتلخيص القوانين على الدفتر</li>
+                    <li>تطبيق طريقة حل الدروس بالآلة الحاسبة وكتابتها كملاحظة</li>
+                </ul>
+            </div>
+
+            <!-- استراحة -->
+            <div class="task-card card-rest">
+                <span class="time-badge">05:15 م – 05:30 م</span>
+                <div class="task-title">☕ استراحة قصيرة</div>
+                <ul class="task-details">
+                    <li>تمديد الجسم، شرب الماء، وفصل الذهن قليلاً</li>
+                </ul>
+            </div>
+
+            <!-- لغات -->
+            <div class="task-card card-lang">
+                <span class="time-badge">05:30 م – 06:15 م</span>
+                <div class="task-title">🌍 اللغات والواجبات المدرسية</div>
+                <ul class="task-details">
+                    <li>دراسة وفهم درس الإنجليزي وحل واجبه الخاص</li>
+                </ul>
+            </div>
+
+            <!-- واجبات سريعة -->
+            <div class="task-card card-lang">
+                <span class="time-badge">06:15 م – 07:00 م</span>
+                <div class="task-title">📚 الواجبات السريعة والعلوم</div>
+                <ul class="task-details">
+                    <li>حل واجبات: (لغتي، إسلامية، علوم)</li>
+                    <li>مراجعة سريعة لدرس العلوم</li>
+                </ul>
+            </div>
+
+            <!-- عشاء -->
+            <div class="task-card card-rest">
+                <span class="time-badge">07:00 م – 07:30 م</span>
+                <div class="task-title">🍽️ استراحة وعشاء خفيف</div>
+                <ul class="task-details">
+                    <li>راحة ذهنية وجسدية وتناول وجبة خفيفة</li>
+                </ul>
+            </div>
+
+            <!-- حفظ -->
+            <div class="task-card card-mem">
+                <span class="time-badge">07:30 م – 08:15 م</span>
+                <div class="task-title">📖 الحفظ السريع (الشرعية والاجتماعية)</div>
+                <ul class="task-details">
+                    <li>حل وحفظ آخر درسين من التوحيد</li>
+                    <li>حل وحفظ آخر درسين من الاجتماعيات</li>
+                </ul>
+            </div>
+
+            <!-- قدرات -->
+            <div class="task-card card-mem">
+                <span class="time-badge">08:15 م – 09:00 م</span>
+                <div class="task-title">✍️ قدرات (اللفظي)</div>
+                <ul class="task-details">
+                    <li>كتابة 20 صفحة قدرات لفظي</li>
+                    <li>حل تدريبات القدرات اللفظي المطلوبة</li>
+                </ul>
+            </div>
+
+            <!-- قرآن -->
+            <div class="task-card card-quran">
+                <span class="time-badge">09:00 م – 09:45 م</span>
+                <div class="task-title">🌙 الورد القرآني والبركة</div>
+                <ul class="task-details">
+                    <li>قراءة 3 أجزاء ونصف اليومية بهدوء</li>
+                    <li>مراجعة الأمس (صفحة بـ 5 تكرارات) ومراجعة ما قبل الأمس</li>
+                </ul>
+            </div>
+
+            <!-- ختام -->
+            <div class="task-card card-rest">
+                <span class="time-badge">09:45 م – 10:00 م</span>
+                <div class="task-title">🎒 الختام والاستعداد</div>
+                <ul class="task-details">
+                    <li>تجهيز الحقيبة المدرسية للغد</li>
+                    <li>إغلاق الشاشات والاسترخاء التام</li>
+                </ul>
+            </div>
+
+            <!-- نوم -->
+            <div class="task-card card-math">
+                <span class="time-badge">10:00 م</span>
+                <div class="task-title">🛏️ النوم المبكر</div>
+                <ul class="task-details">
+                    <li>نوم عميق ومريح للاستيقاظ بنشاط عند الساعة 4:40 فجراً</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>صُمم خصيصاً لإنجاز يومي مريح ومرتب ✨</p>
+        </footer>
+    </div>
 
 </body>
 </html>
