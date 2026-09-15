@@ -3,135 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Cyber Party Hub | 500-in-1</title>
+    <title>10 Players Mini Games</title>
     <style>
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #1f2833;
-            --accent: #66fcf1;
-            --accent-hover: #45a29e;
-            --text: #c5c6c7;
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Arial Rounded MT Bold', 'Trebuchet MS', sans-serif; }
+        body { background: #12131C; color: #fff; overflow-x: hidden; text-align: center; }
+
+        /* الشعار العلوي */
+        .header { padding: 25px 15px 10px; }
+        .logo { font-size: 2.8rem; font-weight: 900; background: linear-gradient(45deg, #FF4757, #FFA502, #2ED573, #1E90FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 15px rgba(0,0,0,0.4); letter-spacing: 2px; }
+        
+        /* محدد عدد اللاعبين على نمط 1234 Player */
+        .player-selector { display: flex; justify-content: center; gap: 8px; margin: 15px auto 25px; background: #1E202F; padding: 6px; border-radius: 50px; width: fit-content; border: 2px solid #2F3249; }
+        .p-chip { width: 40px; height: 40px; border-radius: 50%; border: none; background: transparent; color: #A0A5C0; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
+        .p-chip.active { background: #FF4757; color: #fff; box-shadow: 0 0 12px #FF4757; transform: scale(1.1); }
+
+        /* قائمة الألعاب ببطاقات دائرية كرتونية */
+        .games-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 20px 40px; max-width: 800px; margin: 0 auto; }
+        
+        .game-btn { background: #1E202F; border-radius: 25px; padding: 15px; border: 3px solid #2F3249; cursor: pointer; transition: all 0.15s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 0 #0E0F17; }
+        .game-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #0E0F17; }
+        
+        /* أيقونات الألعاب الملونة */
+        .icon-box { width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); }
+        .game-btn h3 { font-size: 1.1rem; color: #FFF; font-weight: bold; }
+
+        /* ألوان الأيقونات مثل ألعاب JindoBlu */
+        .bg-red { background: #FF4757; }
+        .bg-blue { background: #1E90FF; }
+        .bg-green { background: #2ED573; }
+        .bg-yellow { background: #FFA502; }
+        .bg-purple { background: #9b59b6; }
+
+        /* نافذة التعليمات والشرح (Popup Tutorial) */
+        .modal-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(4px); }
+        .modal-card { background: #1E202F; width: 85%; max-width: 380px; border-radius: 30px; border: 4px solid #2F3249; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        
+        /* أنيميشن كرتوني يعرض طريقة الضغط */
+        .tutorial-anim { width: 100%; height: 130px; background: #12131C; border-radius: 20px; margin: 15px 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; border: 2px dashed #2F3249; }
+        .finger-touch { width: 45px; height: 45px; border-radius: 50%; background: #FF4757; animation: tapAnim 1.2s infinite ease-in-out; }
+        
+        @keyframes tapAnim {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 20px #FF4757; }
+            100% { transform: scale(1); opacity: 0.3; }
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: var(--bg-color); color: var(--text); overflow-x: hidden; }
-
-        /* شريط العنوان والخيارات */
-        header { background: #1f2833; padding: 20px; text-align: center; border-bottom: 2px solid var(--accent); box-shadow: 0 0 15px rgba(102, 252, 241, 0.2); }
-        h1 { color: #fff; font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 8px var(--accent); }
-        
-        .setup-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
-        select { padding: 8px 15px; font-size: 1rem; border-radius: 6px; background: #0b0c10; color: var(--accent); border: 1px solid var(--accent); outline: none; cursor: pointer; }
-
-        /* قائمة الألعاب */
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 30px; max-width: 1200px; margin: 0 auto; }
-        
-        .game-card { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid rgba(102, 252, 241, 0.1); cursor: pointer; transition: all 0.3s ease; text-align: center; position: relative; overflow: hidden; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 5px 20px rgba(102, 252, 241, 0.3); }
-        .game-card h3 { color: #fff; margin-bottom: 10px; }
-        .game-card .tag { display: inline-block; padding: 4px 10px; background: rgba(102, 252, 241, 0.1); color: var(--accent); border-radius: 20px; font-size: 0.8rem; margin-top: 10px; }
-
-        /* نافذة الشرح والتوجيه (Tutorial Modal) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
-        .modal { background: #1f2833; width: 90%; max-width: 500px; border-radius: 15px; border: 2px solid var(--accent); padding: 25px; text-align: center; box-shadow: 0 0 25px rgba(102, 252, 241, 0.4); }
-        .modal h2 { color: #fff; margin-bottom: 15px; }
-        .modal p { color: #c5c6c7; line-height: 1.6; margin-bottom: 20px; }
-        
-        /* شاشة المحاكاة الكرتونية المتحركة للتحكم */
-        .demo-box { width: 100%; height: 120px; background: #0b0c10; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
-        .demo-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); position: absolute; animation: pulse 1.5s infinite alternate; }
-        
-        @keyframes pulse {
-            0% { transform: scale(1) translateX(-50px); box-shadow: 0 0 5px var(--accent); }
-            100% { transform: scale(1.2) translateX(50px); box-shadow: 0 0 20px var(--accent); }
-        }
-
-        .btn-start { padding: 12px 30px; font-size: 1.1rem; background: var(--accent); color: #0b0c10; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-        .btn-start:hover { background: var(--accent-hover); transform: scale(1.05); }
-        .btn-close { background: transparent; border: none; color: #ff4757; font-size: 1.5rem; float: left; cursor: pointer; }
+        .play-btn { width: 100%; padding: 15px; font-size: 1.3rem; font-weight: bold; border: none; border-radius: 50px; background: #2ED573; color: #fff; cursor: pointer; box-shadow: 0 6px 0 #218c4a; margin-top: 10px; }
+        .play-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #218c4a; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🎮 Cyber Party Games Hub</h1>
-        <div class="setup-bar">
-            <label>اختر عدد اللاعبين:</label>
-            <select id="playerSelect">
-                <option value="1">1 لاعب (ضد الكمبيوتر)</option>
-                <option value="2" selected>2 لاعبين</option>
-                <option value="4">4 لاعبين</option>
-                <option value="6">6 لاعبين</option>
-                <option value="8">8 لاعبين</option>
-                <option value="10">10 لاعبين</option>
-            </select>
-        </div>
-    </header>
+    <div class="header">
+        <div class="logo">1 2 3 4 5+</div>
+        <p style="color: #A0A5C0; margin-top: 5px;">ألعاب الحفلات الجماعية</p>
+    </div>
 
-    <main class="games-grid">
-        <!-- لعبة الذكاء: الشطرنج السريع -->
-        <div class="game-card" onclick="openTutorial('Chess Tactics', 'لعبة ذكاء وتكتيك! حرك قطعك للسيطرة على الرقعة والقضاء على ملك الخصم في جولات سريعة.', 'game_chess.html')">
-            <h3>♟️ الشطرنج التكتيكي</h3>
-            <p>لعبة ذكاء واستراتيجية</p>
-            <span class="tag">ذكاء واستراتيجية</span>
-        </div>
+    <!-- اختيار عدد اللاعبين (شريط علوي دائري) -->
+    <div class="player-selector">
+        <button class="p-chip" onclick="setPlayers(2, this)">2</button>
+        <button class="p-chip active" onclick="setPlayers(4, this)">4</button>
+        <button class="p-chip" onclick="setPlayers(6, this)">6</button>
+        <button class="p-chip" onclick="setPlayers(8, this)">8</button>
+        <button class="p-chip" onclick="setPlayers(10, this)">10</button>
+    </div>
 
-        <!-- لعبة السومو الاحترافية -->
-        <div class="game-card" onclick="openTutorial('Neon Sumo', 'اضغط على زرك في الوقت المناسب للاندفاع نحو الخصوم ودفعهم لخارج الحلبة الدائرية.', 'game1.html')">
-            <h3>🔴 حلبة السومو النيون</h3>
-            <p>تدافع وفيزياء حركة</p>
-            <span class="tag">قتال وتدافع</span>
+    <!-- شبكة الألعاب على شكل زر كرتوني ضخم -->
+    <div class="games-container">
+        
+        <!-- لعبة الشطرنج التكتيكي -->
+        <div class="game-btn" onclick="showTutorial('الشطرنج السريع', 'لعبة ذكاء وتكتيك! اضغط للسيطرة على الرقعة وتدمير قطع الخصم.', 'game_chess.html')">
+            <div class="icon-box bg-purple">♟️</div>
+            <h3>الشطرنج</h3>
         </div>
 
-        <!-- لعبة المحتال -->
-        <div class="game-card" onclick="openTutorial('Impostor Party', 'انقر على زرك بظرف سرّي لمعرفة دورك. حاول كشف المحتال قبل فوات الأوان!', 'game_impostor.html')">
-            <h3>🤫 المحتال والمافيا</h3>
-            <p>لعبة حفلات وغموض</p>
-            <span class="tag">حفلات وغموض</span>
+        <!-- لعبة السومو -->
+        <div class="game-btn" onclick="showTutorial('دفع السومو', 'اضغط على زر لونك بسرعة لدفع اللاعبين الآخرين وخروجهم خارج الدائرة!', 'game1.html')">
+            <div class="icon-box bg-red">🤼</div>
+            <h3>السومو</h3>
         </div>
 
-        <!-- لعبة سباق السرعة -->
-        <div class="game-card" onclick="openTutorial('Cyber Drift', 'اضغط باستمرار وبسرعة فائقة للتقدم بسيارتك وتجاوز خط النهاية أولاً.', 'game_race.html')">
-            <h3>🏎️ سباق التفحيط السيبراني</h3>
-            <p>سرعة رد فعل</p>
-            <span class="tag">سباقات</span>
+        <!-- لعبة المحتال / المافيا -->
+        <div class="game-btn" onclick="showTutorial('المحتال والمافيا', 'اضغط لرؤية دورك السرّي على الزر، ثم اصوت على المحتال في الحفلة!', 'game_impostor.html')">
+            <div class="icon-box bg-blue">🕵️</div>
+            <h3>المحتال</h3>
         </div>
-    </main>
 
-    <!-- نافذة الشرح قبل بدء اللعب -->
-    <div class="modal-overlay" id="tutorialModal">
-        <div class="modal">
-            <button class="btn-close" onclick="closeTutorial()">✕</button>
-            <h2 id="modalTitle">اسم اللعبة</h2>
-            <div class="demo-box">
-                <div class="demo-circle"></div>
+        <!-- لعبة السباق -->
+        <div class="game-btn" onclick="showTutorial('سباق السيارات', 'اضغط بسرعة وبشكل متكرر لتسريع سيارتك والوصول للنهاية أولاً!', 'game_race.html')">
+            <div class="icon-box bg-yellow">🏎️</div>
+            <h3>السباق</h3>
+        </div>
+
+        <!-- لعبة الدبابات -->
+        <div class="game-btn" onclick="showTutorial('حرب الدبابات', 'وجه دباباتك واطلق القذائف لتدمير بقية اللاعبين في المتاهة.', 'game_tanks.html')">
+            <div class="icon-box bg-green">💥</div>
+            <h3>الدبابات</h3>
+        </div>
+
+    </div>
+
+    <!-- النافذة التفاعلية قبل بدء اللعبة -->
+    <div class="modal-bg" id="tutorialPopup">
+        <div class="modal-card">
+            <h2 id="tTitle" style="color: #fff; font-size: 1.6rem;">اسم اللعبة</h2>
+            <div class="tutorial-anim">
+                <div class="finger-touch"></div>
             </div>
-            <p id="modalDesc">طريقة اللعب والشرح هنا...</p>
-            <button class="btn-start" onclick="startGame()">ابدأ اللعب الآن 🚀</button>
+            <p id="tDesc" style="color: #A0A5C0; font-size: 0.95rem; line-height: 1.4;"></p>
+            <button class="play-btn" onclick="launchGame()">العب الآن 🎮</button>
         </div>
     </div>
 
     <script>
-        let selectedGameUrl = '';
+        let selectedPlayers = 4;
+        let targetUrl = '';
 
-        function openTutorial(title, description, url) {
-            const players = document.getElementById('playerSelect').value;
-            selectedGameUrl = `${url}?players=${players}`;
-            
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = description;
-            document.getElementById('tutorialModal').style.display = 'flex';
+        function setPlayers(num, btn) {
+            selectedPlayers = num;
+            document.querySelectorAll('.p-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
-        function closeTutorial() {
-            document.getElementById('tutorialModal').style.display = 'none';
+        function showTutorial(title, desc, url) {
+            targetUrl = `${url}?p=${selectedPlayers}`;
+            document.getElementById('tTitle').innerText = title;
+            document.getElementById('tDesc').innerText = desc;
+            document.getElementById('tutorialPopup').style.display = 'flex';
         }
 
-        function startGame() {
-            if (selectedGameUrl) {
-                window.location.href = selectedGameUrl;
+        function launchGame() {
+            if (targetUrl) {
+                window.location.href = targetUrl;
             }
         }
+
+        // إغلاق النافذة عند الضغط خارجها
+        document.getElementById('tutorialPopup').addEventListener('click', function(e) {
+            if (e.target === this) this.style.display = 'none';
+        });
     </script>
 </body>
 </html>
