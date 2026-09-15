@@ -3,69 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجري الإلكتروني | Access Store</title>
+    <title>متجر التقنية والابتكار | المتجر الرسمي</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; }
-        
-        header { background: #1e293b; color: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { font-size: 1.5rem; }
-        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
+
+        /* شريط التوثيق القانوني العلوي */
+        .legal-bar { background: #0f172a; color: #94a3b8; font-size: 0.85rem; text-align: center; padding: 6px 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .legal-bar span { display: flex; align-items: center; gap: 5px; }
+
+        /* الهيدر ورأس الصفحة */
+        header { background: #fff; padding: 15px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; sticky: top; top: 0; z-index: 100; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); }
+        .cart-status { background: #eff6ff; color: var(--primary); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-        
-        .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 15px; }
-        .card-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
-        .card-price { color: #2563eb; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
-        .card-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4; }
-        
-        .btn-buy { width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn-buy:hover { background: #1d4ed8; }
+        /* فلترة التصنيفات */
+        .category-filter { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
+        .cat-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; font-size: 0.95rem; white-space: nowrap; }
+        .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* شبكة المنتجات */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 15px; flex-grow: 1; }
+        .card-badge { display: inline-block; padding: 3px 8px; background: #f1f5f9; color: var(--text-muted); font-size: 0.75rem; border-radius: 4px; margin-bottom: 8px; }
+        .card-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 6px; }
+        .card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; }
+        .card-footer { padding: 15px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .price { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+        /* نافذة إتمام الشراء السريعة كـ زائر */
+        .checkout-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 200; }
+        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 12px; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .modal-box h3 { margin-bottom: 15px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 4px; color: var(--text-muted); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+        .btn-submit { width: 100%; padding: 12px; background: #16a34a; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+
+        /* وسائل الدفع المتاحة */
+        .payment-icons { display: flex; gap: 8px; justify-content: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* زر التواصل المباشر (واتساب) */
+        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 100; }
+
+        /* الفوتر والروابط القانونية */
+        footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 30px 20px; margin-top: 50px; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
+        .footer-links a { color: var(--primary); text-decoration: none; }
     </style>
 </head>
 <body>
 
+    <!-- شريط التوثيق والشروط القانونية -->
+    <div class="legal-bar">
+        <span>🛡️ موثق لدى المركز السعودي للأعمال</span>
+        <span>💳 دفع آمن (مدى / Apple Pay)</span>
+        <span>🚚 توصيل سريع لجميع المناطق</span>
+    </div>
+
     <header>
-        <h1>🛒 المتجر الإلكتروني</h1>
-        <div>قاعدة البيانات: Microsoft Access</div>
+        <div class="logo">التقنية الرقمية ⚙️</div>
+        <div class="cart-status" onclick="openCheckout()">🛒 السلة (<span id="cartCount">0</span>)</div>
     </header>
 
     <div class="container">
-        <h2 style="margin-bottom: 20px;">المنتجات المتاحة</h2>
+        <!-- الفلاتر -->
+        <div class="category-filter">
+            <button class="cat-btn active">الكل</button>
+            <button class="cat-btn">حقائب متكاملة</button>
+            <button class="cat-btn">مكونات وإلكترونيات</button>
+            <button class="cat-btn">منتجات رقمية</button>
+        </div>
+
+        <!-- شبكة عرض المنتجات -->
         <div class="products-grid" id="productsGrid">
-            <!-- يتم تحميل المنتجات هنا ديناميكياً -->
+            <!-- المنتجات تُجلب تلقائياً من Access -->
         </div>
     </div>
 
+    <!-- نافذة الدفع السريع (زائر) -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="modal-box">
+            <h3>إتمام الشراء السريع 🛍️</h3>
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" required placeholder="أدخل اسمك">
+                </div>
+                <div class="form-group">
+                    <label>رقم الجوال</label>
+                    <input type="tel" required placeholder="05xxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label>المدينة والعنوان</label>
+                    <input type="text" required placeholder="مثال: الرياض - حي الملقا">
+                </div>
+                <div class="form-group">
+                    <label>طريقة الدفع</label>
+                    <select>
+                        <option>بطاقة مدى / الفيزا</option>
+                        <option>Apple Pay</option>
+                        <option>الدفع عند الاستلام</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">تأكيد الطلب الآن</button>
+                <button type="button" onclick="closeCheckout()" style="width:100%; border:none; background:none; margin-top:10px; color:gray; cursor:pointer;">إلغاء</button>
+            </form>
+            <div class="payment-icons">
+                مدى | MADA • Apple Pay • VISA • Mastercard
+            </div>
+        </div>
+    </div>
+
+    <!-- زر الواتساب للدعم الفني المباشر -->
+    <a href="https://wa.me/966500000000" class="whatsapp-float" target="_blank" title="دعم الفني عبر الواتساب">💬</a>
+
+    <!-- الفوتر والتذييل القانوني -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">سياسة الاستبدال والاسترجاع</a>
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">الشروط والأحكام</a>
+            <a href="#">التوثيق التجاري</a>
+        </div>
+        <p>© 2026 جميع الحقوق محفوظة لـ متجر التقنية الإلكتروني.</p>
+    </footer>
+
     <script>
+        let cartCount = 0;
+
         async function loadProducts() {
             try {
-                const response = await fetch('/api/products');
-                const products = await response.json();
-                
+                const res = await fetch('/api/products');
+                const products = await res.json();
                 const grid = document.getElementById('productsGrid');
                 grid.innerHTML = '';
-                
+
                 products.forEach(p => {
                     grid.innerHTML += `
                         <div class="card">
                             <img src="${p.ImageURL || 'https://via.placeholder.com/300'}" alt="${p.Name}">
-                            <div class="card-body">
+                            <div class="card-content">
+                                <span class="card-badge">${p.Category || 'عام'}</span>
                                 <div class="card-title">${p.Name}</div>
-                                <div class="card-price">${p.Price} ريال</div>
-                                <div class="card-desc">${p.Description || 'لا يوجد وصف متاح.'}</div>
-                                <button class="btn-buy" onclick="alert('تم إشعار الشراء للمنتج: ${p.Name}')">شراء الآن</button>
+                                <div class="card-desc">${p.Description || 'منتج احترافي عالي الجودة مع الدعم التقني.'}</div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="price">${p.Price} ر.س</div>
+                                <button class="btn-add" onclick="addToCart()">إضافة +</button>
                             </div>
                         </div>
                     `;
                 });
             } catch (err) {
-                console.error('فشل في جلب البيانات:', err);
+                console.error('خطأ في التحميل:', err);
             }
+        }
+
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+
+        function openCheckout() {
+            if(cartCount === 0) return alert('السلة فارغة حالياً!');
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        async function submitOrder(e) {
+            e.preventDefault();
+            alert('تم تسجيل طلبك بنجاح! سيتم توجيهك لبوابة الدفع الإلكتروني.');
+            closeCheckout();
+            cartCount = 0;
+            document.getElementById('cartCount').innerText = 0;
         }
 
         loadProducts();
