@@ -2,123 +2,73 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>1 2 3 4 5+ Player Games Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجري الإلكتروني | Access Store</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif; }
-        body { background: #FFD93D; color: #222; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; padding: 20px 10px; }
-
-        /* الشعار الكرتوني البارز */
-        .title-box { background: #FF6B6B; padding: 15px 30px; border-radius: 25px; border: 5px solid #FFF; box-shadow: 0 8px 0 #C44D4D; transform: rotate(-2deg); margin-top: 10px; }
-        .title-box h1 { color: #FFF; font-size: 2.5rem; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
-
-        /* شريط اختيار عدد اللاعبين */
-        .player-bar { display: flex; gap: 10px; background: #FFF; padding: 10px; border-radius: 50px; border: 4px solid #4D96FF; box-shadow: 0 6px 0 #2B6CB0; }
-        .p-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #E2E8F0; font-size: 1.3rem; font-weight: bold; color: #4A5568; cursor: pointer; transition: 0.1s; }
-        .p-btn.active { background: #6BCB77; color: #FFF; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); transform: scale(1.15); }
-
-        /* شبكة بطاقات الألعاب الملونة */
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 420px; }
-        .game-card { background: #FFF; border-radius: 25px; padding: 15px; border: 5px solid #222; box-shadow: 0 8px 0 #222; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s; }
-        .game-card:active { transform: translateY(6px); box-shadow: 0 2px 0 #222; }
-
-        .game-card.red { background: #FF6B6B; color: #FFF; }
-        .game-card.blue { background: #4D96FF; color: #FFF; }
-        .game-card.green { background: #6BCB77; color: #FFF; }
-        .game-card.purple { background: #9B51E0; color: #FFF; }
-
-        .game-icon { font-size: 3.5rem; margin-bottom: 5px; filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.2)); }
-        .game-title { font-size: 1.2rem; font-weight: 900; text-shadow: 2px 2px 0 #000; }
-
-        /* نافذة التوجيه والشرح الملونة */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 999; }
-        .modal-body { background: #FFF; border: 6px solid #222; border-radius: 30px; width: 85%; max-width: 350px; padding: 20px; text-align: center; box-shadow: 0 10px 0 #222; }
-        .demo-screen { width: 100%; height: 120px; background: #E2E8F0; border-radius: 20px; border: 4px solid #222; margin: 15px 0; display: flex; align-items: center; justify-content: center; position: relative; }
-        .avatar-demo { width: 45px; height: 45px; border-radius: 50%; background: #FF6B6B; border: 3px solid #FFF; animation: bounce 0.8s infinite alternate; }
-
-        @keyframes bounce {
-            from { transform: translateY(-20px) scale(1); }
-            to { transform: translateY(20px) scale(1.1); }
-        }
-
-        .start-btn { width: 100%; padding: 15px; border-radius: 50px; border: 4px solid #222; background: #6BCB77; color: #FFF; font-size: 1.5rem; font-weight: 900; text-shadow: 2px 2px 0 #000; cursor: pointer; box-shadow: 0 6px 0 #222; }
-        .start-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #222; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; }
+        
+        header { background: #1e293b; color: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 1.5rem; }
+        
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        
+        .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-body { padding: 15px; }
+        .card-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
+        .card-price { color: #2563eb; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
+        .card-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4; }
+        
+        .btn-buy { width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-buy:hover { background: #1d4ed8; }
     </style>
 </head>
 <body>
 
-    <div class="title-box">
-        <h1>1 2 3 4 PARTY!</h1>
-    </div>
+    <header>
+        <h1>🛒 المتجر الإلكتروني</h1>
+        <div>قاعدة البيانات: Microsoft Access</div>
+    </header>
 
-    <!-- اختيار عدد اللاعبين -->
-    <div class="player-bar">
-        <button class="p-btn" onclick="selectP(2, this)">2</button>
-        <button class="p-btn active" onclick="selectP(4, this)">4</button>
-        <button class="p-btn" onclick="selectP(6, this)">6</button>
-        <button class="p-btn" onclick="selectP(8, this)">8</button>
-        <button class="p-btn" onclick="selectP(10, this)">10</button>
-    </div>
-
-    <!-- شبكة الألعاب الكرتونية البارزة -->
-    <div class="grid-container">
-        <div class="game-card red" onclick="openGame('حلبة السومو', 'اضغط على زر لونك لتصطدم باللاعبين وتخرجهم من الدائرة!', 'game1.html')">
-            <div class="game-icon">🤼</div>
-            <div class="game-title">السومو</div>
-        </div>
-
-        <div class="game-card blue" onclick="openGame('الشطرنج السريع', 'لعبة ذكاء! تحكم بقطعك واستولِ على رقعة الخصم.', 'game_chess.html')">
-            <div class="game-icon">♟️</div>
-            <div class="game-title">الشطرنج</div>
-        </div>
-
-        <div class="game-card green" onclick="openGame('سباق التفحيط', 'اضغط بسرعة لتبتعد بسيارتك وتصل للنهاية أولاً!', 'game_race.html')">
-            <div class="game-icon">🏎️</div>
-            <div class="game-title">السباق</div>
-        </div>
-
-        <div class="game-card purple" onclick="openGame('المحتال والمافيا', 'اكتشف دورك السري واكشف المحتال بين اللاعبين!', 'game_impostor.html')">
-            <div class="game-icon">🕵️</div>
-            <div class="game-title">المحتال</div>
-        </div>
-    </div>
-
-    <!-- نافذة الشرح التفاعلية -->
-    <div class="modal-overlay" id="gameModal">
-        <div class="modal-body">
-            <h2 id="mTitle" style="font-size: 1.8rem; font-weight: 900; color: #222;">اسم اللعبة</h2>
-            <div class="demo-screen">
-                <div class="avatar-demo"></div>
-            </div>
-            <p id="mDesc" style="font-size: 1rem; font-weight: bold; color: #555; margin-bottom: 15px;"></p>
-            <button class="start-btn" onclick="launch()">انطلق! 🚀</button>
+    <div class="container">
+        <h2 style="margin-bottom: 20px;">المنتجات المتاحة</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- يتم تحميل المنتجات هنا ديناميكياً -->
         </div>
     </div>
 
     <script>
-        let players = 4;
-        let activeUrl = '';
-
-        function selectP(num, btn) {
-            players = num;
-            document.querySelectorAll('.p-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                
+                const grid = document.getElementById('productsGrid');
+                grid.innerHTML = '';
+                
+                products.forEach(p => {
+                    grid.innerHTML += `
+                        <div class="card">
+                            <img src="${p.ImageURL || 'https://via.placeholder.com/300'}" alt="${p.Name}">
+                            <div class="card-body">
+                                <div class="card-title">${p.Name}</div>
+                                <div class="card-price">${p.Price} ريال</div>
+                                <div class="card-desc">${p.Description || 'لا يوجد وصف متاح.'}</div>
+                                <button class="btn-buy" onclick="alert('تم إشعار الشراء للمنتج: ${p.Name}')">شراء الآن</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error('فشل في جلب البيانات:', err);
+            }
         }
 
-        function openGame(title, desc, url) {
-            activeUrl = `${url}?p=${players}`;
-            document.getElementById('mTitle').innerText = title;
-            document.getElementById('mDesc').innerText = desc;
-            document.getElementById('gameModal').style.display = 'flex';
-        }
-
-        function launch() {
-            if (activeUrl) window.location.href = activeUrl;
-        }
-
-        document.getElementById('gameModal').addEventListener('click', function(e) {
-            if (e.target === this) this.style.display = 'none';
-        });
+        loadProducts();
     </script>
 </body>
 </html>
