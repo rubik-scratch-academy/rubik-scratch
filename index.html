@@ -2,514 +2,136 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الإنجاز اليومي الشاملة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Cyber Party Hub | 500-in-1</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --accent-cyan: #38bdf8;
-            --accent-green: #4ade80;
-            --accent-pink: #f472b6;
-            --accent-yellow: #facc15;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --accent: #66fcf1;
+            --accent-hover: #45a29e;
+            --text: #c5c6c7;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--bg-color); color: var(--text); overflow-x: hidden; }
+
+        /* شريط العنوان والخيارات */
+        header { background: #1f2833; padding: 20px; text-align: center; border-bottom: 2px solid var(--accent); box-shadow: 0 0 15px rgba(102, 252, 241, 0.2); }
+        h1 { color: #fff; font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 8px var(--accent); }
+        
+        .setup-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
+        select { padding: 8px 15px; font-size: 1rem; border-radius: 6px; background: #0b0c10; color: var(--accent); border: 1px solid var(--accent); outline: none; cursor: pointer; }
+
+        /* قائمة الألعاب */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .game-card { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid rgba(102, 252, 241, 0.1); cursor: pointer; transition: all 0.3s ease; text-align: center; position: relative; overflow: hidden; }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 5px 20px rgba(102, 252, 241, 0.3); }
+        .game-card h3 { color: #fff; margin-bottom: 10px; }
+        .game-card .tag { display: inline-block; padding: 4px 10px; background: rgba(102, 252, 241, 0.1); color: var(--accent); border-radius: 20px; font-size: 0.8rem; margin-top: 10px; }
+
+        /* نافذة الشرح والتوجيه (Tutorial Modal) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
+        .modal { background: #1f2833; width: 90%; max-width: 500px; border-radius: 15px; border: 2px solid var(--accent); padding: 25px; text-align: center; box-shadow: 0 0 25px rgba(102, 252, 241, 0.4); }
+        .modal h2 { color: #fff; margin-bottom: 15px; }
+        .modal p { color: #c5c6c7; line-height: 1.6; margin-bottom: 20px; }
+        
+        /* شاشة المحاكاة الكرتونية المتحركة للتحكم */
+        .demo-box { width: 100%; height: 120px; background: #0b0c10; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+        .demo-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); position: absolute; animation: pulse 1.5s infinite alternate; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1) translateX(-50px); box-shadow: 0 0 5px var(--accent); }
+            100% { transform: scale(1.2) translateX(50px); box-shadow: 0 0 20px var(--accent); }
         }
 
-        body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-main);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 850px;
-        }
-
-        /* Dashboard Header */
-        .dashboard {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .dashboard-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .progress-stats {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--accent-green);
-        }
-
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.1);
-            height: 14px;
-            border-radius: 7px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
-            height: 100%;
-            width: 0%;
-            border-radius: 7px;
-            transition: width 0.4s ease;
-        }
-
-        /* Section Styling */
-        .section-header {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 25px 0 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent-cyan);
-        }
-
-        .task-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .badge-time {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--accent-cyan);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        /* Checklist Items */
-        .task-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease;
-        }
-
-        .task-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .task-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .task-item input[type="checkbox"] {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent-cyan);
-            border-radius: 6px;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .task-item input[type="checkbox"]:checked {
-            background-color: var(--accent-green);
-            border-color: var(--accent-green);
-        }
-
-        .task-item input[type="checkbox"]:checked::after {
-            content: '✓';
-            position: absolute;
-            color: #000;
-            font-size: 14px;
-            font-weight: bold;
-            top: -2px;
-            right: 3px;
-        }
-
-        .task-item.completed label {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .task-item label {
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .time-tag {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: rgba(255,255,255,0.05);
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+        .btn-start { padding: 12px 30px; font-size: 1.1rem; background: var(--accent); color: #0b0c10; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .btn-start:hover { background: var(--accent-hover); transform: scale(1.05); }
+        .btn-close { background: transparent; border: none; color: #ff4757; font-size: 1.5rem; float: left; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-
-    <!-- لوحة المتابعة والتقدم (Dashboard) -->
-    <div class="dashboard">
-        <div class="dashboard-header">
-            <div class="dashboard-title">منصة الإنجاز والتنظيم اليومي 🚀</div>
-            <div class="progress-stats" id="progressText">0% مكتمل</div>
+    <header>
+        <h1>🎮 Cyber Party Games Hub</h1>
+        <div class="setup-bar">
+            <label>اختر عدد اللاعبين:</label>
+            <select id="playerSelect">
+                <option value="1">1 لاعب (ضد الكمبيوتر)</option>
+                <option value="2" selected>2 لاعبين</option>
+                <option value="4">4 لاعبين</option>
+                <option value="6">6 لاعبين</option>
+                <option value="8">8 لاعبين</option>
+                <option value="10">10 لاعبين</option>
+            </select>
         </div>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressBar"></div>
+    </header>
+
+    <main class="games-grid">
+        <!-- لعبة الذكاء: الشطرنج السريع -->
+        <div class="game-card" onclick="openTutorial('Chess Tactics', 'لعبة ذكاء وتكتيك! حرك قطعك للسيطرة على الرقعة والقضاء على ملك الخصم في جولات سريعة.', 'game_chess.html')">
+            <h3>♟️ الشطرنج التكتيكي</h3>
+            <p>لعبة ذكاء واستراتيجية</p>
+            <span class="tag">ذكاء واستراتيجية</span>
+        </div>
+
+        <!-- لعبة السومو الاحترافية -->
+        <div class="game-card" onclick="openTutorial('Neon Sumo', 'اضغط على زرك في الوقت المناسب للاندفاع نحو الخصوم ودفعهم لخارج الحلبة الدائرية.', 'game1.html')">
+            <h3>🔴 حلبة السومو النيون</h3>
+            <p>تدافع وفيزياء حركة</p>
+            <span class="tag">قتال وتدافع</span>
+        </div>
+
+        <!-- لعبة المحتال -->
+        <div class="game-card" onclick="openTutorial('Impostor Party', 'انقر على زرك بظرف سرّي لمعرفة دورك. حاول كشف المحتال قبل فوات الأوان!', 'game_impostor.html')">
+            <h3>🤫 المحتال والمافيا</h3>
+            <p>لعبة حفلات وغموض</p>
+            <span class="tag">حفلات وغموض</span>
+        </div>
+
+        <!-- لعبة سباق السرعة -->
+        <div class="game-card" onclick="openTutorial('Cyber Drift', 'اضغط باستمرار وبسرعة فائقة للتقدم بسيارتك وتجاوز خط النهاية أولاً.', 'game_race.html')">
+            <h3>🏎️ سباق التفحيط السيبراني</h3>
+            <p>سرعة رد فعل</p>
+            <span class="tag">سباقات</span>
+        </div>
+    </main>
+
+    <!-- نافذة الشرح قبل بدء اللعب -->
+    <div class="modal-overlay" id="tutorialModal">
+        <div class="modal">
+            <button class="btn-close" onclick="closeTutorial()">✕</button>
+            <h2 id="modalTitle">اسم اللعبة</h2>
+            <div class="demo-box">
+                <div class="demo-circle"></div>
+            </div>
+            <p id="modalDesc">طريقة اللعب والشرح هنا...</p>
+            <button class="btn-start" onclick="startGame()">ابدأ اللعب الآن 🚀</button>
         </div>
     </div>
 
-    <!-- القسم الأول: الجدول الزمني اليومي -->
-    <div class="section-header">⏰ أولاً: النمط اليومي والمواعيد الثابتة</div>
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">جدول الصباح والمدرسة</div>
-            <span class="badge-time">ثابت يومياً</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="t1" onchange="updateProgress()">
-                    <label for="t1">الاستيقاظ 04:40 ص لصلاة الفجر ثم النوم للـ 06:15 ص</label>
-                </div>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="t2" onchange="updateProgress()">
-                    <label for="t2">التجهز للمدرسة والدوام من 07:00 ص إلى 01:00 م</label>
-                </div>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="t3" onchange="updateProgress()">
-                    <label for="t3">العودة وتناول وجبة الإفطار/الغداء والراحة (45 دقيقة)</label>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <script>
+        let selectedGameUrl = '';
 
-    <!-- القسم الثاني: الورد القرآني -->
-    <div class="section-header">📖 ثانياً: ورد القرآن الكريم والمراجعة</div>
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">الورد اليومي والمراجعات (3 أجزاء ونصف)</div>
-            <span class="badge-time">الوقت التقديري: 90 دقيقة</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q1" onchange="updateProgress()">
-                    <label for="q1">مراجعة صفحة الأمس (تكرار 5 مرات)</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q2" onchange="updateProgress()">
-                    <label for="q2">مراجعة صفحة ما قبل الأمس (تكرار 5 مرات)</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q3" onchange="updateProgress()">
-                    <label for="q3">قراءة الجزء الأول من الورد</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q4" onchange="updateProgress()">
-                    <label for="q4">قراءة الجزء الثاني من الورد</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q5" onchange="updateProgress()">
-                    <label for="q5">قراءة الجزء الثالث من الورد</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="q6" onchange="updateProgress()">
-                    <label for="q6">قراءة النصف جزء المتبقي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-        </ul>
-    </div>
+        function openTutorial(title, description, url) {
+            const players = document.getElementById('playerSelect').value;
+            selectedGameUrl = `${url}?players=${players}`;
+            
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = description;
+            document.getElementById('tutorialModal').style.display = 'flex';
+        }
 
-    <!-- القسم الثالث: الدراسة والواجبات -->
-    <div class="section-header">📚 ثالثاً: الدراسة والمذاكرة التفصيلية</div>
+        function closeTutorial() {
+            document.getElementById('tutorialModal').style.display = 'none';
+        }
 
-    <!-- 1. الرياضيات المكثفة -->
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">📐 الرياضيات (الواجب + الدروس الأربعة)</div>
-            <span class="badge-time">الوقت التقديري: 120 دقيقة</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m1" onchange="updateProgress()">
-                    <label for="m1">حل واجب الرياضيات المدرسية</label>
-                </div>
-                <span class="time-tag">15 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m2" onchange="updateProgress()">
-                    <label for="m2">الدرس 1: فهم الشرح + حل الأسئلة الناقصة + تلخيصه</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m3" onchange="updateProgress()">
-                    <label for="m3">الدرس 2: فهم الشرح + حل الأسئلة الناقصة + تلخيصه</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m4" onchange="updateProgress()">
-                    <label for="m4">الدرس 3: فهم الشرح + حل الأسئلة الناقصة + تلخيصه</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m5" onchange="updateProgress()">
-                    <label for="m5">الدرس 4: فهم الشرح + حل الأسئلة الناقصة + تلخيصه</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="m6" onchange="updateProgress()">
-                    <label for="m6">تطبيق خطط الحل وتجربة جميع الدروس على الآلة الحاسبة</label>
-                </div>
-                <span class="time-tag">25 دقيقة</span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- 2. الواجبات المدرسية الأخرى -->
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">✏️ الواجبات المدرسية السريعة</div>
-            <span class="badge-time">الوقت التقديري: 40 دقيقة</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="hw1" onchange="updateProgress()">
-                    <label for="hw1">حل واجب لغتي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="hw2" onchange="updateProgress()">
-                    <label for="hw2">حل واجب الإسلامية</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="hw3" onchange="updateProgress()">
-                    <label for="hw3">حل واجب الإنكليزي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="hw4" onchange="updateProgress()">
-                    <label for="hw4">حل واجب العلوم</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- 3. اللغات والعلوم والدين -->
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">📖 فهم وحفظ المواد الأكاديمية</div>
-            <span class="badge-time">الوقت التقديري: 75 دقيقة</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st1" onchange="updateProgress()">
-                    <label for="st1">دراسة وفهم درس الإنكليزي كاملاً</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st2" onchange="updateProgress()">
-                    <label for="st2">مراجعة درس العلوم مراجعة مركزة</label>
-                </div>
-                <span class="time-tag">15 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st3" onchange="updateProgress()">
-                    <label for="st3">التوحيد: حل وحفظ الدرس الأول المتبقي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st4" onchange="updateProgress()">
-                    <label for="st4">التوحيد: حل وحفظ الدرس الثاني المتبقي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st5" onchange="updateProgress()">
-                    <label for="st5">الاجتماعيات: حل وحفظ الدرس الأول المتبقي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="st6" onchange="updateProgress()">
-                    <label for="st6">الاجتماعيات: حل وحفظ الدرس الثاني المتبقي</label>
-                </div>
-                <span class="time-tag">10 دقائق</span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- 4. القدرات اللفظي -->
-    <div class="task-card">
-        <div class="card-header">
-            <div class="card-title">🎯 قدرات اللفظي</div>
-            <span class="badge-time">الوقت التقديري: 60 دقيقة</span>
-        </div>
-        <ul class="task-list">
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="cap1" onchange="updateProgress()">
-                    <label for="cap1">كتابة 20 صفحة قدرات اللفظي</label>
-                </div>
-                <span class="time-tag">40 دقيقة</span>
-            </li>
-            <li class="task-item">
-                <div class="task-left">
-                    <input type="checkbox" id="cap2" onchange="updateProgress()">
-                    <label for="cap2">حل تدريبات القدرات اللفظي بالكامل</label>
-                </div>
-                <span class="time-tag">20 دقيقة</span>
-            </li>
-        </ul>
-    </div>
-
-    <footer>
-        <p>نُظم بذكاء ليناسب أهدافك اليومية وتحقيق النوم المبكر ✨</p>
-    </footer>
-
-</div>
-
-<script>
-    function updateProgress() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const total = checkboxes.length;
-        let checkedCount = 0;
-
-        checkboxes.forEach(cb => {
-            const item = cb.closest('.task-item');
-            if (cb.checked) {
-                checkedCount++;
-                item.classList.add('completed');
-            } else {
-                item.classList.remove('completed');
+        function startGame() {
+            if (selectedGameUrl) {
+                window.location.href = selectedGameUrl;
             }
-        });
-
-        const percentage = Math.round((checkedCount / total) * 100);
-        document.getElementById('progressBar').style.width = percentage + '%';
-        document.getElementById('progressText').innerText = percentage + '% مكتمل (' + checkedCount + ' من ' + total + ')';
-    }
-</script>
-
+        }
+    </script>
 </body>
 </html>
