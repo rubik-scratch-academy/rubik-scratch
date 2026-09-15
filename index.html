@@ -3,143 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>10 Players Mini Games</title>
+    <title>1 2 3 4 5+ Player Games Hub</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Arial Rounded MT Bold', 'Trebuchet MS', sans-serif; }
-        body { background: #12131C; color: #fff; overflow-x: hidden; text-align: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif; }
+        body { background: #FFD93D; color: #222; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; padding: 20px 10px; }
 
-        /* الشعار العلوي */
-        .header { padding: 25px 15px 10px; }
-        .logo { font-size: 2.8rem; font-weight: 900; background: linear-gradient(45deg, #FF4757, #FFA502, #2ED573, #1E90FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 15px rgba(0,0,0,0.4); letter-spacing: 2px; }
-        
-        /* محدد عدد اللاعبين على نمط 1234 Player */
-        .player-selector { display: flex; justify-content: center; gap: 8px; margin: 15px auto 25px; background: #1E202F; padding: 6px; border-radius: 50px; width: fit-content; border: 2px solid #2F3249; }
-        .p-chip { width: 40px; height: 40px; border-radius: 50%; border: none; background: transparent; color: #A0A5C0; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
-        .p-chip.active { background: #FF4757; color: #fff; box-shadow: 0 0 12px #FF4757; transform: scale(1.1); }
+        /* الشعار الكرتوني البارز */
+        .title-box { background: #FF6B6B; padding: 15px 30px; border-radius: 25px; border: 5px solid #FFF; box-shadow: 0 8px 0 #C44D4D; transform: rotate(-2deg); margin-top: 10px; }
+        .title-box h1 { color: #FFF; font-size: 2.5rem; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
 
-        /* قائمة الألعاب ببطاقات دائرية كرتونية */
-        .games-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 20px 40px; max-width: 800px; margin: 0 auto; }
-        
-        .game-btn { background: #1E202F; border-radius: 25px; padding: 15px; border: 3px solid #2F3249; cursor: pointer; transition: all 0.15s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 0 #0E0F17; }
-        .game-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #0E0F17; }
-        
-        /* أيقونات الألعاب الملونة */
-        .icon-box { width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); }
-        .game-btn h3 { font-size: 1.1rem; color: #FFF; font-weight: bold; }
+        /* شريط اختيار عدد اللاعبين */
+        .player-bar { display: flex; gap: 10px; background: #FFF; padding: 10px; border-radius: 50px; border: 4px solid #4D96FF; box-shadow: 0 6px 0 #2B6CB0; }
+        .p-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #E2E8F0; font-size: 1.3rem; font-weight: bold; color: #4A5568; cursor: pointer; transition: 0.1s; }
+        .p-btn.active { background: #6BCB77; color: #FFF; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); transform: scale(1.15); }
 
-        /* ألوان الأيقونات مثل ألعاب JindoBlu */
-        .bg-red { background: #FF4757; }
-        .bg-blue { background: #1E90FF; }
-        .bg-green { background: #2ED573; }
-        .bg-yellow { background: #FFA502; }
-        .bg-purple { background: #9b59b6; }
+        /* شبكة بطاقات الألعاب الملونة */
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 420px; }
+        .game-card { background: #FFF; border-radius: 25px; padding: 15px; border: 5px solid #222; box-shadow: 0 8px 0 #222; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s; }
+        .game-card:active { transform: translateY(6px); box-shadow: 0 2px 0 #222; }
 
-        /* نافذة التعليمات والشرح (Popup Tutorial) */
-        .modal-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(4px); }
-        .modal-card { background: #1E202F; width: 85%; max-width: 380px; border-radius: 30px; border: 4px solid #2F3249; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        
-        /* أنيميشن كرتوني يعرض طريقة الضغط */
-        .tutorial-anim { width: 100%; height: 130px; background: #12131C; border-radius: 20px; margin: 15px 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; border: 2px dashed #2F3249; }
-        .finger-touch { width: 45px; height: 45px; border-radius: 50%; background: #FF4757; animation: tapAnim 1.2s infinite ease-in-out; }
-        
-        @keyframes tapAnim {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 20px #FF4757; }
-            100% { transform: scale(1); opacity: 0.3; }
+        .game-card.red { background: #FF6B6B; color: #FFF; }
+        .game-card.blue { background: #4D96FF; color: #FFF; }
+        .game-card.green { background: #6BCB77; color: #FFF; }
+        .game-card.purple { background: #9B51E0; color: #FFF; }
+
+        .game-icon { font-size: 3.5rem; margin-bottom: 5px; filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.2)); }
+        .game-title { font-size: 1.2rem; font-weight: 900; text-shadow: 2px 2px 0 #000; }
+
+        /* نافذة التوجيه والشرح الملونة */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 999; }
+        .modal-body { background: #FFF; border: 6px solid #222; border-radius: 30px; width: 85%; max-width: 350px; padding: 20px; text-align: center; box-shadow: 0 10px 0 #222; }
+        .demo-screen { width: 100%; height: 120px; background: #E2E8F0; border-radius: 20px; border: 4px solid #222; margin: 15px 0; display: flex; align-items: center; justify-content: center; position: relative; }
+        .avatar-demo { width: 45px; height: 45px; border-radius: 50%; background: #FF6B6B; border: 3px solid #FFF; animation: bounce 0.8s infinite alternate; }
+
+        @keyframes bounce {
+            from { transform: translateY(-20px) scale(1); }
+            to { transform: translateY(20px) scale(1.1); }
         }
 
-        .play-btn { width: 100%; padding: 15px; font-size: 1.3rem; font-weight: bold; border: none; border-radius: 50px; background: #2ED573; color: #fff; cursor: pointer; box-shadow: 0 6px 0 #218c4a; margin-top: 10px; }
-        .play-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #218c4a; }
+        .start-btn { width: 100%; padding: 15px; border-radius: 50px; border: 4px solid #222; background: #6BCB77; color: #FFF; font-size: 1.5rem; font-weight: 900; text-shadow: 2px 2px 0 #000; cursor: pointer; box-shadow: 0 6px 0 #222; }
+        .start-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #222; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">1 2 3 4 5+</div>
-        <p style="color: #A0A5C0; margin-top: 5px;">ألعاب الحفلات الجماعية</p>
+    <div class="title-box">
+        <h1>1 2 3 4 PARTY!</h1>
     </div>
 
-    <!-- اختيار عدد اللاعبين (شريط علوي دائري) -->
-    <div class="player-selector">
-        <button class="p-chip" onclick="setPlayers(2, this)">2</button>
-        <button class="p-chip active" onclick="setPlayers(4, this)">4</button>
-        <button class="p-chip" onclick="setPlayers(6, this)">6</button>
-        <button class="p-chip" onclick="setPlayers(8, this)">8</button>
-        <button class="p-chip" onclick="setPlayers(10, this)">10</button>
+    <!-- اختيار عدد اللاعبين -->
+    <div class="player-bar">
+        <button class="p-btn" onclick="selectP(2, this)">2</button>
+        <button class="p-btn active" onclick="selectP(4, this)">4</button>
+        <button class="p-btn" onclick="selectP(6, this)">6</button>
+        <button class="p-btn" onclick="selectP(8, this)">8</button>
+        <button class="p-btn" onclick="selectP(10, this)">10</button>
     </div>
 
-    <!-- شبكة الألعاب على شكل زر كرتوني ضخم -->
-    <div class="games-container">
-        
-        <!-- لعبة الشطرنج التكتيكي -->
-        <div class="game-btn" onclick="showTutorial('الشطرنج السريع', 'لعبة ذكاء وتكتيك! اضغط للسيطرة على الرقعة وتدمير قطع الخصم.', 'game_chess.html')">
-            <div class="icon-box bg-purple">♟️</div>
-            <h3>الشطرنج</h3>
+    <!-- شبكة الألعاب الكرتونية البارزة -->
+    <div class="grid-container">
+        <div class="game-card red" onclick="openGame('حلبة السومو', 'اضغط على زر لونك لتصطدم باللاعبين وتخرجهم من الدائرة!', 'game1.html')">
+            <div class="game-icon">🤼</div>
+            <div class="game-title">السومو</div>
         </div>
 
-        <!-- لعبة السومو -->
-        <div class="game-btn" onclick="showTutorial('دفع السومو', 'اضغط على زر لونك بسرعة لدفع اللاعبين الآخرين وخروجهم خارج الدائرة!', 'game1.html')">
-            <div class="icon-box bg-red">🤼</div>
-            <h3>السومو</h3>
+        <div class="game-card blue" onclick="openGame('الشطرنج السريع', 'لعبة ذكاء! تحكم بقطعك واستولِ على رقعة الخصم.', 'game_chess.html')">
+            <div class="game-icon">♟️</div>
+            <div class="game-title">الشطرنج</div>
         </div>
 
-        <!-- لعبة المحتال / المافيا -->
-        <div class="game-btn" onclick="showTutorial('المحتال والمافيا', 'اضغط لرؤية دورك السرّي على الزر، ثم اصوت على المحتال في الحفلة!', 'game_impostor.html')">
-            <div class="icon-box bg-blue">🕵️</div>
-            <h3>المحتال</h3>
+        <div class="game-card green" onclick="openGame('سباق التفحيط', 'اضغط بسرعة لتبتعد بسيارتك وتصل للنهاية أولاً!', 'game_race.html')">
+            <div class="game-icon">🏎️</div>
+            <div class="game-title">السباق</div>
         </div>
 
-        <!-- لعبة السباق -->
-        <div class="game-btn" onclick="showTutorial('سباق السيارات', 'اضغط بسرعة وبشكل متكرر لتسريع سيارتك والوصول للنهاية أولاً!', 'game_race.html')">
-            <div class="icon-box bg-yellow">🏎️</div>
-            <h3>السباق</h3>
+        <div class="game-card purple" onclick="openGame('المحتال والمافيا', 'اكتشف دورك السري واكشف المحتال بين اللاعبين!', 'game_impostor.html')">
+            <div class="game-icon">🕵️</div>
+            <div class="game-title">المحتال</div>
         </div>
-
-        <!-- لعبة الدبابات -->
-        <div class="game-btn" onclick="showTutorial('حرب الدبابات', 'وجه دباباتك واطلق القذائف لتدمير بقية اللاعبين في المتاهة.', 'game_tanks.html')">
-            <div class="icon-box bg-green">💥</div>
-            <h3>الدبابات</h3>
-        </div>
-
     </div>
 
-    <!-- النافذة التفاعلية قبل بدء اللعبة -->
-    <div class="modal-bg" id="tutorialPopup">
-        <div class="modal-card">
-            <h2 id="tTitle" style="color: #fff; font-size: 1.6rem;">اسم اللعبة</h2>
-            <div class="tutorial-anim">
-                <div class="finger-touch"></div>
+    <!-- نافذة الشرح التفاعلية -->
+    <div class="modal-overlay" id="gameModal">
+        <div class="modal-body">
+            <h2 id="mTitle" style="font-size: 1.8rem; font-weight: 900; color: #222;">اسم اللعبة</h2>
+            <div class="demo-screen">
+                <div class="avatar-demo"></div>
             </div>
-            <p id="tDesc" style="color: #A0A5C0; font-size: 0.95rem; line-height: 1.4;"></p>
-            <button class="play-btn" onclick="launchGame()">العب الآن 🎮</button>
+            <p id="mDesc" style="font-size: 1rem; font-weight: bold; color: #555; margin-bottom: 15px;"></p>
+            <button class="start-btn" onclick="launch()">انطلق! 🚀</button>
         </div>
     </div>
 
     <script>
-        let selectedPlayers = 4;
-        let targetUrl = '';
+        let players = 4;
+        let activeUrl = '';
 
-        function setPlayers(num, btn) {
-            selectedPlayers = num;
-            document.querySelectorAll('.p-chip').forEach(b => b.classList.remove('active'));
+        function selectP(num, btn) {
+            players = num;
+            document.querySelectorAll('.p-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         }
 
-        function showTutorial(title, desc, url) {
-            targetUrl = `${url}?p=${selectedPlayers}`;
-            document.getElementById('tTitle').innerText = title;
-            document.getElementById('tDesc').innerText = desc;
-            document.getElementById('tutorialPopup').style.display = 'flex';
+        function openGame(title, desc, url) {
+            activeUrl = `${url}?p=${players}`;
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mDesc').innerText = desc;
+            document.getElementById('gameModal').style.display = 'flex';
         }
 
-        function launchGame() {
-            if (targetUrl) {
-                window.location.href = targetUrl;
-            }
+        function launch() {
+            if (activeUrl) window.location.href = activeUrl;
         }
 
-        // إغلاق النافذة عند الضغط خارجها
-        document.getElementById('tutorialPopup').addEventListener('click', function(e) {
+        document.getElementById('gameModal').addEventListener('click', function(e) {
             if (e.target === this) this.style.display = 'none';
         });
     </script>
