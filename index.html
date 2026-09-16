@@ -3,187 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahmoud.chess.com - Ultimate Edition</title>
+    <title>Mahmoud Chess Ultimate Pro</title>
     <style>
         :root {
-            --bg-main: #181614;
-            --bg-panel: #262421;
-            --bg-card: #1e1c19;
-            --border-color: #3e3b37;
-            
-            --square-light: #ebecd0;
-            --square-dark: #739552;
-            --square-highlight: #f5f682;
-            
-            --brand-gold: #ffd700;
-            --brand-pink: #e65c84;
+            --bg-main: #121214;
+            --bg-panel: #1e1e24;
+            --border-color: #33333d;
+            --square-light: #eeeed2;
+            --square-dark: #769656;
+            --brand-pink: #ff2a6d;
+            --brand-gold: #ffb703;
             --text-main: #ffffff;
-            --text-muted: #bababa;
         }
 
-        /* Dynamic Changing Background */
-        @keyframes dynamicBG {
+        /* Dynamic Animated Background */
+        @keyframes dynamicGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
         body {
-            background: linear-gradient(-45deg, #1a0933, #0a192f, #1f1105, #002b17);
+            background: linear-gradient(-45deg, #0d0221, #021a24, #1a0011, #052419);
             background-size: 400% 400%;
-            animation: dynamicBG 18s ease infinite;
+            animation: dynamicGradient 15s ease infinite;
             color: var(--text-main);
             min-height: 100vh;
             margin: 0;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
             user-select: none;
         }
 
-        /* Intro Screen & Animations */
-        .intro-screen {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 10, 12, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 20000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        @keyframes floatPiece {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-
-        .animated-pieces {
-            display: flex;
-            gap: 20px;
-            font-size: 70px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(230, 92, 132, 0.8);
-        }
-
-        .animated-pieces span {
-            animation: floatPiece 3s ease-in-out infinite;
-        }
-
-        .animated-pieces span:nth-child(2) { animation-delay: 0.5s; }
-        .animated-pieces span:nth-child(3) { animation-delay: 1s; }
-
-        .modal-box {
-            background: var(--bg-panel);
-            border: 2px solid var(--brand-pink);
-            padding: 25px;
-            border-radius: 16px;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 0 30px rgba(230, 92, 132, 0.3);
-        }
-
-        .btn {
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, #800016, #e65c84);
-            color: #fff;
-            width: 100%;
-        }
-
-        .btn-gold {
-            background: linear-gradient(90deg, #d4af37, #ffd700);
-            color: #000;
-            width: 100%;
-            font-weight: 800;
-        }
-
-        .btn-secondary { background: #363431; color: #fff; border: 1px solid #4a4743; }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--brand-pink);
-            background: #121110;
-            color: #fff;
-            text-align: center;
-            margin: 10px 0;
-            box-sizing: border-box;
-            font-size: 0.9rem;
-        }
-
-        /* Top Header */
+        /* Responsive Compact Header */
         header {
-            background: rgba(20, 18, 16, 0.85);
+            background: rgba(15, 15, 20, 0.9);
             backdrop-filter: blur(8px);
-            height: 60px;
-            padding: 0 20px;
+            padding: 8px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .logo-text {
+        .logo {
+            font-size: 1rem;
             font-weight: 900;
-            font-size: 1.2rem;
-            background: linear-gradient(90deg, #ffffff, var(--brand-pink));
+            background: linear-gradient(90deg, #fff, var(--brand-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
+        .header-btns { display: flex; gap: 6px; }
+
+        /* Compact Buttons */
+        .btn {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: transform 0.1s ease, background 0.2s;
         }
 
-        /* Trial Banner & Timer */
-        .trial-banner {
-            background: rgba(230, 92, 132, 0.2);
-            border-bottom: 1px solid var(--brand-pink);
-            text-align: center;
-            padding: 6px;
-            font-size: 0.85rem;
-            color: #ffb3c6;
+        .btn:active { transform: scale(0.96); }
+        .btn-pink { background: linear-gradient(90deg, #d62828, var(--brand-pink)); color: #fff; }
+        .btn-gold { background: linear-gradient(90deg, #f77f00, var(--brand-gold)); color: #000; }
+        .btn-dark { background: #2b2b36; color: #ccc; border: 1px solid #444; }
+
+        /* Intro Screen & Modals */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            padding: 15px;
         }
 
-        /* Game Layout */
-        .workspace {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 10px auto;
-            padding: 10px;
-            flex: 1;
+        .modal-box {
+            background: var(--bg-panel);
+            border: 2px solid var(--brand-pink);
+            padding: 20px;
+            border-radius: 12px;
             width: 100%;
-            box-sizing: border-box;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255, 42, 109, 0.3);
         }
 
-        .board-container {
+        .animated-logo {
+            font-size: 45px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--brand-pink);
+            background: #121216;
+            color: #fff;
+            text-align: center;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-size: 0.85rem;
+        }
+
+        /* Workspace & Chessboard */
+        .workspace {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 5px;
+            gap: 10px;
+        }
+
+        .board-container {
             width: 100%;
-            max-width: min(85vw, 65vh);
+            max-width: min(92vw, 52vh);
+            transition: all 0.3s ease;
+        }
+
+        .board-container.fullscreen-mode {
+            max-width: min(98vw, 80vh) !important;
         }
 
         .board-frame {
@@ -191,230 +145,292 @@
             aspect-ratio: 1 / 1;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.8);
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            border: 3px solid #3e3b37;
+            border: 3px solid #333;
         }
 
         .square {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(22px, 7vw, 48px);
+            font-size: clamp(22px, 7.5vw, 42px);
             cursor: pointer;
             position: relative;
+            transition: background 0.15s;
         }
 
         .square.light { background-color: var(--square-light); }
         .square.dark { background-color: var(--square-dark); }
-        .square.selected { background-color: var(--square-highlight) !important; }
-        .possible-move::after {
+        .square.selected { background-color: #f5f682 !important; }
+        .square.possible-move::after {
             content: '';
-            width: 28%; height: 28%;
-            background-color: rgba(0,0,0,0.25);
+            width: 25%; height: 25%;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
             position: absolute;
         }
-
-        .side-panel {
-            width: 320px;
-            background: rgba(38, 36, 33, 0.9);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            height: min(85vw, 65vh);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            gap: 10px;
-            box-sizing: border-box;
+        .square.possible-capture {
+            background-color: #ff4d4d !important;
         }
 
-        .moves-history {
-            flex: 1;
-            background: var(--bg-card);
+        .piece {
+            transition: transform 0.15s ease;
+            z-index: 2;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            width: 100%;
+            max-width: min(92vw, 52vh);
+            background: rgba(30, 30, 36, 0.95);
             border-radius: 8px;
             padding: 10px;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: 35px 1fr 1fr;
-            gap: 5px;
-            font-size: 0.85rem;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        /* Themes for Pieces & Board */
-        body.style-gold .square.light { background-color: #f3e5ab; }
-        body.style-gold .square.dark { background-color: #c5a059; }
-        body.style-neon .square.light { background-color: #2a2a38; }
-        body.style-neon .square.dark { background-color: #005f73; }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--brand-gold);
+            font-weight: bold;
+        }
 
-        @media (max-width: 820px) {
-            .workspace { flex-direction: column; }
-            .side-panel { width: min(85vw, 65vh); height: 200px; }
+        .moves-log {
+            height: 55px;
+            background: #121216;
+            border-radius: 6px;
+            padding: 6px;
+            overflow-y: auto;
+            font-size: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            color: #ccc;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        /* Board Theme Variations */
+        body.theme-wood { --square-light: #f0d9b5; --square-dark: #b58863; }
+        body.theme-neon { --square-light: #2b2d42; --square-dark: #8d99ae; }
+        body.theme-fire { --square-light: #ffddd2; --square-dark: #e63946; }
+        body.theme-ocean { --square-light: #e0fbfc; --square-dark: #3d5a80; }
+        body.theme-marble { --square-light: #e9ecef; --square-dark: #495057; }
+
+        /* Trial Banner */
+        .trial-banner {
+            background: #d62828;
+            color: #fff;
+            text-align: center;
+            font-size: 0.75rem;
+            padding: 4px;
+            font-weight: bold;
+            display: none;
         }
     </style>
 </head>
-<body class="style-classic">
+<body class="theme-default">
 
-<!-- Intro Screen & Trial Option -->
-<div id="introScreen" class="intro-screen">
-    <div class="animated-pieces">
-        <span>♚</span><span>♛</span><span>♞</span>
-    </div>
+<div id="trialBanner" class="trial-banner">
+    ⏳ التجربة المجانية شغالة - الوقت المتبقي: <span id="trialTimer">01:00</span>
+</div>
+
+<!-- Main Landing Screen -->
+<div id="mainLanding" class="modal-overlay">
     <div class="modal-box">
-        <h2 style="color: var(--brand-pink); margin-bottom: 5px;">Mahmoud Chess AI</h2>
-        <p style="color: #aaa; font-size: 0.85rem; margin-bottom: 15px;">منصة الشطرنج الاحترافية للعب الذكي والأونلاين</p>
-        
-        <input type="text" id="vipCodeInput" placeholder="أدخل كود الشراء (20 رقم)..." maxlength="20">
-        <button class="btn btn-gold" onclick="verify20DigitCode()" style="margin-bottom: 10px;">تفعيل الكود واللعب بلا حدود</button>
-        
-        <hr style="border: 0.5px solid #333; margin: 15px 0;">
-        
-        <p style="color: #ddd; font-size: 0.8rem;">تريد تجربة اللعبة أولاً؟</p>
-        <button class="btn btn-secondary" onclick="startFreeTrial()" style="width: 100%; margin-top: 5px;">تجربة مجانية (لمدة دقيقة واحدة)</button>
+        <div class="animated-logo">♚</div>
+        <h3 style="color: var(--brand-pink); margin: 0 0 5px;">Mahmoud Chess</h3>
+        <p style="color: #aaa; font-size: 0.75rem; margin-bottom: 15px;">اختر طريقة الدخول للعبة</p>
+
+        <button class="btn btn-gold" onclick="openCodeInputModal()" style="width: 100%; margin-bottom: 10px; padding: 12px;">
+            🔑 أنا مشتري للكود (دخول كامل)
+        </button>
+
+        <button class="btn btn-pink" onclick="startFreeTrial()" style="width: 100%; padding: 12px;">
+            🎁 تجربة مجانية (لمدة 1 دقيقة)
+        </button>
     </div>
 </div>
 
-<!-- Lockout Screen (After Trial Ends) -->
-<div id="lockoutScreen" class="intro-screen" style="display: none;">
+<!-- Code Verification Modal -->
+<div id="codeModal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
-        <h2 style="color: #ff4d4d; margin-bottom: 10px;">انتهت الفترة التجريبية!</h2>
-        <p style="color: #ccc; font-size: 0.85rem;">لست مجبراً على الانتظار، اشترِ الكود الآن واستمتع بجميع المميزات:</p>
-        
-        <ul style="text-align: right; font-size: 0.8rem; color: #ffd700; margin: 15px 20px; line-height: 1.8;">
-            <li>✨ لعب غير محدود دون قيود وقت.</li>
-            <li>✨ فتح اللعب أونلاين وإنشاء غرف خاصة.</li>
-            <li>✨ منافسة الروبوت بـ 3 مستويات ذكاء اصطناعي.</li>
-            <li>✨ تغيير أشكال وألوان القطع والرقعة بحرية.</li>
+        <h3>أدخل كود الشراء</h3>
+        <p style="color: #aaa; font-size: 0.75rem;">يتكون الكود من 20 رقم:</p>
+        <input type="text" id="vipCodeInput" placeholder="أدخل 20 رقم..." maxlength="20">
+        <button class="btn btn-gold" onclick="verifyVipCode()" style="width: 100%; margin-top: 5px;">تفعيل والدخول</button>
+        <button class="btn btn-dark" onclick="closeModal('codeModal')" style="width: 100%; margin-top: 5px;">إلغاء</button>
+    </div>
+</div>
+
+<!-- Lockout Screen -->
+<div id="lockoutModal" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+        <h3 style="color: #ff4d4d;">انتهت التجربة المجانية!</h3>
+        <p style="color: #ccc; font-size: 0.8rem;">انتهت دقيقة التجربة. اشترِ الكود الآن للحصول على:</p>
+        <ul style="text-align: right; font-size: 0.75rem; color: var(--brand-gold); margin: 10px 15px; line-height: 1.6;">
+            <li>لعب لا محدود بدون توقف.</li>
+            <li>القتال أونلاين وإنشاء الغرف.</li>
+            <li>الروبوت بـ 4 مستويات (منها المستحيل).</li>
+            <li>تخصيص ألوان الشطرنج والشاشة الكاملة.</li>
         </ul>
-
-        <input type="text" id="lockoutCodeInput" placeholder="أدخل كود الشراء المكون من 20 رقم..." maxlength="20">
-        <button class="btn btn-gold" onclick="verify20DigitCodeLockout()">تفعيل الكود ومتابعة اللعب</button>
-        <p id="lockoutTimerText" style="color: #aaa; font-size: 0.75rem; margin-top: 15px;"></p>
+        <input type="text" id="lockoutCodeInput" placeholder="أدخل كود الشراء (20 رقم)..." maxlength="20">
+        <button class="btn btn-gold" onclick="verifyLockoutCode()" style="width: 100%;">تفعيل الكود ومتابعة اللعب</button>
+        <p id="lockoutTimerText" style="color: #888; font-size: 0.7rem; margin-top: 10px;"></p>
     </div>
 </div>
 
-<!-- Settings Modal -->
-<div id="settingsModal" class="intro-screen" style="display: none;">
+<!-- VIP Mode Selection Modal -->
+<div id="vipModesModal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
-        <h3 style="color: var(--brand-pink);">إعدادات المظهر والقطع</h3>
-        
-        <label style="font-size: 0.8rem; color:#ccc;">ستايل الرقعة والقطع:</label>
-        <select id="styleSelect" onchange="changeBoardStyle(this.value)">
-            <option value="style-classic">الكلاسيكي الخشبي</option>
-            <option value="style-gold">الملكي (ذهبي وفضي)</option>
-            <option value="style-neon">النيون الفوسفوري</option>
-        </select>
+        <h3 style="color: var(--brand-pink);">اختر وضع اللعب</h3>
+        <button class="btn btn-dark" onclick="selectMode('local')" style="width: 100%; margin: 4px 0;">👥 اللعب وجهاً لوجه</button>
+        <button class="btn btn-dark" onclick="selectMode('online')" style="width: 100%; margin: 4px 0;">🌐 اللعب أونلاين (غرف)</button>
+        <button class="btn btn-dark" onclick="selectMode('ai')" style="width: 100%; margin: 4px 0;">🤖 اللعب ضد الروبوت</button>
 
-        <label style="font-size: 0.8rem; color:#ccc;">نمط القطع:</label>
-        <select id="pieceColorSelect" onchange="changePieceColor(this.value)">
-            <option value="normal">الافتراضي (أبيض وأسود)</option>
-            <option value="gold-silver">قطع ذهبية ومفضضة</option>
-        </select>
-
-        <button class="btn btn-primary" onclick="toggleModal('settingsModal', false)" style="margin-top: 15px;">حفظ وإغلاق</button>
-    </div>
-</div>
-
-<!-- Online & AI Mode Modal -->
-<div id="playModeModal" class="intro-screen" style="display: none;">
-    <div class="modal-box">
-        <h3 style="color: var(--brand-pink);">اختر نمط اللعب</h3>
-        
-        <button class="btn btn-secondary" onclick="setMode('ai')" style="width: 100%; margin: 8px 0;">🤖 اللعب ضد الروبوت (AI)</button>
-        <div id="aiDifficultyBox" style="display: none;">
-            <select id="aiLevel">
-                <option value="1">مستوى سهل</option>
-                <option value="2">مستوى متوسط</option>
-                <option value="3">مستوى محترف</option>
+        <div id="aiLevelBox" style="display: none; margin-top: 8px;">
+            <p style="font-size: 0.75rem; color:#aaa; margin: 2px 0;">اختر مستوى الروبوت:</p>
+            <select id="aiDifficulty">
+                <option value="1">1. سهل جداً</option>
+                <option value="2">2. متوسط</option>
+                <option value="3">3. صعب</option>
+                <option value="4">4. مستحيل 🔥</option>
             </select>
+            <button class="btn btn-pink" onclick="confirmAIMode()" style="width: 100%; margin-top: 4px;">ابدأ ضد الروبوت</button>
         </div>
 
-        <button class="btn btn-secondary" onclick="setMode('online')" style="width: 100%; margin: 8px 0;">🌐 اللعب أونلاين عبر كود الغرفة</button>
-        <div id="onlineRoomBox" style="display: none;">
-            <input type="text" id="roomCodeInput" placeholder="أدخل كود الغرفة للتحاق بالصديق...">
-            <button class="btn btn-primary" onclick="joinOnlineRoom()">انضمام للغرفة</button>
-            <p style="font-size: 0.75rem; color: #888; margin: 5px 0;">أو أنشئ غرفة جديدة:</p>
-            <button class="btn btn-gold" onclick="createOnlineRoom()">إنشاء غرفة جديدة وتوليد كود</button>
+        <div id="onlineBox" style="display: none; margin-top: 8px;">
+            <input type="text" id="roomCodeInput" placeholder="أدخل كود الغرفة (20 رقم)...">
+            <button class="btn btn-gold" onclick="joinRoom()" style="width: 100%; margin-bottom: 4px;">انضمام لغرفة</button>
+            <button class="btn btn-pink" onclick="createRoom()" style="width: 100%;">إنشاء غرفة جديدة</button>
         </div>
 
-        <button class="btn btn-primary" onclick="toggleModal('playModeModal', false)" style="margin-top: 15px;">إلغاء</button>
+        <button class="btn btn-dark" onclick="closeModal('vipModesModal')" style="width: 100%; margin-top: 10px;">إغلاق</button>
     </div>
 </div>
 
+<!-- Customization Options Modal -->
+<div id="settingsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+        <h3>إعدادات الرقعة والمظهر</h3>
+        <label style="font-size:0.75rem; color:#aaa;">شكل ولون الرقعة:</label>
+        <select onchange="changeTheme(this.value)">
+            <option value="theme-default">الرقعة الكلاسيكية (أخضر)</option>
+            <option value="theme-wood">الخشب الطبيعي</option>
+            <option value="theme-neon">النيون المظلم</option>
+            <option value="theme-fire">النسطح الناري</option>
+            <option value="theme-ocean">المحيط الهادئ</option>
+            <option value="theme-marble">الرخام المودرن</option>
+        </select>
+        <button class="btn btn-pink" onclick="toggleFullScreen()" style="width: 100%; margin-top: 10px;">📺 تفعيل/إلغاء وضع الشاشة الكاملة</button>
+        <button class="btn btn-dark" onclick="closeModal('settingsModal')" style="width: 100%; margin-top: 8px;">إغلاق</button>
+    </div>
+</div>
+
+<!-- Header Controls -->
 <header>
-    <div class="logo-text">Mahmoud Chess</div>
-    <div class="nav-buttons">
-        <button class="btn btn-primary" onclick="toggleModal('playModeModal', true)">🎮 اللعب المباشر / أونلاين</button>
-        <button class="btn btn-secondary" onclick="toggleModal('settingsModal', true)">⚙️ الإعدادات</button>
+    <div class="logo">Mahmoud Chess</div>
+    <div class="header-btns">
+        <button class="btn btn-pink" onclick="openVipModes()">🎮 الأنماط</button>
+        <button class="btn btn-dark" onclick="openModal('settingsModal')">⚙️</button>
     </div>
 </header>
 
-<div id="trialBanner" class="trial-banner" style="display: none;">
-    ⏳ فترة تجريبية مجانية - الوقت المتبقي: <b id="trialTimer">01:00</b>
-</div>
-
+<!-- Main Workspace -->
 <div class="workspace">
-    <div class="board-container">
+    <div id="boardContainer" class="board-container">
         <div id="board" class="board-frame"></div>
     </div>
 
-    <div class="side-panel">
-        <h4 id="gameModeStatus" style="color: var(--brand-pink); text-align: center; margin: 0;">اللعب المحلي</h4>
-        <div class="moves-history" id="movesLog"></div>
-        <button class="btn btn-secondary" onclick="resetGame()">إعادة لعبة جديدة</button>
+    <div class="control-panel">
+        <div class="status-bar">
+            <span id="turnDisplay">الدور: الأبيض</span>
+            <span id="modeDisplay">النمط: محلي</span>
+        </div>
+
+        <div id="movesLog" class="moves-log"></div>
+
+        <div class="action-grid">
+            <button class="btn btn-dark" onclick="saveGameCode()">💾 حفظ الوضعية</button>
+            <button class="btn btn-dark" onclick="loadGameCode()">📥 استعادة الوضعية</button>
+        </div>
+        <button class="btn btn-gold" onclick="resetGame()" style="width: 100%;">مباراة جديدة</button>
     </div>
 </div>
 
 <script>
-    // 20-Digit Code Generation & Verification System
-    const VALID_20_DIGIT_CODES = [
-        "63108941234567899876",
-        "10203040506070809000",
-        "99887766554433221100"
-    ];
+    // Web Audio Sound Generator
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
 
-    let gameMode = 'local'; // local, ai, online
-    let aiLevel = 1;
-    let trialTimerInterval = null;
-    let trialTimeLeft = 60; // 1 Minute free trial
-    let lockoutEndTime = null;
-
-    function verify20DigitCode() {
-        const input = document.getElementById('vipCodeInput').value.trim();
-        if (input.length === 20 && (VALID_20_DIGIT_CODES.includes(input) || /^\d{20}$/.test(input))) {
-            alert("تم التفعيل بنجاح! استمتع باللعبة بكامل الميزات دون قيود.");
-            document.getElementById('introScreen').style.display = 'none';
-        } else {
-            alert("الكود غير صحيح! يجب أن يتكون الكود من 20 رقمًا دقيقًا.");
+        if (type === 'move') {
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(140, now + 0.08);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            osc.start(now); osc.stop(now + 0.08);
+        } else if (type === 'capture') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(180, now + 0.1);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now); osc.stop(now + 0.1);
         }
     }
 
-    function verify20DigitCodeLockout() {
-        const input = document.getElementById('lockoutCodeInput').value.trim();
-        if (input.length === 20 && (VALID_20_DIGIT_CODES.includes(input) || /^\d{20}$/.test(input))) {
-            alert("تم التفعيل بنجاح!");
-            document.getElementById('lockoutScreen').style.display = 'none';
-            clearInterval(trialTimerInterval);
+    // Modal Helpers
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    let isVip = false;
+    let trialTimer = null;
+    let trialTimeLeft = 60;
+
+    function openCodeInputModal() {
+        closeModal('mainLanding');
+        openModal('codeModal');
+    }
+
+    function verifyVipCode() {
+        const val = document.getElementById('vipCodeInput').value.trim();
+        if (val.length === 20 && /^\d{20}$/.test(val)) {
+            isVip = true;
+            alert("تم التفعيل بنجاح! مرحباً بك في النسخة الاحترافية الكاملة.");
+            closeModal('codeModal');
         } else {
-            alert("كود خاطئ! تحقق من الـ 20 رقمًا.");
+            alert("خطأ! يجب إدخال كود صحيح يتكون من 20 رقم.");
         }
     }
 
     function startFreeTrial() {
-        document.getElementById('introScreen').style.display = 'none';
-        document.getElementById('trialBanner').style.display = 'flex';
-        
-        trialTimerInterval = setInterval(() => {
+        closeModal('mainLanding');
+        document.getElementById('trialBanner').style.display = 'block';
+        trialTimer = setInterval(() => {
             trialTimeLeft--;
-            let mins = Math.floor(trialTimeLeft / 60);
-            let secs = trialTimeLeft % 60;
-            document.getElementById('trialTimer').innerText = `0${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            
+            let m = Math.floor(trialTimeLeft / 60);
+            let s = trialTimeLeft % 60;
+            document.getElementById('trialTimer').innerText = `0${m}:${s < 10 ? '0' : ''}${s}`;
             if (trialTimeLeft <= 0) {
-                clearInterval(trialTimerInterval);
+                clearInterval(trialTimer);
                 triggerLockout();
             }
         }, 1000);
@@ -422,69 +438,89 @@
 
     function triggerLockout() {
         document.getElementById('trialBanner').style.display = 'none';
-        document.getElementById('lockoutScreen').style.display = 'flex';
-        
-        let lockoutDuration = 45 * 60; // 45 Minutes Lockout
-        let timer = setInterval(() => {
-            lockoutDuration--;
-            let m = Math.floor(lockoutDuration / 60);
-            let s = lockoutDuration % 60;
-            document.getElementById('lockoutTimerText').innerText = `يمكنك الانتظار لتجربة أخرى بعد: ${m} دقيقة و ${s} ثانية`;
-            if (lockoutDuration <= 0) {
-                clearInterval(timer);
-                location.reload();
-            }
+        openModal('lockoutModal');
+        let lockoutLeft = 45 * 60;
+        let lTimer = setInterval(() => {
+            lockoutLeft--;
+            let m = Math.floor(lockoutLeft / 60);
+            let s = lockoutLeft % 60;
+            document.getElementById('lockoutTimerText').innerText = `يمكن التجربة مجدداً بعد: ${m} دقيقة و ${s} ثانية`;
+            if (lockoutLeft <= 0) { clearInterval(lTimer); location.reload(); }
         }, 1000);
     }
 
-    function toggleModal(id, show) {
-        document.getElementById(id).style.display = show ? 'flex' : 'none';
-    }
-
-    function changeBoardStyle(style) {
-        document.body.className = style;
-    }
-
-    function changePieceColor(val) {
-        const board = document.getElementById('board');
-        if (val === 'gold-silver') {
-            board.style.filter = 'sepia(0.8) hue-rotate(5deg) saturate(2)';
+    function verifyLockoutCode() {
+        const val = document.getElementById('lockoutCodeInput').value.trim();
+        if (val.length === 20 && /^\d{20}$/.test(val)) {
+            isVip = true;
+            closeModal('lockoutModal');
+            alert("تم التفعيل بكتساب العضوية الكاملة!");
         } else {
-            board.style.filter = 'none';
+            alert("الكود غير صحيح! تأكد من إدخال 20 رقم.");
         }
     }
 
-    function setMode(mode) {
-        gameMode = mode;
+    function openVipModes() {
+        openModal('vipModesModal');
+    }
+
+    let currentGameMode = 'local';
+    let aiDiffLevel = 1;
+
+    function selectMode(mode) {
         if (mode === 'ai') {
-            document.getElementById('aiDifficultyBox').style.display = 'block';
-            document.getElementById('onlineRoomBox').style.display = 'none';
-            document.getElementById('gameModeStatus').innerText = "اللعب ضد الروبوت";
+            document.getElementById('aiLevelBox').style.display = 'block';
+            document.getElementById('onlineBox').style.display = 'none';
         } else if (mode === 'online') {
-            document.getElementById('aiDifficultyBox').style.display = 'none';
-            document.getElementById('onlineRoomBox').style.display = 'block';
-        }
-    }
-
-    function createOnlineRoom() {
-        const roomCode = Math.floor(10000000000000000000 + Math.random() * 9000000000000000000).toString();
-        alert(`تم إنشاء الغرفة بنجاح!\nكود المشاركة الخاص بك هو:\n${roomCode}`);
-        document.getElementById('gameModeStatus').innerText = `غرفة أونلاين: ${roomCode.substring(0,6)}...`;
-        toggleModal('playModeModal', false);
-    }
-
-    function joinOnlineRoom() {
-        const code = document.getElementById('roomCodeInput').value.trim();
-        if (code.length === 20) {
-            alert(`تم الانضمام للغرفة رقم: ${code}`);
-            document.getElementById('gameModeStatus').innerText = `متصل بالغرفة أونلاين`;
-            toggleModal('playModeModal', false);
+            document.getElementById('aiLevelBox').style.display = 'none';
+            document.getElementById('onlineBox').style.display = 'block';
         } else {
-            alert("يرجى إدخال كود غرفة صحيح مكون من 20 رقمًا!");
+            document.getElementById('aiLevelBox').style.display = 'none';
+            document.getElementById('onlineBox').style.display = 'none';
+            currentGameMode = 'local';
+            document.getElementById('modeDisplay').innerText = "النمط: محلي";
+            closeModal('vipModesModal');
         }
     }
 
-    // Engine Core Rules & Rendering
+    function confirmAIMode() {
+        currentGameMode = 'ai';
+        aiDiffLevel = parseInt(document.getElementById('aiDifficulty').value);
+        document.getElementById('modeDisplay').innerText = `النمط: روبوت (مستوى ${aiDiffLevel})`;
+        closeModal('vipModesModal');
+        resetGame();
+    }
+
+    function createRoom() {
+        const code = Array.from({length: 20}, () => Math.floor(Math.random() * 10)).join('');
+        alert(`تم إنشاء الغرفة!\nكود الغرفة الخاص بك هو:\n${code}`);
+        currentGameMode = 'online';
+        document.getElementById('modeDisplay').innerText = `أونلاين: ${code.substring(0, 5)}...`;
+        closeModal('vipModesModal');
+    }
+
+    function joinRoom() {
+        const val = document.getElementById('roomCodeInput').value.trim();
+        if (val.length === 20) {
+            alert("تم الانضمام للغرفة بنجاح!");
+            currentGameMode = 'online';
+            document.getElementById('modeDisplay').innerText = `أونلاين متصل`;
+            closeModal('vipModesModal');
+        } else {
+            alert("يرجى كتابة كود الغرفة المكون من 20 رقم بشكل صحيح.");
+        }
+    }
+
+    function changeTheme(theme) {
+        document.body.className = theme;
+    }
+
+    function toggleFullScreen() {
+        const container = document.getElementById('boardContainer');
+        container.classList.toggle('fullscreen-mode');
+    }
+
+    // Engine Core Rules & Mechanics
     const PIECES = {
         'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
         'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
@@ -501,7 +537,10 @@
         ['R','N','B','Q','K','B','N','R']
     ];
 
-    let turn = 'white', selectedSquare = null, possibleMoves = [], moveHistory = [];
+    let turn = 'white', selectedSq = null, validMoves = [], moveHistory = [];
+
+    function isWhite(p) { return p && p === p.toUpperCase(); }
+    function isBlack(p) { return p && p === p.toLowerCase(); }
 
     function initBoard() {
         const boardEl = document.getElementById('board');
@@ -513,8 +552,9 @@
                 const piece = boardState[r][c];
                 if (piece) {
                     const pEl = document.createElement('span');
+                    pEl.className = 'piece';
                     pEl.innerText = PIECES[piece];
-                    pEl.style.color = piece === piece.toUpperCase() ? '#fff' : '#000';
+                    pEl.style.color = isWhite(piece) ? '#ffffff' : '#000000';
                     sq.appendChild(pEl);
                 }
                 sq.addEventListener('click', () => handleSquareClick(r, c));
@@ -524,90 +564,181 @@
     }
 
     function handleSquareClick(r, c) {
-        if (selectedSquare) {
-            const [sr, sc] = selectedSquare;
-            if (possibleMoves.some(m => m[0] === r && m[1] === c)) {
+        if (currentGameMode === 'ai' && turn === 'black') return; // Enforce turn lock for AI
+
+        if (selectedSq) {
+            const [sr, sc] = selectedSq;
+            const move = validMoves.find(m => m.r === r && m.c === c);
+            if (move) {
                 executeMove(sr, sc, r, c);
-                selectedSquare = null; possibleMoves = [];
+                selectedSq = null; validMoves = [];
                 render();
-                if (gameMode === 'ai' && turn === 'black') {
-                    setTimeout(makeAIMove, 600);
+                if (currentGameMode === 'ai' && turn === 'black') {
+                    setTimeout(makeAIMove, 400);
                 }
                 return;
             }
         }
+
         const piece = boardState[r][c];
-        if (piece && ((turn === 'white' && piece === piece.toUpperCase()) || (turn === 'black' && piece === piece.toLowerCase()))) {
-            selectedSquare = [r, c];
-            possibleMoves = getSimpleMoves(r, c);
+        if (piece && ((turn === 'white' && isWhite(piece)) || (turn === 'black' && isBlack(piece)))) {
+            selectedSq = [r, c];
+            validMoves = calculateValidMoves(r, c);
         } else {
-            selectedSquare = null; possibleMoves = [];
+            selectedSq = null; validMoves = [];
         }
         render();
     }
 
-    function getSimpleMoves(r, c) {
+    function calculateValidMoves(r, c) {
+        const piece = boardState[r][c];
+        const type = piece.toLowerCase();
+        const white = isWhite(piece);
         const moves = [];
-        const piece = boardState[r][c].toLowerCase();
-        const isWhite = boardState[r][c] === boardState[r][c].toUpperCase();
-        const dir = isWhite ? -1 : 1;
 
-        if (piece === 'p') {
-            if (r + dir >= 0 && r + dir < 8 && !boardState[r + dir][c]) moves.push([r + dir, c]);
-        } else {
-            for (let dr = -1; dr <= 1; dr++) {
-                for (let dc = -1; dc <= 1; dc++) {
-                    if (dr === 0 && dc === 0) continue;
-                    let nr = r + dr, nc = c + dc;
-                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) moves.push([nr, nc]);
+        const addMove = (nr, nc) => {
+            if (nr < 0 || nr >= 8 || nc < 0 || nc >= 8) return false;
+            const target = boardState[nr][nc];
+            if (!target) {
+                moves.push({ r: nr, c: nc, capture: false });
+                return true;
+            }
+            if ((white && isBlack(target)) || (!white && isWhite(target))) {
+                moves.push({ r: nr, c: nc, capture: true });
+            }
+            return false;
+        };
+
+        if (type === 'p') {
+            const dir = white ? -1 : 1;
+            const startRow = white ? 6 : 1;
+            
+            // Forward 1
+            if (r + dir >= 0 && r + dir < 8 && !boardState[r + dir][c]) {
+                moves.push({ r: r + dir, c, capture: false });
+                // Forward 2 from start row
+                if (r === startRow && !boardState[r + 2 * dir][c]) {
+                    moves.push({ r: r + 2 * dir, c, capture: false });
                 }
             }
+            // Captures
+            for (let dc of [-1, 1]) {
+                if (c + dc >= 0 && c + dc < 8) {
+                    const target = boardState[r + dir]?.[c + dc];
+                    if (target && ((white && isBlack(target)) || (!white && isWhite(target)))) {
+                        moves.push({ r: r + dir, c: c + dc, capture: true });
+                    }
+                }
+            }
+        } else if (type === 'n') {
+            const nMoves = [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]];
+            nMoves.forEach(([dr, dc]) => addMove(r + dr, c + dc));
+        } else if (type === 'k') {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr !== 0 || dc !== 0) addMove(r + dr, c + dc);
+                }
+            }
+        } else {
+            // Rooks, Bishops, Queens
+            const dirs = [];
+            if (type === 'r' || type === 'q') dirs.push([1,0],[-1,0],[0,1],[0,-1]);
+            if (type === 'b' || type === 'q') dirs.push([1,1],[1,-1],[-1,1],[-1,-1]);
+
+            dirs.forEach(([dr, dc]) => {
+                let nr = r + dr, nc = c + dc;
+                while (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                    if (!addMove(nr, nc)) break;
+                    nr += dr; nc += dc;
+                }
+            });
         }
         return moves;
     }
 
     function executeMove(fr, fc, tr, tc) {
         const piece = boardState[fr][fc];
+        const target = boardState[tr][tc];
+
+        if (target) playSound('capture');
+        else playSound('move');
+
         boardState[tr][tc] = piece;
         boardState[fr][fc] = '';
-        moveHistory.push(`${piece} -> ${tr},${tc}`);
+
+        // Pawn Promotion
+        if (piece === 'P' && tr === 0) boardState[tr][tc] = 'Q';
+        if (piece === 'p' && tr === 7) boardState[tr][tc] = 'q';
+
+        moveHistory.push(`${piece}: (${fr},${fc}) ➔ (${tr},${tc})`);
         turn = turn === 'white' ? 'black' : 'white';
         updateLog();
     }
 
     function makeAIMove() {
-        let blackPieces = [];
+        let allMoves = [];
         for (let r = 0; r < 8; r++) {
             for (let c = 0; c < 8; c++) {
-                if (boardState[r][c] && boardState[r][c] === boardState[r][c].toLowerCase()) {
-                    blackPieces.push([r, c]);
+                if (boardState[r][c] && isBlack(boardState[r][c])) {
+                    let moves = calculateValidMoves(r, c);
+                    moves.forEach(m => allMoves.push({ fr: r, fc: c, tr: m.r, tc: m.c, capture: m.capture }));
                 }
             }
         }
-        if (blackPieces.length === 0) return;
-        let randomPiece = blackPieces[Math.floor(Math.random() * blackPieces.length)];
-        let moves = getSimpleMoves(randomPiece[0], randomPiece[1]);
-        if (moves.length > 0) {
-            let move = moves[Math.floor(Math.random() * moves.length)];
-            executeMove(randomPiece[0], randomPiece[1], move[0], move[1]);
-            render();
+
+        if (allMoves.length === 0) return;
+
+        let selectedMove = null;
+        if (aiDiffLevel >= 3) {
+            // Prioritize Captures on Hard / Impossible
+            let captures = allMoves.filter(m => m.capture);
+            if (captures.length > 0) selectedMove = captures[Math.floor(Math.random() * captures.length)];
         }
+        
+        if (!selectedMove) {
+            selectedMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+        }
+
+        executeMove(selectedMove.fr, selectedMove.fc, selectedMove.tr, selectedMove.tc);
+        render();
     }
 
     function updateLog() {
         const log = document.getElementById('movesLog');
-        log.innerHTML = moveHistory.map((m, i) => `<div>${i+1}.</div><div style="grid-column: span 2">${m}</div>`).join('');
+        log.innerHTML = moveHistory.map((m, i) => `<span>${i + 1}. ${m}</span>`).join(' | ');
+        log.scrollTop = log.scrollHeight;
+        document.getElementById('turnDisplay').innerText = `الدور: ${turn === 'white' ? 'الأبيض' : 'الأسود'}`;
     }
 
     function render() {
         initBoard();
         const boardEl = document.getElementById('board');
-        if (selectedSquare) {
-            boardEl.children[selectedSquare[0] * 8 + selectedSquare[1]].classList.add('selected');
+        if (selectedSq) {
+            boardEl.children[selectedSq[0] * 8 + selectedSq[1]].classList.add('selected');
         }
-        possibleMoves.forEach(([r, c]) => {
-            boardEl.children[r * 8 + c].classList.add('possible-move');
+        validMoves.forEach(m => {
+            const idx = m.r * 8 + m.c;
+            if (m.capture) boardEl.children[idx].classList.add('possible-capture');
+            else boardEl.children[idx].classList.add('possible-move');
         });
+    }
+
+    function saveGameCode() {
+        const data = { b: boardState, t: turn, h: moveHistory };
+        const code = btoa(JSON.stringify(data));
+        prompt("تم إنشاء كود الحفظ، انسخه الآن:", code);
+    }
+
+    function loadGameCode() {
+        const code = prompt("أدخل كود الوضعية المحفوظة:");
+        if (!code) return;
+        try {
+            const data = JSON.parse(atob(code));
+            boardState = data.b; turn = data.t; moveHistory = data.h;
+            selectedSq = null; validMoves = [];
+            updateLog(); render();
+            alert("تمت استعادة الوضعية بنجاح!");
+        } catch (e) { alert("الكود أدخل بشكل غير صحيح!"); }
     }
 
     function resetGame() {
@@ -621,7 +752,7 @@
             ['P','P','P','P','P','P','P','P'],
             ['R','N','B','Q','K','B','N','R']
         ];
-        turn = 'white'; selectedSquare = null; possibleMoves = []; moveHistory = [];
+        turn = 'white'; selectedSq = null; validMoves = []; moveHistory = [];
         updateLog(); render();
     }
 
