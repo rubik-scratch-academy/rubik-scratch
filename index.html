@@ -2,20 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahmoud.chess.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mahmoud.chess.com Pro</title>
     <style>
         :root {
-            --red-dark: #800016;
-            --red-mid: #b80d38;
-            --pink-mid: #e65c84;
-            --pink-light: #f8bbd0;
-            --pink-ultra-light: #fff0f5;
+            --color-1: #800016;
+            --color-2: #b80d38;
+            --color-3: #e65c84;
+            --color-4: #f8bbd0;
+            --color-5: #fff0f5;
             
-            --square-dark: #b80d38;
+            --square-dark: #a80c33;
             --square-light: #f8bbd0;
-            --highlight: rgba(255, 255, 255, 0.6);
-            --possible: rgba(128, 0, 22, 0.4);
+            --highlight: rgba(255, 255, 255, 0.75);
+            --possible: rgba(128, 0, 22, 0.5);
         }
 
         * {
@@ -24,116 +24,170 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
+        /* Animated Dynamic Gradient Background */
         body {
-            background: linear-gradient(135deg, var(--red-dark), var(--red-mid), var(--pink-mid), var(--pink-light));
-            color: var(--pink-ultra-light);
+            background: linear-gradient(-45deg, var(--color-1), var(--color-2), var(--color-3), var(--color-4));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--color-5);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Cinematic Splash Screen */
+        #splashOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .cinematic-logo {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--color-2), var(--color-4), #fff, var(--color-3));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite, zoomIn 1.5s ease-out forwards;
+            text-shadow: 0 0 30px rgba(230, 92, 132, 0.5);
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .click-prompt {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            color: var(--color-4);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
         /* Login Modal */
         #loginOverlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--red-dark), var(--pink-mid));
-            display: flex;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 15px;
         }
 
         .login-card {
-            background: linear-gradient(180deg, var(--red-dark), var(--red-mid));
-            padding: 40px;
+            background: linear-gradient(180deg, var(--color-1), var(--color-2));
+            padding: clamp(20px, 5vw, 40px);
             border-radius: 20px;
-            border: 2px solid var(--pink-light);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid var(--color-4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             text-align: center;
-            max-width: 450px;
-            width: 90%;
+            max-width: 480px;
+            width: 100%;
         }
 
-        .login-card h1 {
-            color: var(--pink-light);
-            font-size: 2.2rem;
+        .login-card h2 {
+            color: var(--color-4);
             margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-size: clamp(1.4rem, 4vw, 2rem);
         }
 
         .login-card input {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             border-radius: 10px;
-            border: 2px solid var(--pink-mid);
-            background: var(--pink-ultra-light);
-            color: var(--red-dark);
-            font-size: 1.1rem;
+            border: 2px solid var(--color-3);
+            background: var(--color-5);
+            color: var(--color-1);
+            font-size: 1rem;
             font-weight: bold;
             outline: none;
-            margin-bottom: 15px;
             text-align: center;
+            margin-bottom: 10px;
         }
 
-        /* Navbar Header */
+        /* Responsive Layout Header */
         header {
-            background: linear-gradient(90deg, var(--red-dark), var(--red-mid));
-            padding: 15px 30px;
+            background: rgba(128, 0, 22, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--pink-mid);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--color-3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .logo {
-            font-size: 1.8rem;
+        .logo-text {
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
             font-weight: 900;
-            background: linear-gradient(45deg, var(--pink-light), var(--pink-ultra-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
+            color: var(--color-4);
+            letter-spacing: 0.5px;
         }
 
-        .user-info {
-            background: var(--red-dark);
-            padding: 8px 16px;
+        .user-pill {
+            background: rgba(0,0,0,0.3);
+            padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid var(--pink-light);
-            color: var(--pink-light);
+            border: 1px solid var(--color-4);
+            color: var(--color-4);
+            font-size: clamp(0.75rem, 2.5vw, 0.95rem);
             font-weight: bold;
         }
 
-        /* Main Game Layout */
+        /* Container Layout */
         .main-container {
             display: flex;
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             gap: 20px;
             justify-content: center;
-            align-items: flex-start;
-            max-width: 1300px;
+            align-items: center;
+            max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            flex-wrap: wrap;
         }
 
-        .board-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Dynamic Responsive Chess Board */
+        .board-wrapper {
+            width: min(85vw, 520px);
+            height: min(85vw, 520px);
+            position: relative;
         }
 
         .chess-board {
-            width: 560px;
-            height: 560px;
+            width: 100%;
+            height: 100%;
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            border: 6px solid var(--red-dark);
+            border: 6px solid var(--color-1);
             border-radius: 8px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
 
@@ -141,7 +195,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 46px;
+            font-size: clamp(24px, 8vw, 42px);
             cursor: pointer;
             position: relative;
         }
@@ -149,153 +203,202 @@
         .square.light { background-color: var(--square-light); }
         .square.dark { background-color: var(--square-dark); }
         .square.selected { background-color: var(--highlight) !important; }
-        
+
         .possible-move::after {
             content: '';
-            width: 18px;
-            height: 18px;
+            width: 30%;
+            height: 30%;
             background-color: var(--possible);
             border-radius: 50%;
             position: absolute;
         }
 
-        /* Custom Pink/Red Pieces Styling */
+        /* Custom Styled Pieces */
         .piece {
             z-index: 2;
             line-height: 0;
-            transition: transform 0.1s;
+            transition: transform 0.15s ease;
         }
         .piece.white-piece {
-            color: var(--pink-ultra-light);
-            text-shadow: 0 2px 5px rgba(128, 0, 22, 0.8);
+            color: var(--color-5);
+            text-shadow: 0 2px 6px rgba(128, 0, 22, 0.9);
         }
         .piece.black-piece {
-            color: var(--red-dark);
-            text-shadow: 0 2px 5px rgba(248, 187, 208, 0.8);
+            color: var(--color-1);
+            text-shadow: 0 2px 6px rgba(248, 187, 208, 0.9);
         }
 
-        /* Control Panel */
+        /* Side Controls Panel */
         .panel {
-            background: linear-gradient(180deg, var(--red-dark), var(--red-mid));
+            background: rgba(128, 0, 22, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
-            padding: 20px;
-            width: 340px;
-            border: 2px solid var(--pink-mid);
+            padding: 15px;
+            width: min(90vw, 360px);
+            border: 2px solid var(--color-3);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .panel-box {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px;
             border-radius: 8px;
-            border-right: 4px solid var(--pink-light);
+            border-right: 4px solid var(--color-4);
         }
 
         .turn-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            color: var(--pink-light);
+            color: var(--color-4);
         }
 
         .captured-area {
-            min-height: 40px;
-            font-size: 22px;
+            min-height: 35px;
+            font-size: clamp(18px, 4vw, 22px);
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
+            gap: 4px;
+            margin-top: 4px;
         }
 
         .btn {
-            background: linear-gradient(90deg, var(--pink-mid), var(--pink-light));
-            color: var(--red-dark);
+            background: linear-gradient(90deg, var(--color-3), var(--color-4));
+            color: var(--color-1);
             border: none;
             padding: 12px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
             text-align: center;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
+        .btn:active { transform: scale(0.98); }
 
         textarea {
             width: 100%;
-            height: 70px;
-            background: var(--pink-ultra-light);
-            color: var(--red-dark);
-            border: 2px solid var(--pink-mid);
+            height: 60px;
+            background: var(--color-5);
+            color: var(--color-1);
+            border: 2px solid var(--color-3);
             border-radius: 6px;
             padding: 8px;
             font-family: monospace;
             resize: none;
             outline: none;
-        }
-
-        @media (max-width: 900px) {
-            .main-container { flex-direction: column; align-items: center; }
-            .chess-board { width: 90vw; height: 90vw; max-width: 480px; max-height: 480px; }
-            .panel { width: 90vw; max-width: 480px; }
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-<!-- Login Overlay -->
+<!-- Cinematic Intro Overlay -->
+<div id="splashOverlay" onclick="startCinematicIntro()">
+    <div class="cinematic-logo">Mahmoud.chess.com</div>
+    <div class="click-prompt">اضغط في أي مكان للبدء ♔</div>
+</div>
+
+<!-- Login Modal -->
 <div id="loginOverlay">
     <div class="login-card">
-        <h1>Mahmoud.chess.com</h1>
-        <p style="margin-bottom: 15px; color: var(--pink-light);">أدخل كلمة المرور الخاصة بك للدخول:</p>
+        <h2>أهلاً بك في منصة الشطرنج</h2>
+        <p style="margin-bottom: 15px; color: var(--color-4); font-size: 0.9rem;">أدخل كلمة المرور المخصصة لك للدخول:</p>
         <input type="password" id="passInput" placeholder="كلمة السر..." oninput="checkPassword()">
-        <p id="loginError" style="color: #ff9999; font-size: 0.9rem; display: none;">كلمة المرور غير صحيحة!</p>
+        <p id="loginError" style="color: #ff9999; font-size: 0.85rem; display: none;">كلمة المرور غير صحيحة!</p>
     </div>
 </div>
 
-<!-- Main App -->
+<!-- Main App Layout -->
 <header>
-    <div class="logo">Mahmoud.chess.com</div>
-    <div class="user-info" id="userDisplay">مستخدِم: ---</div>
+    <div class="logo-text">Mahmoud.chess.com</div>
+    <div class="user-pill" id="userDisplay">مستخدِم: ---</div>
 </header>
 
 <div class="main-container">
-    <div class="board-section">
+    <div class="board-wrapper">
         <div id="board" class="chess-board"></div>
     </div>
 
     <div class="panel">
         <div class="panel-box">
             <div class="turn-text" id="turnIndicator">الدور: الأبيض</div>
-            <div id="statusText" style="font-size: 0.9rem; margin-top: 5px; color: var(--pink-light);">العب الآن</div>
         </div>
 
         <div class="panel-box">
-            <label style="font-size: 0.85rem; color: var(--pink-light);">قطع الأسود المأكولة:</label>
+            <label style="font-size: 0.8rem; color: var(--color-4);">قطع الأسود المأكولة:</label>
             <div class="captured-area" id="capturedBlack"></div>
-            <label style="font-size: 0.85rem; color: var(--pink-light); margin-top: 10px; display:block;">قطع الأبيض المأكولة:</label>
+            <label style="font-size: 0.8rem; color: var(--color-4); margin-top: 8px; display:block;">قطع الأبيض المأكولة:</label>
             <div class="captured-area" id="capturedWhite"></div>
         </div>
 
         <button class="btn" onclick="generateSaveCode()">حفظ اللعبة وإنشاء كود الحصة</button>
         
         <div>
-            <label style="font-size: 0.85rem; color: var(--pink-light);">كود استعادة اللعبة:</label>
-            <textarea id="codeBox" placeholder="سيظهر كود الحصة هنا أو ألصق كود لاستعادة اللعبة..."></textarea>
+            <label style="font-size: 0.8rem; color: var(--color-4);">كود استعادة اللعبة:</label>
+            <textarea id="codeBox" placeholder="ألصق كود الحصة هنا واستعد المباراة..."></textarea>
             <button class="btn" style="margin-top: 5px; width: 100%;" onclick="loadSaveCode()">استعادة اللعبة من الكود</button>
         </div>
 
-        <button class="btn" style="background: var(--red-dark); color: var(--pink-light); border: 1px solid var(--pink-mid);" onclick="resetGame()">مباراة جديدة</button>
+        <button class="btn" style="background: var(--color-1); color: var(--color-4); border: 1px solid var(--color-3);" onclick="resetGame()">مباراة جديدة</button>
     </div>
 </div>
 
 <script>
+    // Audio Synthesizer (Zero External Files Needed)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function initAudio() {
+        if (!audioCtx) audioCtx = new AudioCtx();
+    }
+
+    function playSound(type) {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'intro') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 1.2);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
+            osc.start(now);
+            osc.stop(now + 1.5);
+        } else if (type === 'move') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(400, now);
+            osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        } else if (type === 'capture') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(800, now);
+            osc.frequency.exponentialRampToValueAtTime(200, now + 0.15);
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+            osc.start(now);
+            osc.stop(now + 0.15);
+        }
+    }
+
+    function startCinematicIntro() {
+        initAudio();
+        playSound('intro');
+        document.getElementById('splashOverlay').style.display = 'none';
+        document.getElementById('loginOverlay').style.display = 'flex';
+    }
+
     // System Users Base
     const USERS = {
         "6310894123456789987654321123456789987654321090807060504030201": "المالك (محمود)",
@@ -326,7 +429,6 @@
     let capturedWhite = [];
     let capturedBlack = [];
 
-    // Automatic Authentication Check
     function checkPassword() {
         const inputPass = document.getElementById('passInput').value.trim();
         const errorEl = document.getElementById('loginError');
@@ -334,7 +436,7 @@
         if (USERS[inputPass]) {
             document.getElementById('userDisplay').innerText = `المستخدم: ${USERS[inputPass]}`;
             document.getElementById('loginOverlay').style.display = 'none';
-        } else if (inputPass.length >= 22) {
+        } else if (inputPass.length >= 20) {
             errorEl.style.display = 'block';
         } else {
             errorEl.style.display = 'none';
@@ -457,8 +559,11 @@
         const target = boardState[toR][toC];
 
         if (target) {
+            playSound('capture');
             if (isWhite(target)) capturedWhite.push(PIECES[target]);
             else capturedBlack.push(PIECES[target]);
+        } else {
+            playSound('move');
         }
 
         boardState[toR][toC] = piece;
@@ -489,7 +594,6 @@
         document.getElementById('capturedBlack').innerText = capturedBlack.join(' ');
     }
 
-    // Save Game to Code Feature
     function generateSaveCode() {
         const gameData = {
             b: boardState,
@@ -502,7 +606,6 @@
         alert("تم إنشاء كود استعادة اللعبة بنجاح! انسخه واستخدمه لاحقاً.");
     }
 
-    // Load Game from Code Feature
     function loadSaveCode() {
         const code = document.getElementById('codeBox').value.trim();
         if (!code) return;
