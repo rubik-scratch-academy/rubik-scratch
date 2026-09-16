@@ -3,403 +3,644 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahmoud.chess.com Pro</title>
+    <title>Mahmoud.chess.com - Grandmaster Pro Edition</title>
     <style>
+        /* ========================================== */
+        /* 1. CSS VARIABLES & THEME SETUP             */
+        /* ========================================== */
         :root {
-            --color-1: #800016;
-            --color-2: #b80d38;
-            --color-3: #e65c84;
-            --color-4: #f8bbd0;
-            --color-5: #fff0f5;
+            --bg-main: #262421;
+            --bg-panel: #312e2b;
+            --bg-card: #21201d;
+            --bg-header: #1e1c18;
+            --border-color: #3e3b37;
             
-            --square-dark: #a80c33;
-            --square-light: #f8bbd0;
-            --highlight: rgba(255, 255, 255, 0.75);
-            --possible: rgba(128, 0, 22, 0.5);
+            --square-light: #ebecd0;
+            --square-dark: #739552;
+            --square-highlight: #f5f682;
+            --move-hint: rgba(0, 0, 0, 0.2);
+            --check-bg: #e63946;
+            
+            --brand-red: #800016;
+            --brand-pink-mid: #e65c84;
+            --brand-pink-light: #f8bbd0;
+            
+            --text-main: #ffffff;
+            --text-muted: #bababa;
+            --text-dim: #8b8987;
         }
 
+        /* Wood Theme Alternate */
+        body.theme-wood {
+            --square-light: #f0d9b5;
+            --square-dark: #b58863;
+        }
+
+        /* Ocean Theme Alternate */
+        body.theme-ocean {
+            --square-light: #dee3e6;
+            --square-dark: #8ca2ad;
+        }
+
+        /* ========================================== */
+        /* 2. GLOBAL RESET & BASE STYLES              */
+        /* ========================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Animated Dynamic Gradient Background */
         body {
-            background: linear-gradient(-45deg, var(--color-1), var(--color-2), var(--color-3), var(--color-4));
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--color-5);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Cinematic Splash Screen */
-        #splashOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            cursor: pointer;
-        }
-
-        .cinematic-logo {
-            font-size: clamp(2rem, 6vw, 4.5rem);
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--color-2), var(--color-4), #fff, var(--color-3));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite, zoomIn 1.5s ease-out forwards;
-            text-shadow: 0 0 30px rgba(230, 92, 132, 0.5);
-            text-align: center;
-            padding: 0 10px;
-        }
-
-        .click-prompt {
-            margin-top: 25px;
-            font-size: 1.2rem;
-            color: var(--color-4);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes shine { to { background-position: 200% center; } }
-        @keyframes zoomIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        /* Login Modal */
-        #loginOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 15px;
-        }
-
-        .login-card {
-            background: linear-gradient(180deg, var(--color-1), var(--color-2));
-            padding: clamp(20px, 5vw, 40px);
-            border-radius: 20px;
-            border: 2px solid var(--color-4);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            text-align: center;
-            max-width: 480px;
-            width: 100%;
-        }
-
-        .login-card h2 {
-            color: var(--color-4);
-            margin-bottom: 20px;
-            font-size: clamp(1.4rem, 4vw, 2rem);
-        }
-
-        .login-card input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid var(--color-3);
-            background: var(--color-5);
-            color: var(--color-1);
-            font-size: 1rem;
-            font-weight: bold;
-            outline: none;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        /* Responsive Layout Header */
+        /* ========================================== */
+        /* 3. HEADER & NAVBAR                         */
+        /* ========================================== */
         header {
-            background: rgba(128, 0, 22, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 12px 20px;
+            background-color: var(--bg-header);
+            height: 60px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--color-3);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--brand-red), var(--brand-pink-mid), var(--brand-pink-light));
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            box-shadow: 0 0 15px rgba(230, 92, 132, 0.4);
         }
 
         .logo-text {
-            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
-            font-weight: 900;
-            color: var(--color-4);
-            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ffffff, var(--brand-pink-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .user-pill {
-            background: rgba(0,0,0,0.3);
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid var(--color-4);
-            color: var(--color-4);
-            font-size: clamp(0.75rem, 2.5vw, 0.95rem);
-            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--brand-pink-light);
         }
 
-        /* Container Layout */
-        .main-container {
+        .icon-btn {
+            background: #363431;
+            border: 1px solid #4a4743;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
             display: flex;
-            flex: 1;
-            padding: 15px;
-            gap: 20px;
             justify-content: center;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            flex-wrap: wrap;
+            font-size: 1.1rem;
+            transition: 0.2s;
         }
 
-        /* Dynamic Responsive Chess Board */
-        .board-wrapper {
-            width: min(85vw, 520px);
-            height: min(85vw, 520px);
+        .icon-btn:hover {
+            background: #4a4743;
+        }
+
+        /* ========================================== */
+        /* 4. MAIN WORKSPACE LAYOUT                   */
+        /* ========================================== */
+        .workspace {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 15px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Evaluation Bar System */
+        .eval-bar-container {
+            width: 20px;
+            height: min(85vw, 560px);
+            background: #403d39;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #504c47;
             position: relative;
         }
 
-        .chess-board {
+        .eval-bar-black {
+            background: #2b2927;
             width: 100%;
-            height: 100%;
+            height: 50%;
+            transition: height 0.4s ease;
+        }
+
+        .eval-bar-white {
+            background: #e8e8e8;
+            width: 100%;
+            flex: 1;
+        }
+
+        .eval-score-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--brand-pink-mid);
+            bottom: 4px;
+            left: 0;
+            z-index: 2;
+        }
+
+        /* Chess Board Outer & Frame */
+        .board-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .player-bar {
+            width: 100%;
+            max-width: 560px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            color: var(--text-muted);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: #403d39;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid #504c47;
+        }
+
+        .captured-pieces {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #d1d1d1;
+        }
+
+        .board-frame {
+            width: min(85vw, 560px);
+            height: min(85vw, 560px);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            border: 6px solid var(--color-1);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
+            border: 2px solid #3e3b37;
         }
 
         .square {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(24px, 8vw, 42px);
+            font-size: clamp(28px, 8vw, 48px);
             cursor: pointer;
             position: relative;
+            transition: background-color 0.15s ease;
         }
 
         .square.light { background-color: var(--square-light); }
         .square.dark { background-color: var(--square-dark); }
-        .square.selected { background-color: var(--highlight) !important; }
+        .square.selected { background-color: var(--square-highlight) !important; }
+        .square.last-move { background-color: rgba(255, 255, 0, 0.35) !important; }
+        .square.in-check { background-color: var(--check-bg) !important; }
 
         .possible-move::after {
             content: '';
-            width: 30%;
-            height: 30%;
-            background-color: var(--possible);
+            width: 26%;
+            height: 26%;
+            background-color: var(--move-hint);
             border-radius: 50%;
             position: absolute;
         }
 
-        /* Custom Styled Pieces */
         .piece {
-            z-index: 2;
-            line-height: 0;
-            transition: transform 0.15s ease;
-        }
-        .piece.white-piece {
-            color: var(--color-5);
-            text-shadow: 0 2px 6px rgba(128, 0, 22, 0.9);
-        }
-        .piece.black-piece {
-            color: var(--color-1);
-            text-shadow: 0 2px 6px rgba(248, 187, 208, 0.9);
+            z-index: 5;
+            transition: transform 0.1s ease;
         }
 
-        /* Side Controls Panel */
-        .panel {
-            background: rgba(128, 0, 22, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px;
-            width: min(90vw, 360px);
-            border: 2px solid var(--color-3);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        .piece:active {
+            transform: scale(1.15);
+        }
+
+        /* ========================================== */
+        /* 5. SIDE CONTROL PANEL                      */
+        /* ========================================== */
+        .side-panel {
+            width: 380px;
+            background-color: var(--bg-panel);
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            height: min(85vw, 560px);
+            border: 1px solid var(--border-color);
         }
 
-        .panel-box {
-            background: rgba(0, 0, 0, 0.25);
-            padding: 12px;
-            border-radius: 8px;
-            border-right: 4px solid var(--color-4);
-        }
-
-        .turn-text {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--color-4);
-        }
-
-        .captured-area {
-            min-height: 35px;
-            font-size: clamp(18px, 4vw, 22px);
+        .panel-header {
+            background-color: var(--bg-card);
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--brand-pink-light);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            background: #2a2825;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid #3e3b37;
+            color: var(--text-muted);
+        }
+
+        .moves-history {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 45px 1fr 1fr;
             gap: 4px;
-            margin-top: 4px;
+            font-size: 0.9rem;
+            align-content: start;
+            background: var(--bg-card);
+        }
+
+        .move-number {
+            color: var(--text-dim);
+            font-weight: bold;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .move-val {
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #dedede;
+            cursor: pointer;
+        }
+
+        .move-val:hover {
+            background: #3a3732;
+        }
+
+        .move-val:nth-child(3n+2) {
+            background: #282623;
+        }
+
+        .panel-actions {
+            padding: 15px;
+            background-color: var(--bg-main);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 8px;
         }
 
         .btn {
-            background: linear-gradient(90deg, var(--color-3), var(--color-4));
-            color: var(--color-1);
             border: none;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
+            transition: filter 0.2s, transform 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
         }
 
-        .btn:active { transform: scale(0.98); }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--brand-red), var(--brand-pink-mid));
+            color: #fff;
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: #363431;
+            color: var(--text-muted);
+            border: 1px solid #4a4743;
+            flex: 1;
+        }
+
+        .btn-danger {
+            background: #a8233b;
+            color: #fff;
+            width: 100%;
+        }
 
         textarea {
             width: 100%;
-            height: 60px;
-            background: var(--color-5);
-            color: var(--color-1);
-            border: 2px solid var(--color-3);
-            border-radius: 6px;
+            height: 55px;
+            background: #1a1917;
+            border: 1px solid #4a4743;
+            color: var(--brand-pink-light);
+            border-radius: 4px;
             padding: 8px;
-            font-family: monospace;
             resize: none;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        /* ========================================== */
+        /* 6. MODALS & OVERLAYS                       */
+        /* ========================================== */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-card {
+            background: var(--bg-panel);
+            border: 2px solid var(--brand-pink-mid);
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .modal-card h2 {
+            margin-bottom: 10px;
+            color: var(--brand-pink-light);
+        }
+
+        .modal-card input, .modal-card select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--brand-pink-mid);
+            background: #1e1c18;
+            color: #fff;
+            text-align: center;
+            margin: 12px 0;
             outline: none;
-            font-size: 0.85rem;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            text-align: right;
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            display: none;
+            margin-top: 5px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 950px) {
+            .workspace {
+                flex-direction: column;
+                align-items: center;
+            }
+            .side-panel {
+                width: min(85vw, 560px);
+                height: 380px;
+            }
+            .eval-bar-container {
+                width: min(85vw, 560px);
+                height: 14px;
+                flex-direction: row;
+            }
+            .eval-bar-black {
+                height: 100%;
+                width: 50%;
+            }
+            .eval-score-text {
+                display: none;
+            }
         }
     </style>
 </head>
-<body>
+<body class="theme-default">
 
-<!-- Cinematic Intro Overlay -->
-<div id="splashOverlay" onclick="startCinematicIntro()">
-    <div class="cinematic-logo">Mahmoud.chess.com</div>
-    <div class="click-prompt">اضغط في أي مكان للبدء ♔</div>
-</div>
-
-<!-- Login Modal -->
-<div id="loginOverlay">
-    <div class="login-card">
-        <h2>أهلاً بك في منصة الشطرنج</h2>
-        <p style="margin-bottom: 15px; color: var(--color-4); font-size: 0.9rem;">أدخل كلمة المرور المخصصة لك للدخول:</p>
-        <input type="password" id="passInput" placeholder="كلمة السر..." oninput="checkPassword()">
-        <p id="loginError" style="color: #ff9999; font-size: 0.85rem; display: none;">كلمة المرور غير صحيحة!</p>
+<!-- Authentication Overlay -->
+<div id="authOverlay" class="overlay">
+    <div class="modal-card">
+        <div class="logo-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 30px;">♚</div>
+        <h2>Mahmoud.chess.com</h2>
+        <p style="color: #aaa; font-size: 0.85rem;">أدخل كلمة المرور المخصصة للوصول إلى النظام:</p>
+        <input type="password" id="passInput" placeholder="أدخل كلمة السر..." oninput="autoLoginCheck()">
+        <p id="authError" class="error-msg">كلمة المرور غير صحيحة!</p>
     </div>
 </div>
 
-<!-- Main App Layout -->
+<!-- Settings Modal -->
+<div id="settingsOverlay" class="overlay" style="display: none;">
+    <div class="modal-card">
+        <h2>إعدادات اللعبة</h2>
+        
+        <div class="form-group">
+            <label>ثيم الرقعة:</label>
+            <select id="themeSelect" onchange="changeTheme(this.value)">
+                <option value="theme-default">الكلاسيكي (خشب أخضر)</option>
+                <option value="theme-wood">الخشب الطبيعي</option>
+                <option value="theme-ocean">المحيط الهادئ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>المؤثرات الصوتية:</label>
+            <input type="checkbox" id="soundToggle" checked style="width: 20px;">
+        </div>
+
+        <button class="btn btn-primary" onclick="toggleSettings(false)" style="margin-top: 15px;">إغلاق</button>
+    </div>
+</div>
+
+<!-- Main Application Header -->
 <header>
-    <div class="logo-text">Mahmoud.chess.com</div>
-    <div class="user-pill" id="userDisplay">مستخدِم: ---</div>
+    <div class="brand-logo">
+        <div class="logo-icon">♚</div>
+        <div class="logo-text">Mahmoud.chess.com</div>
+    </div>
+    <div class="header-controls">
+        <button class="icon-btn" onclick="toggleSettings(true)" title="الإعدادات">⚙️</button>
+        <div class="user-badge" id="userDisplay">مستخدم غير مسجل</div>
+    </div>
 </header>
 
-<div class="main-container">
-    <div class="board-wrapper">
-        <div id="board" class="chess-board"></div>
+<!-- Main Workspace Layout -->
+<div class="workspace">
+    <!-- Evaluation Bar System -->
+    <div class="eval-bar-container">
+        <div class="eval-bar-black" id="evalBlack"></div>
+        <div class="eval-bar-white"></div>
+        <div class="eval-score-text" id="evalScore">0.0</div>
     </div>
 
-    <div class="panel">
-        <div class="panel-box">
-            <div class="turn-text" id="turnIndicator">الدور: الأبيض</div>
+    <!-- Chess Board Frame -->
+    <div class="board-container">
+        <div class="player-bar">
+            <div class="player-info">
+                <div class="avatar">♟</div>
+                <span>المنافس (الأسود)</span>
+            </div>
+            <div class="captured-pieces" id="capturedWhite"></div>
         </div>
 
-        <div class="panel-box">
-            <label style="font-size: 0.8rem; color: var(--color-4);">قطع الأسود المأكولة:</label>
-            <div class="captured-area" id="capturedBlack"></div>
-            <label style="font-size: 0.8rem; color: var(--color-4); margin-top: 8px; display:block;">قطع الأبيض المأكولة:</label>
-            <div class="captured-area" id="capturedWhite"></div>
+        <div id="board" class="board-frame"></div>
+
+        <div class="player-bar">
+            <div class="player-info">
+                <div class="avatar" style="color: #fff;">♙</div>
+                <span>أنت (الأبيض)</span>
+            </div>
+            <div class="captured-pieces" id="capturedBlack"></div>
+        </div>
+    </div>
+
+    <!-- Side Control Panel -->
+    <div class="side-panel">
+        <div class="panel-header">
+            <span id="turnIndicator">الدور: الأبيض</span>
+            <span class="status-badge" id="gameStatus">مباراة نشطة</span>
         </div>
 
-        <button class="btn" onclick="generateSaveCode()">حفظ اللعبة وإنشاء كود الحصة</button>
-        
-        <div>
-            <label style="font-size: 0.8rem; color: var(--color-4);">كود استعادة اللعبة:</label>
-            <textarea id="codeBox" placeholder="ألصق كود الحصة هنا واستعد المباراة..."></textarea>
-            <button class="btn" style="margin-top: 5px; width: 100%;" onclick="loadSaveCode()">استعادة اللعبة من الكود</button>
-        </div>
+        <div class="moves-history" id="movesLog"></div>
 
-        <button class="btn" style="background: var(--color-1); color: var(--color-4); border: 1px solid var(--color-3);" onclick="resetGame()">مباراة جديدة</button>
+        <div class="panel-actions">
+            <button class="btn btn-primary" onclick="generateSaveCode()">حفظ الوضعية (كود الحصة)</button>
+            <textarea id="codeBox" placeholder="ألصق كود استعادة الوضعية هنا..."></textarea>
+            <div class="action-row">
+                <button class="btn btn-secondary" onclick="loadSaveCode()">استعادة الوضعية</button>
+                <button class="btn btn-secondary" onclick="exportPGN()">تصدير PGN</button>
+            </div>
+            <button class="btn btn-danger" onclick="resetGame()">مباراة جديدة</button>
+        </div>
     </div>
 </div>
 
+<!-- Core Game Script Logic -->
 <script>
-    // Audio Synthesizer (Zero External Files Needed)
+    /* ========================================== */
+    /* 1. AUDIO ENGINE & SOUND EFFECTS            */
+    /* ========================================== */
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
-    function initAudio() {
-        if (!audioCtx) audioCtx = new AudioCtx();
-    }
-
     function playSound(type) {
-        if (!audioCtx) return;
+        const enabled = document.getElementById('soundToggle').checked;
+        if (!enabled) return;
+
+        if (!audioCtx) audioCtx = new AudioCtx();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-
         const now = audioCtx.currentTime;
 
-        if (type === 'intro') {
+        if (type === 'move') {
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(220, now);
-            osc.frequency.exponentialRampToValueAtTime(880, now + 1.2);
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(140, now + 0.08);
             gain.gain.setValueAtTime(0.3, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
             osc.start(now);
-            osc.stop(now + 1.5);
-        } else if (type === 'move') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(400, now);
-            osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
-            gain.gain.setValueAtTime(0.2, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-            osc.start(now);
-            osc.stop(now + 0.1);
+            osc.stop(now + 0.08);
         } else if (type === 'capture') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(180, now + 0.12);
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+            osc.start(now);
+            osc.stop(now + 0.12);
+        } else if (type === 'check') {
             osc.type = 'square';
             osc.frequency.setValueAtTime(800, now);
-            osc.frequency.exponentialRampToValueAtTime(200, now + 0.15);
-            gain.gain.setValueAtTime(0.25, now);
+            osc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+            gain.gain.setValueAtTime(0.2, now);
             gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
             osc.start(now);
             osc.stop(now + 0.15);
         }
     }
 
-    function startCinematicIntro() {
-        initAudio();
-        playSound('intro');
-        document.getElementById('splashOverlay').style.display = 'none';
-        document.getElementById('loginOverlay').style.display = 'flex';
-    }
-
-    // System Users Base
+    /* ========================================== */
+    /* 2. AUTHENTICATION SYSTEM                   */
+    /* ========================================== */
     const USERS = {
         "6310894123456789987654321123456789987654321090807060504030201": "المالك (محمود)",
         "1234567899876543210000": "مستخدم 1",
@@ -407,10 +648,36 @@
         "1234567899876543212222": "مستخدم 3"
     };
 
+    function autoLoginCheck() {
+        const val = document.getElementById('passInput').value.trim();
+        const err = document.getElementById('authError');
+        if (USERS[val]) {
+            document.getElementById('userDisplay').innerText = `المستخدم: ${USERS[val]}`;
+            document.getElementById('authOverlay').style.display = 'none';
+        } else if (val.length >= 22) {
+            err.style.display = 'block';
+        } else {
+            err.style.display = 'none';
+        }
+    }
+
+    function toggleSettings(show) {
+        document.getElementById('settingsOverlay').style.display = show ? 'flex' : 'none';
+    }
+
+    function changeTheme(themeClass) {
+        document.body.className = themeClass;
+    }
+
+    /* ========================================== */
+    /* 3. CHESS ENGINE DATA & CONFIG              */
+    /* ========================================== */
     const PIECES = {
         'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
         'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
     };
+
+    const VALUES = { 'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9, 'k': 0 };
 
     let boardState = [
         ['r','n','b','q','k','b','n','r'],
@@ -426,23 +693,42 @@
     let turn = 'white';
     let selectedSquare = null;
     let possibleMoves = [];
+    let lastMove = null;
     let capturedWhite = [];
     let capturedBlack = [];
+    let moveHistory = [];
+    let kingInCheck = null;
 
-    function checkPassword() {
-        const inputPass = document.getElementById('passInput').value.trim();
-        const errorEl = document.getElementById('loginError');
-
-        if (USERS[inputPass]) {
-            document.getElementById('userDisplay').innerText = `المستخدم: ${USERS[inputPass]}`;
-            document.getElementById('loginOverlay').style.display = 'none';
-        } else if (inputPass.length >= 20) {
-            errorEl.style.display = 'block';
-        } else {
-            errorEl.style.display = 'none';
+    /* ========================================== */
+    /* 4. EVALUATION & STATE CALCULATIONS         */
+    /* ========================================== */
+    function updateEvalBar() {
+        let wScore = 0, bScore = 0;
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                const p = boardState[r][c];
+                if (p) {
+                    const val = VALUES[p.toLowerCase()];
+                    if (isWhite(p)) wScore += val;
+                    else bScore += val;
+                }
+            }
         }
+        const total = wScore + bScore || 1;
+        const bPercent = (bScore / total) * 100;
+        document.getElementById('evalBlack').style.height = `${bPercent}%`;
+        
+        const diff = wScore - bScore;
+        const formattedDiff = diff > 0 ? `+${diff}` : `${diff}`;
+        document.getElementById('evalScore').innerText = formattedDiff;
     }
 
+    function isWhite(p) { return p && p === p.toUpperCase(); }
+    function isBlack(p) { return p && p === p.toLowerCase(); }
+
+    /* ========================================== */
+    /* 5. BOARD RENDERER                          */
+    /* ========================================== */
     function initBoard() {
         const boardEl = document.getElementById('board');
         boardEl.innerHTML = '';
@@ -453,11 +739,19 @@
                 sq.classList.add('square');
                 sq.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
                 
+                if (lastMove && ((lastMove.from[0] === r && lastMove.from[1] === c) || (lastMove.to[0] === r && lastMove.to[1] === c))) {
+                    sq.classList.add('last-move');
+                }
+
+                if (kingInCheck && kingInCheck[0] === r && kingInCheck[1] === c) {
+                    sq.classList.add('in-check');
+                }
+
                 const piece = boardState[r][c];
                 if (piece) {
                     const pEl = document.createElement('span');
                     pEl.classList.add('piece');
-                    pEl.classList.add(piece === piece.toUpperCase() ? 'white-piece' : 'black-piece');
+                    pEl.style.color = piece === piece.toUpperCase() ? '#ffffff' : '#000000';
                     pEl.innerText = PIECES[piece];
                     sq.appendChild(pEl);
                 }
@@ -468,9 +762,9 @@
         }
     }
 
-    function isWhite(p) { return p && p === p.toUpperCase(); }
-    function isBlack(p) { return p && p === p.toLowerCase(); }
-
+    /* ========================================== */
+    /* 6. MOVE HANDLING & GAME LOGIC              */
+    /* ========================================== */
     function handleSquareClick(r, c) {
         const piece = boardState[r][c];
 
@@ -531,9 +825,7 @@
                 const nr = r + dr, nc = c + dc;
                 if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
                     const target = boardState[nr][nc];
-                    if (!target || (whiteTurn ? isBlack(target) : isWhite(target))) {
-                        moves.push([nr, nc]);
-                    }
+                    if (!target || (whiteTurn ? isBlack(target) : isWhite(target))) moves.push([nr, nc]);
                 }
             }
         } else if (['r', 'b', 'q'].includes(piece)) {
@@ -566,13 +858,64 @@
             playSound('move');
         }
 
+        const files = ['a','b','c','d','e','f','g','h'];
+        const notation = (piece.toLowerCase() !== 'p' ? piece.toUpperCase() : '') + (target ? 'x' : '') + files[toC] + (8 - toR);
+        moveHistory.push(notation);
+
         boardState[toR][toC] = piece;
         boardState[fromR][fromC] = '';
+        lastMove = { from: [fromR, fromC], to: [toR, toC] };
 
+        // Promotion Logic
         if (piece === 'P' && toR === 0) boardState[toR][toC] = 'Q';
         if (piece === 'p' && toR === 7) boardState[toR][toC] = 'q';
 
         turn = turn === 'white' ? 'black' : 'white';
+        
+        checkKingStatus();
+        updateMoveLog();
+        updateEvalBar();
+    }
+
+    function checkKingStatus() {
+        kingInCheck = null;
+        let targetKing = turn === 'white' ? 'K' : 'k';
+        
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                if (boardState[r][c] === targetKing) {
+                    // Simple check verification mockup
+                    // (Expandable for full check validation)
+                    break;
+                }
+            }
+        }
+    }
+
+    /* ========================================== */
+    /* 7. UI LOGS & DATA PERSISTENCE              */
+    /* ========================================== */
+    function updateMoveLog() {
+        const logEl = document.getElementById('movesLog');
+        logEl.innerHTML = '';
+        for (let i = 0; i < moveHistory.length; i += 2) {
+            const num = document.createElement('div');
+            num.className = 'move-number';
+            num.innerText = Math.floor(i / 2) + 1 + '.';
+            
+            const wMove = document.createElement('div');
+            wMove.className = 'move-val';
+            wMove.innerText = moveHistory[i] || '';
+
+            const bMove = document.createElement('div');
+            bMove.className = 'move-val';
+            bMove.innerText = moveHistory[i + 1] || '';
+
+            logEl.appendChild(num);
+            logEl.appendChild(wMove);
+            logEl.appendChild(bMove);
+        }
+        logEl.scrollTop = logEl.scrollHeight;
     }
 
     function render() {
@@ -595,33 +938,35 @@
     }
 
     function generateSaveCode() {
-        const gameData = {
-            b: boardState,
-            t: turn,
-            cw: capturedWhite,
-            cb: capturedBlack
-        };
-        const code = btoa(JSON.stringify(gameData));
-        document.getElementById('codeBox').value = code;
-        alert("تم إنشاء كود استعادة اللعبة بنجاح! انسخه واستخدمه لاحقاً.");
+        const gameData = { b: boardState, t: turn, cw: capturedWhite, cb: capturedBlack, h: moveHistory, lm: lastMove };
+        document.getElementById('codeBox').value = btoa(JSON.stringify(gameData));
+        alert("تم إنشاء كود استعادة الوضعية والحصة بنجاح!");
     }
 
     function loadSaveCode() {
         const code = document.getElementById('codeBox').value.trim();
         if (!code) return;
         try {
-            const gameData = JSON.parse(atob(code));
-            boardState = gameData.b;
-            turn = gameData.t;
-            capturedWhite = gameData.cw;
-            capturedBlack = gameData.cb;
-            selectedSquare = null;
-            possibleMoves = [];
+            const d = JSON.parse(atob(code));
+            boardState = d.b; turn = d.t; capturedWhite = d.cw; capturedBlack = d.cb; moveHistory = d.h; lastMove = d.lm;
+            selectedSquare = null; possibleMoves = [];
+            updateMoveLog();
+            updateEvalBar();
             render();
-            alert("تمت استعادة اللعبة بنجاح!");
+            alert("تمت استعادة الوضعية بنجاح!");
         } catch (e) {
-            alert("الكود المدخل غير صالح!");
+            alert("الكود المدخل غير صحيح!");
         }
+    }
+
+    function exportPGN() {
+        let pgn = "";
+        for (let i = 0; i < moveHistory.length; i += 2) {
+            const moveNum = Math.floor(i / 2) + 1;
+            pgn += `${moveNum}. ${moveHistory[i]} ${moveHistory[i+1] || ''} `;
+        }
+        document.getElementById('codeBox').value = pgn.trim();
+        alert("تم تصدير سجل النقلات بتنسيق PGN!");
     }
 
     function resetGame() {
@@ -635,16 +980,17 @@
             ['P','P','P','P','P','P','P','P'],
             ['R','N','B','Q','K','B','N','R']
         ];
-        turn = 'white';
-        selectedSquare = null;
-        possibleMoves = [];
-        capturedWhite = [];
-        capturedBlack = [];
+        turn = 'white'; selectedSquare = null; possibleMoves = []; lastMove = null; kingInCheck = null;
+        capturedWhite = []; capturedBlack = []; moveHistory = [];
         document.getElementById('codeBox').value = '';
+        updateMoveLog();
+        updateEvalBar();
         render();
     }
 
+    // Initialize Application
     render();
+    updateEvalBar();
 </script>
 </body>
 </html>
