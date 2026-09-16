@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شطرنج المحترفين | Pro Chess</title>
+    <title>Mahmoud.chess.com</title>
     <style>
         :root {
-            --bg-dark: #121212;
-            --panel-bg: #1e1e1e;
-            --square-light: #eeeed2;
-            --square-dark: #769656;
-            --highlight: rgba(255, 255, 0, 0.5);
-            --possible: rgba(0, 0, 0, 0.15);
-            --gold: #d4af37;
+            --red-dark: #800016;
+            --red-mid: #b80d38;
+            --pink-mid: #e65c84;
+            --pink-light: #f8bbd0;
+            --pink-ultra-light: #fff0f5;
+            
+            --square-dark: #b80d38;
+            --square-light: #f8bbd0;
+            --highlight: rgba(255, 255, 255, 0.6);
+            --possible: rgba(128, 0, 22, 0.4);
         }
 
         * {
@@ -24,179 +27,282 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--red-dark), var(--red-mid), var(--pink-mid), var(--pink-light));
+            color: var(--pink-ultra-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Login Modal */
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--red-dark), var(--pink-mid));
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            z-index: 1000;
         }
 
-        .game-container {
+        .login-card {
+            background: linear-gradient(180deg, var(--red-dark), var(--red-mid));
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--pink-light);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .login-card h1 {
+            color: var(--pink-light);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--pink-mid);
+            background: var(--pink-ultra-light);
+            color: var(--red-dark);
+            font-size: 1.1rem;
+            font-weight: bold;
+            outline: none;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Navbar Header */
+        header {
+            background: linear-gradient(90deg, var(--red-dark), var(--red-mid));
+            padding: 15px 30px;
             display: flex;
-            flex-direction: row;
-            gap: 30px;
-            background: var(--panel-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 1px solid #333;
-            max-width: 1000px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--pink-mid);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--pink-light), var(--pink-ultra-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .user-info {
+            background: var(--red-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--pink-light);
+            color: var(--pink-light);
+            font-weight: bold;
+        }
+
+        /* Main Game Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 1300px;
+            margin: 0 auto;
             width: 100%;
         }
 
-        .board-container {
+        .board-section {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .board {
+        .chess-board {
             width: 560px;
             height: 560px;
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            border: 8px solid #3d2817;
-            border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border: 6px solid var(--red-dark);
+            border-radius: 8px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
         }
 
         .square {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 48px;
+            font-size: 46px;
             cursor: pointer;
             position: relative;
-            transition: background 0.2s;
         }
 
-        .square.light { background-color: var(--square-light); color: #000; }
-        .square.dark { background-color: var(--square-dark); color: #000; }
+        .square.light { background-color: var(--square-light); }
+        .square.dark { background-color: var(--square-dark); }
         .square.selected { background-color: var(--highlight) !important; }
         
         .possible-move::after {
             content: '';
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background-color: var(--possible);
             border-radius: 50%;
             position: absolute;
         }
 
+        /* Custom Pink/Red Pieces Styling */
         .piece {
             z-index: 2;
             line-height: 0;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.1s;
+        }
+        .piece.white-piece {
+            color: var(--pink-ultra-light);
+            text-shadow: 0 2px 5px rgba(128, 0, 22, 0.8);
+        }
+        .piece.black-piece {
+            color: var(--red-dark);
+            text-shadow: 0 2px 5px rgba(248, 187, 208, 0.8);
         }
 
-        .sidebar {
-            flex: 1;
+        /* Control Panel */
+        .panel {
+            background: linear-gradient(180deg, var(--red-dark), var(--red-mid));
+            border-radius: 12px;
+            padding: 20px;
+            width: 340px;
+            border: 2px solid var(--pink-mid);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-width: 250px;
+            gap: 15px;
         }
 
-        .status-box {
-            background: #2a2a2a;
+        .panel-box {
+            background: rgba(0, 0, 0, 0.2);
             padding: 15px;
             border-radius: 8px;
-            border-right: 4px solid var(--gold);
-            margin-bottom: 20px;
+            border-right: 4px solid var(--pink-light);
         }
 
-        .turn-indicator {
+        .turn-text {
             font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 8px;
-            color: var(--gold);
+            color: var(--pink-light);
         }
 
-        .captured-pieces {
-            background: #252525;
-            padding: 10px;
-            border-radius: 6px;
-            min-height: 50px;
-            font-size: 24px;
-            margin-bottom: 10px;
+        .captured-area {
+            min-height: 40px;
+            font-size: 22px;
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 5px;
+            margin-top: 5px;
         }
 
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        button {
-            padding: 12px 20px;
-            background: var(--gold);
-            color: #121212;
+        .btn {
+            background: linear-gradient(90deg, var(--pink-mid), var(--pink-light));
+            color: var(--red-dark);
             border: none;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.2s;
+            text-align: center;
         }
 
-        button:hover {
-            background: #b5932b;
+        .btn:hover {
+            opacity: 0.9;
             transform: translateY(-2px);
         }
 
-        @media (max-width: 850px) {
-            .game-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .board {
-                width: 90vw;
-                height: 90vw;
-                max-width: 480px;
-                max-height: 480px;
-            }
+        textarea {
+            width: 100%;
+            height: 70px;
+            background: var(--pink-ultra-light);
+            color: var(--red-dark);
+            border: 2px solid var(--pink-mid);
+            border-radius: 6px;
+            padding: 8px;
+            font-family: monospace;
+            resize: none;
+            outline: none;
+        }
+
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; align-items: center; }
+            .chess-board { width: 90vw; height: 90vw; max-width: 480px; max-height: 480px; }
+            .panel { width: 90vw; max-width: 480px; }
         }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <div class="board-container">
-        <div id="board" class="board"></div>
+<!-- Login Overlay -->
+<div id="loginOverlay">
+    <div class="login-card">
+        <h1>Mahmoud.chess.com</h1>
+        <p style="margin-bottom: 15px; color: var(--pink-light);">أدخل كلمة المرور الخاصة بك للدخول:</p>
+        <input type="password" id="passInput" placeholder="كلمة السر..." oninput="checkPassword()">
+        <p id="loginError" style="color: #ff9999; font-size: 0.9rem; display: none;">كلمة المرور غير صحيحة!</p>
+    </div>
+</div>
+
+<!-- Main App -->
+<header>
+    <div class="logo">Mahmoud.chess.com</div>
+    <div class="user-info" id="userDisplay">مستخدِم: ---</div>
+</header>
+
+<div class="main-container">
+    <div class="board-section">
+        <div id="board" class="chess-board"></div>
     </div>
 
-    <div class="sidebar">
+    <div class="panel">
+        <div class="panel-box">
+            <div class="turn-text" id="turnIndicator">الدور: الأبيض</div>
+            <div id="statusText" style="font-size: 0.9rem; margin-top: 5px; color: var(--pink-light);">العب الآن</div>
+        </div>
+
+        <div class="panel-box">
+            <label style="font-size: 0.85rem; color: var(--pink-light);">قطع الأسود المأكولة:</label>
+            <div class="captured-area" id="capturedBlack"></div>
+            <label style="font-size: 0.85rem; color: var(--pink-light); margin-top: 10px; display:block;">قطع الأبيض المأكولة:</label>
+            <div class="captured-area" id="capturedWhite"></div>
+        </div>
+
+        <button class="btn" onclick="generateSaveCode()">حفظ اللعبة وإنشاء كود الحصة</button>
+        
         <div>
-            <div class="status-box">
-                <div class="turn-indicator" id="turnIndicator">الدور: الأبيض</div>
-                <div id="gameStatus">التقط القطع للبدء في اللعب</div>
-            </div>
-
-            <label style="color: #aaa; font-size: 0.9rem;">القطع المأكولة (الأبيض):</label>
-            <div class="captured-pieces" id="capturedBlack"></div>
-
-            <label style="color: #aaa; font-size: 0.9rem;">القطع المأكولة (الأسود):</label>
-            <div class="captured-pieces" id="capturedWhite"></div>
+            <label style="font-size: 0.85rem; color: var(--pink-light);">كود استعادة اللعبة:</label>
+            <textarea id="codeBox" placeholder="سيظهر كود الحصة هنا أو ألصق كود لاستعادة اللعبة..."></textarea>
+            <button class="btn" style="margin-top: 5px; width: 100%;" onclick="loadSaveCode()">استعادة اللعبة من الكود</button>
         </div>
 
-        <div class="controls">
-            <button onclick="resetGame()">إعادة لعبة جديدة</button>
-        </div>
+        <button class="btn" style="background: var(--red-dark); color: var(--pink-light); border: 1px solid var(--pink-mid);" onclick="resetGame()">مباراة جديدة</button>
     </div>
 </div>
 
 <script>
-    const boardElement = document.getElementById('board');
-    const turnIndicator = document.getElementById('turnIndicator');
-    const gameStatus = document.getElementById('gameStatus');
-    const capturedWhiteEl = document.getElementById('capturedWhite');
-    const capturedBlackEl = document.getElementById('capturedBlack');
+    // System Users Base
+    const USERS = {
+        "6310894123456789987654321123456789987654321090807060504030201": "المالك (محمود)",
+        "1234567899876543210000": "مستخدم 1",
+        "1234567899876543211111": "مستخدم 2",
+        "1234567899876543212222": "مستخدم 3"
+    };
 
     const PIECES = {
         'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
@@ -214,38 +320,54 @@
         ['R','N','B','Q','K','B','N','R']
     ];
 
-    let turn = 'white'; // 'white' or 'black'
+    let turn = 'white';
     let selectedSquare = null;
     let possibleMoves = [];
     let capturedWhite = [];
     let capturedBlack = [];
 
+    // Automatic Authentication Check
+    function checkPassword() {
+        const inputPass = document.getElementById('passInput').value.trim();
+        const errorEl = document.getElementById('loginError');
+
+        if (USERS[inputPass]) {
+            document.getElementById('userDisplay').innerText = `المستخدم: ${USERS[inputPass]}`;
+            document.getElementById('loginOverlay').style.display = 'none';
+        } else if (inputPass.length >= 22) {
+            errorEl.style.display = 'block';
+        } else {
+            errorEl.style.display = 'none';
+        }
+    }
+
     function initBoard() {
-        boardElement.innerHTML = '';
+        const boardEl = document.getElementById('board');
+        boardEl.innerHTML = '';
+
         for (let r = 0; r < 8; r++) {
             for (let c = 0; c < 8; c++) {
-                const square = document.createElement('div');
-                square.classList.add('square');
-                square.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
-                square.dataset.row = r;
-                square.dataset.col = c;
-
-                const pieceSymbol = boardState[r][c];
-                if (pieceSymbol) {
-                    const piece = document.createElement('span');
-                    piece.classList.add('piece');
-                    piece.innerText = PIECES[pieceSymbol];
-                    square.appendChild(piece);
+                const sq = document.createElement('div');
+                sq.classList.add('square');
+                sq.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
+                
+                const piece = boardState[r][c];
+                if (piece) {
+                    const pEl = document.createElement('span');
+                    pEl.classList.add('piece');
+                    pEl.classList.add(piece === piece.toUpperCase() ? 'white-piece' : 'black-piece');
+                    pEl.innerText = PIECES[piece];
+                    sq.appendChild(pEl);
                 }
 
-                square.addEventListener('click', () => handleSquareClick(r, c));
-                boardElement.appendChild(square);
+                sq.addEventListener('click', () => handleSquareClick(r, c));
+                boardEl.appendChild(sq);
             }
         }
     }
 
-    function isWhitePiece(p) { return p && p === p.toUpperCase(); }
-    function isBlackPiece(p) { return p && p === p.toLowerCase(); }
+    function isWhite(p) { return p && p === p.toUpperCase(); }
+    function isBlack(p) { return p && p === p.toLowerCase(); }
 
     function handleSquareClick(r, c) {
         const piece = boardState[r][c];
@@ -261,7 +383,7 @@
             }
         }
 
-        if (piece && ((turn === 'white' && isWhitePiece(piece)) || (turn === 'black' && isBlackPiece(piece)))) {
+        if (piece && ((turn === 'white' && isWhite(piece)) || (turn === 'black' && isBlack(piece)))) {
             selectedSquare = [r, c];
             possibleMoves = getValidMoves(r, c);
         } else {
@@ -274,10 +396,10 @@
 
     function getValidMoves(r, c) {
         const piece = boardState[r][c].toLowerCase();
-        const isWhite = isWhitePiece(boardState[r][c]);
+        const whiteTurn = isWhite(boardState[r][c]);
         const moves = [];
 
-        const directions = {
+        const dirs = {
             'r': [[1,0], [-1,0], [0,1], [0,-1]],
             'b': [[1,1], [1,-1], [-1,1], [-1,-1]],
             'n': [[2,1], [2,-1], [-2,1], [-2,-1], [1,2], [1,-2], [-1,2], [-1,-2]],
@@ -286,44 +408,41 @@
         };
 
         if (piece === 'p') {
-            const dir = isWhite ? -1 : 1;
-            const startRow = isWhite ? 6 : 1;
+            const dir = whiteTurn ? -1 : 1;
+            const startRow = whiteTurn ? 6 : 1;
             if (r + dir >= 0 && r + dir < 8 && !boardState[r + dir][c]) {
                 moves.push([r + dir, c]);
                 if (r === startRow && !boardState[r + 2 * dir][c]) {
                     moves.push([r + 2 * dir, c]);
                 }
             }
-            // Capture
             for (let dc of [-1, 1]) {
                 if (c + dc >= 0 && c + dc < 8) {
                     const target = boardState[r + dir]?.[c + dc];
-                    if (target && (isWhite ? isBlackPiece(target) : isWhitePiece(target))) {
+                    if (target && (whiteTurn ? isBlack(target) : isWhite(target))) {
                         moves.push([r + dir, c + dc]);
                     }
                 }
             }
         } else if (piece === 'n' || piece === 'k') {
-            for (let [dr, dc] of directions[piece]) {
+            for (let [dr, dc] of dirs[piece]) {
                 const nr = r + dr, nc = c + dc;
                 if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
                     const target = boardState[nr][nc];
-                    if (!target || (isWhite ? isBlackPiece(target) : isWhitePiece(target))) {
+                    if (!target || (whiteTurn ? isBlack(target) : isWhite(target))) {
                         moves.push([nr, nc]);
                     }
                 }
             }
         } else if (['r', 'b', 'q'].includes(piece)) {
-            for (let [dr, dc] of directions[piece]) {
+            for (let [dr, dc] of dirs[piece]) {
                 let nr = r + dr, nc = c + dc;
                 while (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
                     const target = boardState[nr][nc];
                     if (!target) {
                         moves.push([nr, nc]);
                     } else {
-                        if (isWhite ? isBlackPiece(target) : isWhitePiece(target)) {
-                            moves.push([nr, nc]);
-                        }
+                        if (whiteTurn ? isBlack(target) : isWhite(target)) moves.push([nr, nc]);
                         break;
                     }
                     nr += dr; nc += dc;
@@ -338,14 +457,13 @@
         const target = boardState[toR][toC];
 
         if (target) {
-            if (isWhitePiece(target)) capturedWhite.push(PIECES[target]);
+            if (isWhite(target)) capturedWhite.push(PIECES[target]);
             else capturedBlack.push(PIECES[target]);
         }
 
         boardState[toR][toC] = piece;
         boardState[fromR][fromC] = '';
 
-        // Pawn promotion to Queen
         if (piece === 'P' && toR === 0) boardState[toR][toC] = 'Q';
         if (piece === 'p' && toR === 7) boardState[toR][toC] = 'q';
 
@@ -354,20 +472,53 @@
 
     function render() {
         initBoard();
-        
+        const boardEl = document.getElementById('board');
+
         if (selectedSquare) {
             const index = selectedSquare[0] * 8 + selectedSquare[1];
-            boardElement.children[index].classList.add('selected');
+            boardEl.children[index].classList.add('selected');
         }
 
         possibleMoves.forEach(([r, c]) => {
             const index = r * 8 + c;
-            boardElement.children[index].classList.add('possible-move');
+            boardEl.children[index].classList.add('possible-move');
         });
 
-        turnIndicator.innerText = `الدور: ${turn === 'white' ? 'الأبيض' : 'الأسود'}`;
-        capturedWhiteEl.innerText = capturedWhite.join(' ');
-        capturedBlackEl.innerText = capturedBlack.join(' ');
+        document.getElementById('turnIndicator').innerText = `الدور: ${turn === 'white' ? 'الأبيض' : 'الأسود'}`;
+        document.getElementById('capturedWhite').innerText = capturedWhite.join(' ');
+        document.getElementById('capturedBlack').innerText = capturedBlack.join(' ');
+    }
+
+    // Save Game to Code Feature
+    function generateSaveCode() {
+        const gameData = {
+            b: boardState,
+            t: turn,
+            cw: capturedWhite,
+            cb: capturedBlack
+        };
+        const code = btoa(JSON.stringify(gameData));
+        document.getElementById('codeBox').value = code;
+        alert("تم إنشاء كود استعادة اللعبة بنجاح! انسخه واستخدمه لاحقاً.");
+    }
+
+    // Load Game from Code Feature
+    function loadSaveCode() {
+        const code = document.getElementById('codeBox').value.trim();
+        if (!code) return;
+        try {
+            const gameData = JSON.parse(atob(code));
+            boardState = gameData.b;
+            turn = gameData.t;
+            capturedWhite = gameData.cw;
+            capturedBlack = gameData.cb;
+            selectedSquare = null;
+            possibleMoves = [];
+            render();
+            alert("تمت استعادة اللعبة بنجاح!");
+        } catch (e) {
+            alert("الكود المدخل غير صالح!");
+        }
     }
 
     function resetGame() {
@@ -386,6 +537,7 @@
         possibleMoves = [];
         capturedWhite = [];
         capturedBlack = [];
+        document.getElementById('codeBox').value = '';
         render();
     }
 
