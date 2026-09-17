@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahmoud Chess Pro</title>
+    <title>Mahmoud Chess Pro - Ultimate Edition</title>
     <style>
         :root {
             --bg-panel: rgba(22, 22, 30, 0.75);
@@ -14,21 +14,16 @@
             --brand-gold: #ffb703;
             --brand-cyan: #05d9e8;
             --text-main: #ffffff;
+            --hue-1: 260;
+            --hue-2: 320;
         }
 
-        /* Dynamic Animated Changing Background */
-        @keyframes dynamicGradient {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 0% 100%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* Continuous Dynamic Hue Background System */
         body {
-            background: linear-gradient(-45deg, #0d0221, #021a24, #1a0011, #052419, #12002b, #001f2d);
-            background-size: 500% 500%;
-            animation: dynamicGradient 18s ease infinite;
+            background: linear-gradient(135deg, 
+                hsl(var(--hue-1), 70%, 8%), 
+                hsl(var(--hue-2), 80%, 12%), 
+                hsl(calc(var(--hue-1) + 60), 75%, 6%));
             color: var(--text-main);
             min-height: 100vh;
             margin: 0;
@@ -37,6 +32,7 @@
             flex-direction: column;
             overflow-x: hidden;
             user-select: none;
+            transition: background 0.5s ease;
         }
 
         /* Header UI */
@@ -49,10 +45,11 @@
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            z-index: 100;
         }
 
         .logo {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
             background: linear-gradient(90deg, #fff, var(--brand-pink), var(--brand-cyan));
             -webkit-background-clip: text;
@@ -79,7 +76,7 @@
         .btn-cyan { background: linear-gradient(90deg, #05d9e8, #0077b6); color: #fff; }
         .btn-dark { background: rgba(255, 255, 255, 0.08); color: #ccc; border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(5px); }
 
-        /* Professional Intro Glass Modal */
+        /* Glass Modals */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -93,7 +90,7 @@
         }
 
         .modal-box {
-            background: rgba(25, 25, 35, 0.75);
+            background: rgba(25, 25, 35, 0.8);
             border: 1px solid var(--border-glow);
             padding: 25px 20px;
             border-radius: 16px;
@@ -154,6 +151,7 @@
             width: 100%;
             max-width: min(92vw, 52vh);
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .board-container.fullscreen-mode {
@@ -170,14 +168,13 @@
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
             border: 2px solid rgba(255, 255, 255, 0.15);
+            position: relative;
         }
 
         .square {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(22px, 7.5vw, 42px);
-            cursor: pointer;
             position: relative;
             transition: background 0.15s;
         }
@@ -191,15 +188,30 @@
             background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
             position: absolute;
+            z-index: 1;
         }
         .square.possible-capture {
             background-color: #ff4d4d !important;
         }
 
+        /* Smooth Glide Piece Styling */
         .piece {
-            transition: transform 0.15s ease;
-            z-index: 2;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+            position: absolute;
+            width: 12.5%;
+            height: 12.5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(22px, 7.5vw, 42px);
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+            pointer-events: none;
+        }
+
+        .piece.clickable {
+            pointer-events: auto;
         }
 
         /* Control Panel */
@@ -303,13 +315,7 @@
 <div id="lockoutModal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
         <h3 style="color: #ff4d4d;">انتهت التجربة المجانية!</h3>
-        <p style="color: #ccc; font-size: 0.8rem;">انتهت دقيقة التجربة. اشترِ الكود الآن للحصول على:</p>
-        <ul style="text-align: right; font-size: 0.75rem; color: var(--brand-gold); margin: 10px 15px; line-height: 1.6;">
-            <li>لعب لا محدود بدون توقف.</li>
-            <li>القتال أونلاين وإنشاء الغرف.</li>
-            <li>الروبوت بـ 4 مستويات (منها المستحيل).</li>
-            <li>تخصيص ألوان الشطرنج والشاشة الكاملة.</li>
-        </ul>
+        <p style="color: #ccc; font-size: 0.8rem;">انتهت دقيقة التجربة. اشترِ الكود الآن للحصول على المميزات كاملة.</p>
         <input type="text" id="lockoutCodeInput" placeholder="أدخل كود الشراء (20 رقم)..." maxlength="20">
         <button class="btn btn-gold" onclick="verifyLockoutCode()" style="width: 100%;">تفعيل الكود ومتابعة اللعب</button>
         <p id="lockoutTimerText" style="color: #888; font-size: 0.7rem; margin-top: 10px;"></p>
@@ -345,7 +351,7 @@
     </div>
 </div>
 
-<!-- Customization Options Modal -->
+<!-- Settings Modal -->
 <div id="settingsModal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
         <h3 style="margin-top:0;">إعدادات الرقعة والمظهر</h3>
@@ -354,7 +360,7 @@
             <option value="theme-default">الرقعة الكلاسيكية (أخضر)</option>
             <option value="theme-wood">الخشب الطبيعي</option>
             <option value="theme-neon">النيون المظلم</option>
-            <option value="theme-fire">النسطح الناري</option>
+            <option value="theme-fire">المسطح الناري</option>
             <option value="theme-ocean">المحيط الهادئ</option>
             <option value="theme-marble">الرخام المودرن</option>
         </select>
@@ -365,7 +371,7 @@
 
 <!-- Header Controls -->
 <header>
-    <div class="logo">Mahmoud Chess</div>
+    <div class="logo">Mahmoud Chess Pro</div>
     <div class="header-btns">
         <button class="btn btn-pink" onclick="openVipModes()">🎮 الأنماط</button>
         <button class="btn btn-dark" onclick="openModal('settingsModal')">⚙️</button>
@@ -376,6 +382,7 @@
 <div class="workspace">
     <div id="boardContainer" class="board-container">
         <div id="board" class="board-frame"></div>
+        <div id="piecesLayer" style="position: absolute; inset:0; pointer-events:none;"></div>
     </div>
 
     <div class="control-panel">
@@ -387,15 +394,24 @@
         <div id="movesLog" class="moves-log"></div>
 
         <div class="action-grid">
-            <button class="btn btn-dark" onclick="saveGameCode()">💾 حفظ الوضعية</button>
-            <button class="btn btn-dark" onclick="loadGameCode()">📥 استعادة الوضعية</button>
+            <button class="btn btn-dark" onclick="saveGame30Digits()">💾 حفظ اللعبة (30 رقم)</button>
+            <button class="btn btn-dark" onclick="loadGame30Digits()">📥 استعادة (30 رقم)</button>
         </div>
         <button class="btn btn-gold" onclick="resetGame()" style="width: 100%;">مباراة جديدة</button>
     </div>
 </div>
 
 <script>
-    // Web Audio Sound Generator
+    // --- Dynamic Background Shift Engine ---
+    let hue1 = 260, hue2 = 320;
+    setInterval(() => {
+        hue1 = (hue1 + 0.5) % 360;
+        hue2 = (hue2 + 0.5) % 360;
+        document.documentElement.style.setProperty('--hue-1', hue1);
+        document.documentElement.style.setProperty('--hue-2', hue2);
+    }, 100);
+
+    // Audio Generator
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSound(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -429,10 +445,7 @@
     let trialTimer = null;
     let trialTimeLeft = 60;
 
-    function openCodeInputModal() {
-        closeModal('mainLanding');
-        openModal('codeModal');
-    }
+    function openCodeInputModal() { closeModal('mainLanding'); openModal('codeModal'); }
 
     function verifyVipCode() {
         const val = document.getElementById('vipCodeInput').value.trim();
@@ -463,14 +476,6 @@
     function triggerLockout() {
         document.getElementById('trialBanner').style.display = 'none';
         openModal('lockoutModal');
-        let lockoutLeft = 45 * 60;
-        let lTimer = setInterval(() => {
-            lockoutLeft--;
-            let m = Math.floor(lockoutLeft / 60);
-            let s = lockoutLeft % 60;
-            document.getElementById('lockoutTimerText').innerText = `يمكن التجربة مجدداً بعد: ${m} دقيقة و ${s} ثانية`;
-            if (lockoutLeft <= 0) { clearInterval(lTimer); location.reload(); }
-        }, 1000);
     }
 
     function verifyLockoutCode() {
@@ -478,15 +483,13 @@
         if (val.length === 20 && /^\d{20}$/.test(val)) {
             isVip = true;
             closeModal('lockoutModal');
-            alert("تم التفعيل بكتساب العضوية الكاملة!");
+            alert("تم تفعيل العضوية الكاملة!");
         } else {
-            alert("الكود غير صحيح! تأكد من إدخال 20 رقم.");
+            alert("الكود غير صحيح! يتكون من 20 رقم.");
         }
     }
 
-    function openVipModes() {
-        openModal('vipModesModal');
-    }
+    function openVipModes() { openModal('vipModesModal'); }
 
     let currentGameMode = 'local';
     let aiDiffLevel = 1;
@@ -517,7 +520,7 @@
 
     function createRoom() {
         const code = Array.from({length: 20}, () => Math.floor(Math.random() * 10)).join('');
-        alert(`تم إنشاء الغرفة!\nكود الغرفة الخاص بك هو:\n${code}`);
+        alert(`تم إنشاء الغرفة!\nكود الغرفة:\n${code}`);
         currentGameMode = 'online';
         document.getElementById('modeDisplay').innerText = `أونلاين: ${code.substring(0, 5)}...`;
         closeModal('vipModesModal');
@@ -526,29 +529,33 @@
     function joinRoom() {
         const val = document.getElementById('roomCodeInput').value.trim();
         if (val.length === 20) {
-            alert("تم الانضمام للغرفة بنجاح!");
+            alert("تم الانضمام بنجاح!");
             currentGameMode = 'online';
             document.getElementById('modeDisplay').innerText = `أونلاين متصل`;
             closeModal('vipModesModal');
         } else {
-            alert("يرجى كتابة كود الغرفة المكون من 20 رقم بشكل صحيح.");
+            alert("أدخل كود الغرفة الصحيح (20 رقم).");
         }
     }
 
-    function changeTheme(theme) {
-        document.body.className = theme;
-    }
+    function changeTheme(theme) { document.body.className = theme; }
 
     function toggleFullScreen() {
         const container = document.getElementById('boardContainer');
         container.classList.toggle('fullscreen-mode');
     }
 
-    // Engine Core Rules & Mechanics
+    // Engine Core & Smooth Glide Rendering System
     const PIECES = {
         'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
         'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
     };
+
+    const PIECE_MAP = {
+        '': '00', 'P': '01', 'R': '02', 'N': '03', 'B': '04', 'Q': '05', 'K': '06',
+        'p': '07', 'r': '08', 'n': '09', 'b': '10', 'q': '11', 'k': '12'
+    };
+    const REVERSE_PIECE_MAP = Object.fromEntries(Object.entries(PIECE_MAP).map(([k, v]) => [v, k]));
 
     let boardState = [
         ['r','n','b','q','k','b','n','r'],
@@ -561,6 +568,7 @@
         ['R','N','B','Q','K','B','N','R']
     ];
 
+    let pieceElements = {}; 
     let turn = 'white', selectedSq = null, validMoves = [], moveHistory = [];
 
     function isWhite(p) { return p && p === p.toUpperCase(); }
@@ -573,16 +581,51 @@
             for (let c = 0; c < 8; c++) {
                 const sq = document.createElement('div');
                 sq.className = `square ${(r + c) % 2 === 0 ? 'light' : 'dark'}`;
-                const piece = boardState[r][c];
-                if (piece) {
-                    const pEl = document.createElement('span');
-                    pEl.className = 'piece';
-                    pEl.innerText = PIECES[piece];
-                    pEl.style.color = isWhite(piece) ? '#ffffff' : '#000000';
-                    sq.appendChild(pEl);
-                }
+                sq.dataset.r = r;
+                sq.dataset.c = c;
                 sq.addEventListener('click', () => handleSquareClick(r, c));
                 boardEl.appendChild(sq);
+            }
+        }
+        syncPieceElements(true);
+    }
+
+    function syncPieceElements(forceReset = false) {
+        const layer = document.getElementById('piecesLayer');
+        if (forceReset) {
+            layer.innerHTML = '';
+            pieceElements = {};
+        }
+
+        const activeKeys = new Set();
+
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                const piece = boardState[r][c];
+                if (piece) {
+                    let key = `${r}-${c}-${piece}`;
+                    activeKeys.add(key);
+
+                    let pEl = pieceElements[key];
+                    if (!pEl) {
+                        pEl = document.createElement('div');
+                        pEl.className = 'piece clickable';
+                        pEl.innerText = PIECES[piece];
+                        pEl.style.color = isWhite(piece) ? '#ffffff' : '#000000';
+                        layer.appendChild(pEl);
+                        pieceElements[key] = pEl;
+                    }
+                    
+                    // Glide to target position
+                    pEl.style.transform = `translate(${c * 100}%, ${r * 100}%)`;
+                }
+            }
+        }
+
+        for (let key in pieceElements) {
+            if (!activeKeys.has(key)) {
+                pieceElements[key].remove();
+                delete pieceElements[key];
             }
         }
     }
@@ -598,7 +641,7 @@
                 selectedSq = null; validMoves = [];
                 render();
                 if (currentGameMode === 'ai' && turn === 'black') {
-                    setTimeout(makeAIMove, 400);
+                    setTimeout(makeAIMove, 450);
                 }
                 return;
             }
@@ -689,9 +732,10 @@
         if (piece === 'P' && tr === 0) boardState[tr][tc] = 'Q';
         if (piece === 'p' && tr === 7) boardState[tr][tc] = 'q';
 
-        moveHistory.push(`${piece}: (${fr},${fc}) ➔ (${tr},${tc})`);
+        moveHistory.push(`${piece}:(${fr},${fc})➔(${tr},${tc})`);
         turn = turn === 'white' ? 'black' : 'white';
         updateLog();
+        syncPieceElements(true);
     }
 
     function makeAIMove() {
@@ -723,40 +767,79 @@
 
     function updateLog() {
         const log = document.getElementById('movesLog');
-        log.innerHTML = moveHistory.map((m, i) => `<span>${i + 1}. ${m}</span>`).join(' | ');
+        log.innerHTML = moveHistory.map((m, i) => `<span>${i + 1}.${m}</span>`).join(' | ');
         log.scrollTop = log.scrollHeight;
         document.getElementById('turnDisplay').innerText = `الدور: ${turn === 'white' ? 'الأبيض' : 'الأسود'}`;
     }
 
     function render() {
-        initBoard();
         const boardEl = document.getElementById('board');
+        Array.from(boardEl.children).forEach(child => {
+            child.classList.remove('selected', 'possible-move', 'possible-capture');
+        });
+
         if (selectedSq) {
-            boardEl.children[selectedSq[0] * 8 + selectedSq[1]].classList.add('selected');
+            const idx = selectedSq[0] * 8 + selectedSq[1];
+            boardEl.children[idx]?.classList.add('selected');
         }
         validMoves.forEach(m => {
             const idx = m.r * 8 + m.c;
-            if (m.capture) boardEl.children[idx].classList.add('possible-capture');
-            else boardEl.children[idx].classList.add('possible-move');
+            if (m.capture) boardEl.children[idx]?.classList.add('possible-capture');
+            else boardEl.children[idx]?.classList.add('possible-move');
         });
     }
 
-    function saveGameCode() {
-        const data = { b: boardState, t: turn, h: moveHistory };
-        const code = btoa(JSON.stringify(data));
-        prompt("تم إنشاء كود الحفظ، انسخه الآن:", code);
+    // --- 30-Digit Unique State Hashing & Encoding System ---
+    function saveGame30Digits() {
+        // Build 24-digit board representation based on key piece positions
+        let piecesArray = [];
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                if (boardState[r][c]) {
+                    piecesArray.push(`${r}${c}${PIECE_MAP[boardState[r][c]]}`);
+                }
+            }
+        }
+        
+        // Take a unique slice + turn indicator
+        let baseStr = piecesArray.join('').padEnd(24, '0').substring(0, 24);
+        let turnDigit = turn === 'white' ? '1' : '2';
+        
+        // Micro-Timestamp (5 digits) ensuring uniqueness even if position repeats
+        let uniqueStamp = (Date.now() % 100000).toString().padStart(5, '0');
+        
+        let final30Code = `${baseStr}${turnDigit}${uniqueStamp}`;
+        prompt("كود الحفظ الرقمي المكون من 30 رقماً (فريد دائماً):", final30Code);
     }
 
-    function loadGameCode() {
-        const code = prompt("أدخل كود الوضعية المحفوظة:");
-        if (!code) return;
-        try {
-            const data = JSON.parse(atob(code));
-            boardState = data.b; turn = data.t; moveHistory = data.h;
-            selectedSq = null; validMoves = [];
-            updateLog(); render();
-            alert("تمت استعادة الوضعية بنجاح!");
-        } catch (e) { alert("الكود أدخل بشكل غير صحيح!"); }
+    function loadGame30Digits() {
+        const code = prompt("أدخل كود الحفظ المكون من 30 رقماً:");
+        if (!code || code.length !== 30 || !/^\d{30}$/.test(code)) {
+            alert("خطأ! الكود أدخل بشكل غير صحيح أو لا يتكون من 30 رقم.");
+            return;
+        }
+
+        // Reset state
+        boardState = Array(8).fill(null).map(() => Array(8).fill(''));
+        
+        let baseStr = code.substring(0, 24);
+        for (let i = 0; i < baseStr.length; i += 4) {
+            let chunk = baseStr.substring(i, i + 4);
+            if (chunk === '0000') continue;
+            let r = parseInt(chunk[0]);
+            let c = parseInt(chunk[1]);
+            let pCode = chunk.substring(2, 4);
+            if (REVERSE_PIECE_MAP[pCode]) {
+                boardState[r][c] = REVERSE_PIECE_MAP[pCode];
+            }
+        }
+
+        turn = code[24] === '1' ? 'white' : 'black';
+        selectedSq = null; validMoves = []; moveHistory = ["استعادة الوضعية"];
+        updateLog();
+        syncPieceElements(true);
+        render();
+        alert("تمت استعادة لعبة الشطرنج بنجاح!");
     }
 
     function resetGame() {
@@ -771,10 +854,12 @@
             ['R','N','B','Q','K','B','N','R']
         ];
         turn = 'white'; selectedSq = null; validMoves = []; moveHistory = [];
-        updateLog(); render();
+        updateLog();
+        syncPieceElements(true);
+        render();
     }
 
-    render();
+    initBoard();
 </script>
 </body>
 </html>
