@@ -20,7 +20,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* خلفية ديناميكية متحركة */
         body {
             min-height: 100vh;
             display: flex;
@@ -40,7 +39,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* بوابة الحماية */
         .auth-container {
             background: var(--panel-bg);
             backdrop-filter: blur(12px);
@@ -92,7 +90,6 @@
             box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
         }
 
-        /* واجهة اللعبة */
         .game-layout {
             display: none;
             flex-direction: column;
@@ -172,17 +169,23 @@
 
         .square.light { background-color: var(--light-square); }
         .square.dark { background-color: var(--dark-square); }
-        
-        .square.selected {
-            background-color: #f1c40f !important;
+        .square.selected { background-color: #f1c40f !important; }
+
+        .square.in-check {
+            background-color: #ef4444 !important;
+            animation: pulseCheck 1s infinite alternate;
         }
 
-        /* مؤشرات النقلات القانونية */
+        @keyframes pulseCheck {
+            from { box-shadow: inset 0 0 5px #7f1d1d; }
+            to { box-shadow: inset 0 0 20px #dc2626; }
+        }
+
         .square.possible::after {
             content: '';
             width: 18px;
             height: 18px;
-            background-color: rgba(34, 197, 94, 0.75);
+            background-color: rgba(34, 197, 94, 0.85);
             border-radius: 50%;
             position: absolute;
             box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
@@ -192,8 +195,8 @@
             width: 100%;
             height: 100%;
             border-radius: 0;
-            background-color: rgba(239, 68, 68, 0.4);
-            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.8);
+            background-color: rgba(239, 68, 68, 0.45);
+            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.9);
         }
 
         .sidebar {
@@ -246,7 +249,6 @@
 </head>
 <body>
 
-    <!-- بوابة الحماية -->
     <div id="authGate" class="auth-container">
         <h2>🔒 تسجيل الدخول للمنصة</h2>
         <p>أدخل كلمة المرور السرية للوصول:</p>
@@ -255,10 +257,7 @@
         <button class="btn" onclick="authenticate()">دخول المنصة</button>
     </div>
 
-    <!-- واجهة اللعبة -->
     <div id="gameApp" class="game-layout">
-        
-        <!-- التحكم بالألوان -->
         <div class="controls-bar">
             <div class="color-picker-group">
                 <label>المربعات الفاتحة:</label>
@@ -274,12 +273,10 @@
         </div>
 
         <div class="main-content">
-            <!-- الرقعة -->
             <div class="board-wrapper">
                 <div id="board" class="chess-board"></div>
             </div>
 
-            <!-- معلومات الجولة -->
             <div class="sidebar">
                 <div class="panel-box">
                     <h3>حالة اللعبة</h3>
@@ -346,9 +343,9 @@
         ];
 
         let boardState = [];
-        let selected = null; // { r, c }
-        let legalMoves = []; // قائمة بالحركات المتاحة للقطعة المحددة
-        let turn = 'W'; // 'W' أو 'B'
+        let selected = null; 
+        let legalMoves = []; 
+        let turn = 'W'; 
 
         function isWhite(p) { return p && p === p.toUpperCase(); }
         function isBlack(p) { return p && p === p.toLowerCase(); }
@@ -359,62 +356,142 @@
             selected = null;
             legalMoves = [];
             document.getElementById('movesLog').innerHTML = '';
-            updateTurnStatus();
             renderBoard();
+            updateGameStatus();
         }
 
-        // محرك حساب الحركات القانونية حسب قوانين الشطرنج
-        function getLegalMoves(r, c) {
-            const piece = boardState[r][c];
-            if (!piece) return [];
+        // 1. فحص هل المربع (tr, tc) مهدد من قبل أي قطعة تابعة لـ attackerColor
+        function isSquareAttacked(tr, tc, attackerColor, board) {
+            const isAttackerWhite = (attackerColor === 'W');
 
+            // البيادق
+            const pawnDir = isAttackerWhite ? 1 : -1;
+            const pawnChar = isAttackerWhite ? 'P' : 'p';
+            for (let dc of [-1, 1]) {
+                let pr = tr + pawnDir, pc = tc + dc;
+                if (pr >= 0 && pr <= 7 && pc >= 0 && pc <= 7) {
+                    if (board[pr][pc] === pawnChar) return true;
+                }
+            }
+
+            // الأحصنة
+            const knightChar = isAttackerWhite ? 'N' : 'n';
+            const knightOffsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+            for (let [dr, dc] of knightOffsets) {
+                let kr = tr + dr, kc = tc + dc;
+                if (kr >= 0 && kr <= 7 && kc >= 0 && kc <= 7) {
+                    if (board[kr][kc] === knightChar) return true;
+                }
+            }
+
+            // الملوك
+            const kingChar = isAttackerWhite ? 'K' : 'k';
+            for (let dr of [-1,0,1]) {
+                for (let dc of [-1,0,1]) {
+                    if (dr === 0 && dc === 0) continue;
+                    let kr = tr + dr, kc = tc + dc;
+                    if (kr >= 0 && kr <= 7 && kc >= 0 && kc <= 7) {
+                        if (board[kr][kc] === kingChar) return true;
+                    }
+                }
+            }
+
+            // القلاع والوزراء (خطوط مستقيمة)
+            const straightDirs = [[-1,0],[1,0],[0,-1],[0,1]];
+            const rookChar = isAttackerWhite ? 'R' : 'r';
+            const queenChar = isAttackerWhite ? 'Q' : 'q';
+            for (let [dr, dc] of straightDirs) {
+                let r = tr + dr, c = tc + dc;
+                while (r >= 0 && r <= 7 && c >= 0 && c <= 7) {
+                    const p = board[r][c];
+                    if (p) {
+                        if (p === rookChar || p === queenChar) return true;
+                        break;
+                    }
+                    r += dr; c += dc;
+                }
+            }
+
+            // الفيلة والوزراء (خطوط مائلة)
+            const diagDirs = [[-1,-1],[-1,1],[1,-1],[1,1]];
+            const bishopChar = isAttackerWhite ? 'B' : 'b';
+            for (let [dr, dc] of diagDirs) {
+                let r = tr + dr, c = tc + dc;
+                while (r >= 0 && r <= 7 && c >= 0 && c <= 7) {
+                    const p = board[r][c];
+                    if (p) {
+                        if (p === bishopChar || p === queenChar) return true;
+                        break;
+                    }
+                    r += dr; c += dc;
+                }
+            }
+
+            return false;
+        }
+
+        // 2. البحث عن مكان الملك
+        function findKing(color, board) {
+            const target = color === 'W' ? 'K' : 'k';
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    if (board[r][c] === target) return { r, c };
+                }
+            }
+            return null;
+        }
+
+        // 3. هل الملك في حالة كش؟
+        function isKingInCheck(color, board) {
+            const kingPos = findKing(color, board);
+            if (!kingPos) return false;
+            const enemyColor = color === 'W' ? 'B' : 'W';
+            return isSquareAttacked(kingPos.r, kingPos.c, enemyColor, board);
+        }
+
+        // 4. الحركة الهندسية الخام دون تصفية الشروط الأمنية للملك
+        function getRawMoves(r, c, board) {
+            const piece = board[r][c];
+            if (!piece) return [];
             const white = isWhite(piece);
             const type = piece.toLowerCase();
             const moves = [];
 
             function addMove(tr, tc) {
                 if (tr < 0 || tr > 7 || tc < 0 || tc > 7) return false;
-                const target = boardState[tr][tc];
+                const target = board[tr][tc];
                 if (!target) {
                     moves.push({ r: tr, c: tc, isCapture: false });
-                    return true; // يمكن المواصلة بنفس الاتجاه
+                    return true;
                 }
                 if ((white && isBlack(target)) || (!white && isWhite(target))) {
                     moves.push({ r: tr, c: tc, isCapture: true });
                 }
-                return false; // طريق مسدود بسبب وجود قطعة
+                return false;
             }
 
-            if (type === 'p') { // البيدق
+            if (type === 'p') {
                 const dir = white ? -1 : 1;
                 const startRow = white ? 6 : 1;
-
-                // تحرك خطوة للأمام
-                if (r + dir >= 0 && r + dir <= 7 && !boardState[r + dir][c]) {
+                if (r + dir >= 0 && r + dir <= 7 && !board[r + dir][c]) {
                     moves.push({ r: r + dir, c: c, isCapture: false });
-                    // تحرك خطوتين من البداية
-                    if (r === startRow && !boardState[r + 2 * dir][c]) {
+                    if (r === startRow && !board[r + 2 * dir][c]) {
                         moves.push({ r: r + 2 * dir, c: c, isCapture: false });
                     }
                 }
-                // الأكل قطرياً
                 for (let dc of [-1, 1]) {
-                    let tc = c + dc;
-                    let tr = r + dir;
+                    let tc = c + dc, tr = r + dir;
                     if (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
-                        let target = boardState[tr][tc];
+                        let target = board[tr][tc];
                         if (target && ((white && isBlack(target)) || (!white && isWhite(target)))) {
                             moves.push({ r: tr, c: tc, isCapture: true });
                         }
                     }
                 }
-            } else if (type === 'n') { // الحصان
-                const offsets = [
-                    [-2, -1], [-2, 1], [-1, -2], [-1, 2],
-                    [1, -2], [1, 2], [2, -1], [2, 1]
-                ];
+            } else if (type === 'n') {
+                const offsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
                 for (let [dr, dc] of offsets) addMove(r + dr, c + dc);
-            } else if (type === 'r' || type === 'b' || type === 'q') { // القلعة والفيل والوزير
+            } else if (type === 'r' || type === 'b' || type === 'q') {
                 const dirs = [];
                 if (type === 'r' || type === 'q') dirs.push([-1,0], [1,0], [0,-1], [0,1]);
                 if (type === 'b' || type === 'q') dirs.push([-1,-1], [-1,1], [1,-1], [1,1]);
@@ -422,37 +499,78 @@
                 for (let [dr, dc] of dirs) {
                     let tr = r + dr, tc = c + dc;
                     while (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
-                        let canContinue = addMove(tr, tc);
-                        if (!canContinue) break;
+                        if (!addMove(tr, tc)) break;
                         tr += dr; tc += dc;
                     }
                 }
-            } else if (type === 'k') { // الملك
+            } else if (type === 'k') {
                 for (let dr of [-1, 0, 1]) {
                     for (let dc of [-1, 0, 1]) {
                         if (dr !== 0 || dc !== 0) addMove(r + dr, c + dc);
                     }
                 }
             }
-
             return moves;
+        }
+
+        // 5. تصفية الحركات: استبعاد أي حركة تجعل الملك في وضعية كش (تطبيق القانون الشطرنجي الصارم)
+        function getLegalMoves(r, c) {
+            const piece = boardState[r][c];
+            if (!piece) return [];
+            const pieceColor = isWhite(piece) ? 'W' : 'B';
+            if (pieceColor !== turn) return [];
+
+            const rawMoves = getRawMoves(r, c, boardState);
+            const verifiedLegalMoves = [];
+
+            for (let move of rawMoves) {
+                // محاكاة الحركة على رقعة افتراضية
+                const simBoard = boardState.map(row => [...row]);
+                simBoard[move.r][move.c] = simBoard[r][c];
+                simBoard[r][c] = '';
+
+                // إذا لم يقع الملك في كش بعد هذه الحركة، فهي قانونية تماماً
+                if (!isKingInCheck(pieceColor, simBoard)) {
+                    verifiedLegalMoves.push(move);
+                }
+            }
+            return verifiedLegalMoves;
+        }
+
+        // فحص هل لدى اللاعب الحالي أي حركة قانونية على الإطلاق
+        function hasAnyLegalMoves(color) {
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const p = boardState[r][c];
+                    if (p && ((color === 'W' && isWhite(p)) || (color === 'B' && isBlack(p)))) {
+                        if (getLegalMoves(r, c).length > 0) return true;
+                    }
+                }
+            }
+            return false;
         }
 
         function renderBoard() {
             const boardEl = document.getElementById('board');
             boardEl.innerHTML = '';
 
+            const inCheck = isKingInCheck(turn, boardState);
+            const kingPos = findKing(turn, boardState);
+
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
                     const square = document.createElement('div');
                     square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
 
-                    // تحديد القطعة المختارة
+                    // تظليل الملك باللون الأحمر إذا كان في حالة كش
+                    if (inCheck && kingPos && kingPos.r === r && kingPos.c === c) {
+                        square.classList.add('in-check');
+                    }
+
                     if (selected && selected.r === r && selected.c === c) {
                         square.classList.add('selected');
                     }
 
-                    // إظهار النقاط المتاحة للحركة
                     const moveOption = legalMoves.find(m => m.r === r && m.c === c);
                     if (moveOption) {
                         square.classList.add('possible');
@@ -476,7 +594,6 @@
             const isWhitePiece = clickedPiece && isWhite(clickedPiece);
             const isBlackPiece = clickedPiece && isBlack(clickedPiece);
 
-            // 1. عند تحديد قطعة جديدة لشرط الدور
             if (!selected) {
                 if (!clickedPiece) return;
                 if ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece)) {
@@ -489,7 +606,6 @@
                 return;
             }
 
-            // 2. إذا ضغطت نفس القطعة مرة أخرى -> إغلاق التحديد
             if (selected.r === r && selected.c === c) {
                 selected = null;
                 legalMoves = [];
@@ -497,23 +613,19 @@
                 return;
             }
 
-            // 3. التحقق مما إذا كان المربع المضروب حركة قانونية
             const validMove = legalMoves.find(m => m.r === r && m.c === c);
             if (validMove) {
                 executeMove(selected.r, selected.c, r, c);
                 selected = null;
                 legalMoves = [];
-                renderBoard();
                 return;
             }
 
-            // 4. إذا نُقر على قطعة أخرى من نفس اللون -> تبديل التحديد فوراً
             if (clickedPiece && ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece))) {
                 selected = { r, c };
                 legalMoves = getLegalMoves(r, c);
                 renderBoard();
             } else {
-                // ضغط على مربع غير قانوني -> إلغاء التحديد
                 selected = null;
                 legalMoves = [];
                 renderBoard();
@@ -523,28 +635,46 @@
         function executeMove(fromR, fromC, toR, toC) {
             let piece = boardState[fromR][fromC];
             
-            // ترقية البيدق عند الوصول للنهاية
             if (piece === 'P' && toR === 0) piece = 'Q';
             if (piece === 'p' && toR === 7) piece = 'q';
 
             boardState[toR][toC] = piece;
             boardState[fromR][fromC] = '';
 
-            // تسجل النقلة في اللوحة الجانبية
             const cols = ['a','b','c','d','e','f','g','h'];
             const logEl = document.getElementById('movesLog');
             const moveText = `• ${piece.toUpperCase()} من (${cols[fromC]}${8-fromR}) إلى (${cols[toC]}${8-toR})`;
             logEl.innerHTML += `<div>${moveText}</div>`;
             logEl.scrollTop = logEl.scrollHeight;
 
-            // تبديل الدور
             turn = turn === 'W' ? 'B' : 'W';
-            updateTurnStatus();
+            renderBoard();
+            updateGameStatus();
         }
 
-        function updateTurnStatus() {
+        function updateGameStatus() {
             const el = document.getElementById('turnStatus');
-            el.innerHTML = `الدور الحالي: <strong style="color: ${turn === 'W' ? '#38bdf8' : '#f43f5e'};">${turn === 'W' ? 'الأبيض' : 'الأسود'}</strong>`;
+            const turnName = turn === 'W' ? 'الأبيض' : 'الأسود';
+            const turnColorHex = turn === 'W' ? '#38bdf8' : '#f43f5e';
+            const inCheck = isKingInCheck(turn, boardState);
+            const canMove = hasAnyLegalMoves(turn);
+
+            if (!canMove) {
+                if (inCheck) {
+                    const winner = turn === 'W' ? 'الأسود' : 'الأبيض';
+                    el.innerHTML = `<span style="color: #ef4444; font-weight: bold;">🚨 كش مات! فوز اللاعب ${winner}!</span>`;
+                    setTimeout(() => alert(`🚨 انتهت اللعبة! كش مات، الفائز هو اللاعب ${winner}`), 100);
+                } else {
+                    el.innerHTML = `<span style="color: #f59e0b; font-weight: bold;">🤝 تعادل (Stalemate)!</span>`;
+                    setTimeout(() => alert(`🤝 تعادل! لا توجد حركات قانونية متاحة.`), 100);
+                }
+            } else {
+                if (inCheck) {
+                    el.innerHTML = `الدور الحالي: <strong style="color: ${turnColorHex};">${turnName}</strong> <span style="color: #ef4444; font-weight: bold;">⚠️ (كش ملك!)</span>`;
+                } else {
+                    el.innerHTML = `الدور الحالي: <strong style="color: ${turnColorHex};">${turnName}</strong>`;
+                }
+            }
         }
     </script>
 </body>
