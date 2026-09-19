@@ -51,125 +51,68 @@
             max-width: 500px;
         }
 
-        .auth-container h2 {
-            color: var(--accent-color);
-            margin-bottom: 12px;
-        }
-
-        .auth-container p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
+        .auth-container h2 { color: var(--accent-color); margin-bottom: 12px; }
+        .auth-container p { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
         .auth-container input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: rgba(15, 23, 42, 0.9);
-            color: white;
-            font-size: 13px;
-            text-align: center;
-            margin-bottom: 20px;
+            width: 100%; padding: 12px; border-radius: 8px;
+            border: 1px solid #334155; background: rgba(15, 23, 42, 0.9);
+            color: white; font-size: 13px; text-align: center; margin-bottom: 20px;
         }
 
         .btn {
-            background: var(--accent-color);
-            color: #0f172a;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
+            background: var(--accent-color); color: #0f172a; border: none;
+            padding: 10px 24px; border-radius: 6px; font-weight: bold;
+            cursor: pointer; transition: all 0.2s;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4); }
 
         .game-layout {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1100px;
-            gap: 20px;
+            display: none; flex-direction: column; align-items: center;
+            width: 100%; max-width: 1100px; gap: 20px;
         }
 
         .controls-bar {
-            background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 25px;
-            border-radius: 12px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 100%;
+            background: var(--panel-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1); padding: 15px 25px;
+            border-radius: 12px; display: flex; gap: 20px;
+            align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;
         }
 
-        .color-picker-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-
+        .color-picker-group { display: flex; align-items: center; gap: 8px; font-size: 14px; }
         .color-picker-group input[type="color"] {
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            background: none;
+            border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; background: none;
         }
 
-        .main-content {
-            display: flex;
-            gap: 25px;
-            width: 100%;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .main-content { display: flex; gap: 25px; width: 100%; justify-content: center; flex-wrap: wrap; }
 
         .board-wrapper {
-            background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--panel-bg); backdrop-filter: blur(10px);
+            padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
         .chess-board {
-            display: grid;
-            grid-template-columns: repeat(8, 65px);
-            grid-template-rows: repeat(8, 65px);
-            border: 4px solid #0f172a;
-            border-radius: 6px;
-            overflow: hidden;
+            display: grid; grid-template-columns: repeat(8, 65px); grid-template-rows: repeat(8, 65px);
+            border: 4px solid #0f172a; border-radius: 6px; overflow: hidden;
         }
 
         .square {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 42px;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.2s;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; user-select: none; transition: background-color 0.2s;
         }
 
         .square.light { background-color: var(--light-square); }
         .square.dark { background-color: var(--dark-square); }
         .square.selected { background-color: #f1c40f !important; }
+
+        /* طبقة عزل القطعة لتبدو دائماً أعلى المؤشرات البصرية */
+        .piece {
+            position: relative;
+            z-index: 2;
+            font-size: 42px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
 
         .square.in-check {
             background-color: #ef4444 !important;
@@ -181,68 +124,46 @@
             to { box-shadow: inset 0 0 20px #dc2626; }
         }
 
+        /* مؤشر النقلة للمربع الفارغ */
         .square.possible::after {
-            content: '';
-            width: 18px;
-            height: 18px;
-            background-color: rgba(34, 197, 94, 0.85);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+            content: ''; position: absolute; width: 18px; height: 18px;
+            background-color: rgba(34, 197, 94, 0.75); border-radius: 50%;
+            z-index: 1; box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
         }
 
+        /* إطار حلقة الاستحواذ/الأكل المفرغ لحماية رؤية القطع */
         .square.possible.capture::after {
-            width: 100%;
-            height: 100%;
-            border-radius: 0;
-            background-color: rgba(239, 68, 68, 0.45);
-            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.9);
+            width: 100%; height: 100%; border-radius: 0;
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 4px solid rgba(239, 68, 68, 0.85);
+            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.5);
+            z-index: 1;
         }
 
         .sidebar {
-            background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 20px;
-            width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            background: var(--panel-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+            padding: 20px; width: 320px; display: flex; flex-direction: column; gap: 15px;
         }
 
         .panel-box {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(15, 23, 42, 0.6); padding: 12px;
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
         }
 
         .panel-box h3 {
-            font-size: 1rem;
-            color: var(--accent-color);
-            margin-bottom: 8px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 4px;
+            font-size: 1rem; color: var(--accent-color); margin-bottom: 8px;
+            border-bottom: 1px solid #334155; padding-bottom: 4px;
         }
 
         .moves-log {
-            height: 180px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 13px;
-            color: #cbd5e1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            height: 180px; overflow-y: auto; font-family: monospace;
+            font-size: 13px; color: #cbd5e1; display: flex; flex-direction: column; gap: 4px;
         }
 
         @media (max-width: 650px) {
-            .chess-board {
-                grid-template-columns: repeat(8, 42px);
-                grid-template-rows: repeat(8, 42px);
-            }
-            .square { font-size: 28px; }
+            .chess-board { grid-template-columns: repeat(8, 42px); grid-template-rows: repeat(8, 42px); }
+            .piece { font-size: 28px; }
             .sidebar { width: 100%; }
         }
     </style>
@@ -360,11 +281,8 @@
             updateGameStatus();
         }
 
-        // 1. فحص هل المربع (tr, tc) مهدد من قبل أي قطعة تابعة لـ attackerColor
         function isSquareAttacked(tr, tc, attackerColor, board) {
             const isAttackerWhite = (attackerColor === 'W');
-
-            // البيادق
             const pawnDir = isAttackerWhite ? 1 : -1;
             const pawnChar = isAttackerWhite ? 'P' : 'p';
             for (let dc of [-1, 1]) {
@@ -374,7 +292,6 @@
                 }
             }
 
-            // الأحصنة
             const knightChar = isAttackerWhite ? 'N' : 'n';
             const knightOffsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
             for (let [dr, dc] of knightOffsets) {
@@ -384,7 +301,6 @@
                 }
             }
 
-            // الملوك
             const kingChar = isAttackerWhite ? 'K' : 'k';
             for (let dr of [-1,0,1]) {
                 for (let dc of [-1,0,1]) {
@@ -396,7 +312,6 @@
                 }
             }
 
-            // القلاع والوزراء (خطوط مستقيمة)
             const straightDirs = [[-1,0],[1,0],[0,-1],[0,1]];
             const rookChar = isAttackerWhite ? 'R' : 'r';
             const queenChar = isAttackerWhite ? 'Q' : 'q';
@@ -412,7 +327,6 @@
                 }
             }
 
-            // الفيلة والوزراء (خطوط مائلة)
             const diagDirs = [[-1,-1],[-1,1],[1,-1],[1,1]];
             const bishopChar = isAttackerWhite ? 'B' : 'b';
             for (let [dr, dc] of diagDirs) {
@@ -430,7 +344,6 @@
             return false;
         }
 
-        // 2. البحث عن مكان الملك
         function findKing(color, board) {
             const target = color === 'W' ? 'K' : 'k';
             for (let r = 0; r < 8; r++) {
@@ -441,7 +354,6 @@
             return null;
         }
 
-        // 3. هل الملك في حالة كش؟
         function isKingInCheck(color, board) {
             const kingPos = findKing(color, board);
             if (!kingPos) return false;
@@ -449,7 +361,6 @@
             return isSquareAttacked(kingPos.r, kingPos.c, enemyColor, board);
         }
 
-        // 4. الحركة الهندسية الخام دون تصفية الشروط الأمنية للملك
         function getRawMoves(r, c, board) {
             const piece = board[r][c];
             if (!piece) return [];
@@ -513,7 +424,6 @@
             return moves;
         }
 
-        // 5. تصفية الحركات: استبعاد أي حركة تجعل الملك في وضعية كش (تطبيق القانون الشطرنجي الصارم)
         function getLegalMoves(r, c) {
             const piece = boardState[r][c];
             if (!piece) return [];
@@ -524,12 +434,10 @@
             const verifiedLegalMoves = [];
 
             for (let move of rawMoves) {
-                // محاكاة الحركة على رقعة افتراضية
                 const simBoard = boardState.map(row => [...row]);
                 simBoard[move.r][move.c] = simBoard[r][c];
                 simBoard[r][c] = '';
 
-                // إذا لم يقع الملك في كش بعد هذه الحركة، فهي قانونية تماماً
                 if (!isKingInCheck(pieceColor, simBoard)) {
                     verifiedLegalMoves.push(move);
                 }
@@ -537,7 +445,6 @@
             return verifiedLegalMoves;
         }
 
-        // فحص هل لدى اللاعب الحالي أي حركة قانونية على الإطلاق
         function hasAnyLegalMoves(color) {
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
@@ -562,7 +469,6 @@
                     const square = document.createElement('div');
                     square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
 
-                    // تظليل الملك باللون الأحمر إذا كان في حالة كش
                     if (inCheck && kingPos && kingPos.r === r && kingPos.c === c) {
                         square.classList.add('in-check');
                     }
@@ -579,8 +485,11 @@
 
                     const piece = boardState[r][c];
                     if (piece) {
-                        square.textContent = pieceSymbols[piece];
-                        square.style.color = (piece === piece.toUpperCase()) ? '#ffffff' : '#1e293b';
+                        const pieceSpan = document.createElement('span');
+                        pieceSpan.className = 'piece';
+                        pieceSpan.textContent = pieceSymbols[piece];
+                        pieceSpan.style.color = (piece === piece.toUpperCase()) ? '#ffffff' : '#1e293b';
+                        square.appendChild(pieceSpan);
                     }
 
                     square.onclick = () => handleSquareClick(r, c);
