@@ -159,6 +159,7 @@
         }
 
         .square {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -171,9 +172,28 @@
 
         .square.light { background-color: var(--light-square); }
         .square.dark { background-color: var(--dark-square); }
+        
         .square.selected {
             background-color: #f1c40f !important;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* مؤشرات النقلات القانونية */
+        .square.possible::after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background-color: rgba(34, 197, 94, 0.75);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+        }
+
+        .square.possible.capture::after {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            background-color: rgba(239, 68, 68, 0.4);
+            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.8);
         }
 
         .sidebar {
@@ -309,7 +329,6 @@
             updateBoardColors();
         }
 
-        // استخدام رموز صلبة ومواضحة بصرياً لكل الألوان
         const pieceSymbols = {
             'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
             'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟'
@@ -328,15 +347,95 @@
 
         let boardState = [];
         let selected = null; // { r, c }
+        let legalMoves = []; // قائمة بالحركات المتاحة للقطعة المحددة
         let turn = 'W'; // 'W' أو 'B'
+
+        function isWhite(p) { return p && p === p.toUpperCase(); }
+        function isBlack(p) { return p && p === p.toLowerCase(); }
 
         function resetBoard() {
             boardState = defaultBoard.map(row => [...row]);
             turn = 'W';
             selected = null;
+            legalMoves = [];
             document.getElementById('movesLog').innerHTML = '';
             updateTurnStatus();
             renderBoard();
+        }
+
+        // محرك حساب الحركات القانونية حسب قوانين الشطرنج
+        function getLegalMoves(r, c) {
+            const piece = boardState[r][c];
+            if (!piece) return [];
+
+            const white = isWhite(piece);
+            const type = piece.toLowerCase();
+            const moves = [];
+
+            function addMove(tr, tc) {
+                if (tr < 0 || tr > 7 || tc < 0 || tc > 7) return false;
+                const target = boardState[tr][tc];
+                if (!target) {
+                    moves.push({ r: tr, c: tc, isCapture: false });
+                    return true; // يمكن المواصلة بنفس الاتجاه
+                }
+                if ((white && isBlack(target)) || (!white && isWhite(target))) {
+                    moves.push({ r: tr, c: tc, isCapture: true });
+                }
+                return false; // طريق مسدود بسبب وجود قطعة
+            }
+
+            if (type === 'p') { // البيدق
+                const dir = white ? -1 : 1;
+                const startRow = white ? 6 : 1;
+
+                // تحرك خطوة للأمام
+                if (r + dir >= 0 && r + dir <= 7 && !boardState[r + dir][c]) {
+                    moves.push({ r: r + dir, c: c, isCapture: false });
+                    // تحرك خطوتين من البداية
+                    if (r === startRow && !boardState[r + 2 * dir][c]) {
+                        moves.push({ r: r + 2 * dir, c: c, isCapture: false });
+                    }
+                }
+                // الأكل قطرياً
+                for (let dc of [-1, 1]) {
+                    let tc = c + dc;
+                    let tr = r + dir;
+                    if (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
+                        let target = boardState[tr][tc];
+                        if (target && ((white && isBlack(target)) || (!white && isWhite(target)))) {
+                            moves.push({ r: tr, c: tc, isCapture: true });
+                        }
+                    }
+                }
+            } else if (type === 'n') { // الحصان
+                const offsets = [
+                    [-2, -1], [-2, 1], [-1, -2], [-1, 2],
+                    [1, -2], [1, 2], [2, -1], [2, 1]
+                ];
+                for (let [dr, dc] of offsets) addMove(r + dr, c + dc);
+            } else if (type === 'r' || type === 'b' || type === 'q') { // القلعة والفيل والوزير
+                const dirs = [];
+                if (type === 'r' || type === 'q') dirs.push([-1,0], [1,0], [0,-1], [0,1]);
+                if (type === 'b' || type === 'q') dirs.push([-1,-1], [-1,1], [1,-1], [1,1]);
+
+                for (let [dr, dc] of dirs) {
+                    let tr = r + dr, tc = c + dc;
+                    while (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
+                        let canContinue = addMove(tr, tc);
+                        if (!canContinue) break;
+                        tr += dr; tc += dc;
+                    }
+                }
+            } else if (type === 'k') { // الملك
+                for (let dr of [-1, 0, 1]) {
+                    for (let dc of [-1, 0, 1]) {
+                        if (dr !== 0 || dc !== 0) addMove(r + dr, c + dc);
+                    }
+                }
+            }
+
+            return moves;
         }
 
         function renderBoard() {
@@ -347,15 +446,22 @@
                 for (let c = 0; c < 8; c++) {
                     const square = document.createElement('div');
                     square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
-                    
+
+                    // تحديد القطعة المختارة
                     if (selected && selected.r === r && selected.c === c) {
                         square.classList.add('selected');
+                    }
+
+                    // إظهار النقاط المتاحة للحركة
+                    const moveOption = legalMoves.find(m => m.r === r && m.c === c);
+                    if (moveOption) {
+                        square.classList.add('possible');
+                        if (moveOption.isCapture) square.classList.add('capture');
                     }
 
                     const piece = boardState[r][c];
                     if (piece) {
                         square.textContent = pieceSymbols[piece];
-                        // القطع البيضاء نصها أبيض ناصع، والقطع السوداء نصها كحلي غامق واضح
                         square.style.color = (piece === piece.toUpperCase()) ? '#ffffff' : '#1e293b';
                     }
 
@@ -367,16 +473,15 @@
 
         function handleSquareClick(r, c) {
             const clickedPiece = boardState[r][c];
-            const isWhitePiece = clickedPiece && clickedPiece === clickedPiece.toUpperCase();
-            const isBlackPiece = clickedPiece && clickedPiece === clickedPiece.toLowerCase();
+            const isWhitePiece = clickedPiece && isWhite(clickedPiece);
+            const isBlackPiece = clickedPiece && isBlack(clickedPiece);
 
-            // 1. إذا لم تكن هناك قطعة محددة بعد
+            // 1. عند تحديد قطعة جديدة لشرط الدور
             if (!selected) {
                 if (!clickedPiece) return;
-
-                // التأكد من أن الدور للاعب صاحب القطعة
                 if ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece)) {
                     selected = { r, c };
+                    legalMoves = getLegalMoves(r, c);
                     renderBoard();
                 } else {
                     alert(turn === 'W' ? "الدور حالياً للاعب الأبيض!" : "الدور حالياً للاعب الأسود!");
@@ -384,28 +489,44 @@
                 return;
             }
 
-            // 2. إذا تم النقر على نفس القطعة المحددة مجدداً -> إلغاء التحديد
+            // 2. إذا ضغطت نفس القطعة مرة أخرى -> إغلاق التحديد
             if (selected.r === r && selected.c === c) {
                 selected = null;
+                legalMoves = [];
                 renderBoard();
                 return;
             }
 
-            // 3. إذا تم النقر على قطعة أخرى من نفس لونك -> تبديل التحديد إليها فوراً
+            // 3. التحقق مما إذا كان المربع المضروب حركة قانونية
+            const validMove = legalMoves.find(m => m.r === r && m.c === c);
+            if (validMove) {
+                executeMove(selected.r, selected.c, r, c);
+                selected = null;
+                legalMoves = [];
+                renderBoard();
+                return;
+            }
+
+            // 4. إذا نُقر على قطعة أخرى من نفس اللون -> تبديل التحديد فوراً
             if (clickedPiece && ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece))) {
                 selected = { r, c };
+                legalMoves = getLegalMoves(r, c);
                 renderBoard();
-                return;
+            } else {
+                // ضغط على مربع غير قانوني -> إلغاء التحديد
+                selected = null;
+                legalMoves = [];
+                renderBoard();
             }
-
-            // 4. تنفيذ الحركة إلى المربع الهدف
-            executeMove(selected.r, selected.c, r, c);
-            selected = null;
-            renderBoard();
         }
 
         function executeMove(fromR, fromC, toR, toC) {
-            const piece = boardState[fromR][fromC];
+            let piece = boardState[fromR][fromC];
+            
+            // ترقية البيدق عند الوصول للنهاية
+            if (piece === 'P' && toR === 0) piece = 'Q';
+            if (piece === 'p' && toR === 7) piece = 'q';
+
             boardState[toR][toC] = piece;
             boardState[fromR][fromC] = '';
 
