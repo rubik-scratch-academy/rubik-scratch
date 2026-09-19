@@ -3,443 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل برمجة محرك الشطرنج الاحترافي في Scratch</title>
+    <title>Grandmaster Pro Chess Platform</title>
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --accent: #38bdf8;
-            --accent-hover: #0284c7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --square-light: #f0d9b5;
-            --square-dark: #b58863;
-            --square-border: #ef4444;
+            --light-square: #f0d9b5;
+            --dark-square: #b58863;
+            --panel-bg: rgba(30, 41, 59, 0.85);
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* خلفية متغيرة الألوان باستمرار */
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Sidebar Navigation */
-        sidebar {
-            width: 300px;
-            background: var(--bg-card);
-            border-left: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 20px 10px;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        sidebar h2 {
-            font-size: 1.1rem;
-            color: var(--accent);
-            padding: 0 10px 15px 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: right;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent);
-        }
-
-        /* Main Content Container */
-        main {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .content-section {
-            display: none;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        h1 {
-            font-size: 2rem;
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-
-        p.subtitle {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            color: var(--accent);
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-        }
-
-        .card p, .card li {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        ul, ol {
-            padding-right: 20px;
-            margin-top: 10px;
-        }
-
-        /* Code Block Mockup */
-        .scratch-code {
-            background: #090d16;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            color: #7dd3fc;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            margin-top: 10px;
-            direction: ltr;
-            text-align: left;
-        }
-
-        .sb-hat { color: #ffbf00; font-weight: bold; }
-        .sb-stack { color: #4c97ff; }
-        .sb-control { color: #ffab19; }
-        .sb-custom { color: #ff6680; font-weight: bold; }
-        .sb-list { color: #ff6534; }
-
-        /* Interactive 10x12 Grid Visualizer */
-        .grid-10x12 {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 2px;
-            background: var(--border);
-            padding: 2px;
-            border-radius: 6px;
-            max-width: 450px;
-            margin: 20px auto;
-        }
-
-        .cell {
-            aspect-ratio: 1;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            padding: 20px;
+            color: var(--text-color);
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #2e1065, #022c22, #172554);
+            background-size: 400% 400%;
+            animation: dynamicBackground 12s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes dynamicBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* بوابة الحماية */
+        .auth-container {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .auth-container h2 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+
+        .auth-container p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .auth-container input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .btn {
+            background: var(--accent-color);
+            color: #0f172a;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
             font-weight: bold;
-            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* واجهة اللعبة */
+        .game-layout {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            gap: 20px;
+        }
+
+        .controls-bar {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .color-picker-group input[type="color"] {
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: none;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 25px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* رقعة الشطرنج */
+        .board-wrapper {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 65px);
+            grid-template-rows: repeat(8, 65px);
+            border: 4px solid #0f172a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
             cursor: pointer;
             user-select: none;
+            transition: background-color 0.3s;
         }
 
-        .cell.border-cell {
-            background: #334155;
-            color: #64748b;
+        .square.light { background-color: var(--light-square); }
+        .square.dark { background-color: var(--dark-square); }
+        .square.selected { background-color: #f1c40f !important; }
+
+        /* اللوحة الجانبية */
+        .sidebar {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .cell.board-light {
-            background: var(--square-light);
-            color: #1e293b;
+        .panel-box {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .cell.board-dark {
-            background: var(--square-dark);
-            color: #f8fafc;
+        .panel-box h3 {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 4px;
         }
 
-        .cell.highlight {
-            outline: 3px solid #38bdf8;
-            z-index: 10;
+        .moves-log {
+            height: 180px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 13px;
+            color: #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .cell.target {
-            background: #ef4444 !important;
-            color: white !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            sidebar { width: 100%; height: auto; border-left: none; border-bottom: 1px solid var(--border); }
+        @media (max-width: 650px) {
+            .chess-board {
+                grid-template-columns: repeat(8, 42px);
+                grid-template-rows: repeat(8, 42px);
+            }
+            .square { font-size: 26px; }
+            .sidebar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <sidebar>
-        <h2>دليل الشطرنج في Scratch</h2>
-        <button class="nav-btn active" onclick="showTab('arch')">1. معمارية الـ Mailbox 10x12</button>
-        <button class="nav-btn" onclick="showTab('sprite')">2. كائن واحد و 64 مستنسخ</button>
-        <button class="nav-btn" onclick="showTab('vectors')">3. متجهات حركة القطع</button>
-        <button class="nav-btn" onclick="showTab('check')">4. خوارزمية كشف الكش</button>
-        <button class="nav-btn" onclick="showTab('code')">5. اللبنات البرمجية الكاملة</button>
-        <button class="nav-btn" onclick="showTab('explorer')">6. المحاكي التفاعلي للرقعة</button>
-    </sidebar>
+    <!-- بوابة الحماية -->
+    <div id="authGate" class="auth-container">
+        <h2>🔒 تسجيل الدخول للمنصة</h2>
+        <p>أدخل كلمة المرور الخاصة للوصول إلى لوحة اللعب:</p>
+        <input type="password" id="passInput" placeholder="أدخل كلمة المرور السرية...">
+        <br>
+        <button class="btn" onclick="authenticate()">دخول المنصة</button>
+    </div>
 
-    <main>
-        <!-- Section 1 -->
-        <div id="arch" class="content-section active">
-            <h1>1. معمارية نظام Mailbox 10x12</h1>
-            <p class="subtitle">تجنب التعقيد الحسابي والشروط الجغرافية الخاطئة بإنشاء حدود وهمية حول رقعة الشطرنج.</p>
-
-            <div class="card">
-                <h3>لماذا 10×12 بدلاً من 8×8؟</h3>
-                <p>في سكراتش، إذا تحركت القطعة خارج رقعة 8×8، فستحتاج لكتابة شروط معقدة مثل <code>إذا كان الصف &gt; 8 أو العمود &lt; 1</code> لكل قطعة وحركة. بدلاً من ذلك، نُحيط الرقعة بحافة من المربعات القيمة الخاصة بها تساوي <code>99</code>.</p>
+    <!-- تطبيق الشطرنج الرئيسي -->
+    <div id="gameApp" class="game-layout">
+        
+        <!-- شريط التحكم والألوان -->
+        <div class="controls-bar">
+            <div class="color-picker-group">
+                <label>المربعات الفاتحة:</label>
+                <input type="color" id="lightColorPicker" value="#f0d9b5" onchange="updateBoardColors()">
             </div>
-
-            <div class="card">
-                <h3>تكوين قائمة "الرقعة" (Board List)</h3>
-                <p>تتكون القائمة من <strong>120 عنصراً</strong> مرتبة كالتالي:</p>
-                <ul>
-                    <li><strong>العناصر 1 إلى 20:</strong> صفان سفليان من الجدران الوهمية (قيمة 99).</li>
-                    <li><strong>العناصر 101 إلى 120:</strong> صفان علويان من الجدران الوهمية (قيمة 99).</li>
-                    <li><strong>العمود الأول والأخير من كل صف:</strong> جدران وهمية (قيمة 99).</li>
-                    <li><strong>المربعات الفعلية (64 مربعاً):</strong> تحتوي على أرقام تمثل القطع (مثال: a1 = الدليل 22، h8 = الدليل 99).</li>
-                </ul>
+            <div class="color-picker-group">
+                <label>المربعات الداكنة:</label>
+                <input type="color" id="darkColorPicker" value="#b58863" onchange="updateBoardColors()">
             </div>
-
-            <div class="card">
-                <h3>ترميز القطع بالأرقام</h3>
-                <p>نستخدم أرقاماً موجبة للقطع البيضاء وسالبة للقطع السوداء لسهولة التحقق من لون القطعة ضرباً في 1 أو -1:</p>
-                <ul>
-                    <li><code>1 / -1</code>: بيدق (Pawn)</li>
-                    <li><code>2 / -2</code>: حصان (Knight)</li>
-                    <li><code>3 / -3</code>: فيل (Bishop)</li>
-                    <li><code>4 / -4</code>: قلعة (Rook)</li>
-                    <li><code>5 / -5</code>: وزير (Queen)</li>
-                    <li><code>6 / -6</code>: ملك (King)</li>
-                    <li><code>0</code>: مربع فارغ</li>
-                    <li><code>99</code>: جدار خارج الحدود</li>
-                </ul>
-            </div>
+            <button class="btn" onclick="applyPreset('classic')">خشب كلاسيكي</button>
+            <button class="btn" onclick="applyPreset('emerald')">زمردي</button>
+            <button class="btn" onclick="applyPreset('cyber')">سايبر بنك</button>
         </div>
 
-        <!-- Section 2 -->
-        <div id="sprite" class="content-section">
-            <h1>2. كائن واحد و 64 مستنسخ (Clones)</h1>
-            <p class="subtitle">إدارة شاشة اللعبة بكائن واحد يوفر الذاكرة ويسرع عملية التحديث تلقائياً.</p>
-
-            <div class="card">
-                <h3>آلية العمل</h3>
-                <p>بدلاً من إنشاء 32 أو 64 كائناً مستقل، ننشئ كائناً واحداً نطلق عليه <code>[المربع]</code> ونحمّل فيه المظاهر التالية:</p>
-                <ol>
-                    <li>مظهر المربع الفاتح والداكن.</li>
-                    <li>مظاهر القطع البيضاء (6 مظاهر).</li>
-                    <li>مظاهر القطع السوداء (6 مظاهر).</li>
-                </ol>
+        <div class="main-content">
+            <!-- الرقعة -->
+            <div class="board-wrapper">
+                <div id="board" class="chess-board"></div>
             </div>
 
-            <div class="card">
-                <h3>إنشاء الـ Clones وتحديد الدليل</h3>
-                <p>ننشئ متغيراً يسمى <code>[رقم_المربع]</code> ونضبط خياره على <strong>"لهذا الكائن فقط" (For this sprite only)</strong>. يضمن هذا الحفاظ على قيمة مستقلة لكل مستنسخ.</p>
-                <div class="scratch-code">
-<span class="sb-hat">عند نقر زر البدء</span>
-<span class="sb-stack">امسح الكل</span>
-<span class="sb-stack">اجعل [رقم_المربع] مساوياً لـ [22]</span>
-<span class="sb-control">كرر (8) مرات [الصفوف]:</span>
-    <span class="sb-control">كرر (8) مرات [الأعمدة]:</span>
-        <span class="sb-stack">أنشئ مستنسخاً من [نفسي]</span>
-        <span class="sb-stack">غيّر [رقم_المربع] بمقدار (1)</span>
-    <span class="sb-stack">غيّر [رقم_المربع] بمقدار (2) <span style="color:#64748b;">// القفز فوق حواف الجدار</span></span>
+            <!-- معلومات الجولة -->
+            <div class="sidebar">
+                <div class="panel-box">
+                    <h3>حالة اللعبة</h3>
+                    <p id="turnStatus">الدور الحالي: <strong style="color: #38bdf8;">الأبيض</strong></p>
                 </div>
-            </div>
-        </div>
 
-        <!-- Section 3 -->
-        <div id="vectors" class="content-section">
-            <h1>3. متجهات حركة القطع (Move Vectors)</h1>
-            <p class="subtitle">حساب الحركات المتاحة عبر عمليات رياضية بسيطة بإضافة فروق الأدلة في قائمة 10x12.</p>
-
-            <div class="card">
-                <h3>جدول المتجهات الرياضية</h3>
-                <p>لتحريك قطعة على القائمة، نضيف الأرقام التالية إلى دليل المربع الحالي:</p>
-                <ul>
-                    <li><strong>القلعة (Rook):</strong> <code>[+10, -10, +1, -1]</code> (أعلى، أسفل، يمين، يسار).</li>
-                    <li><strong>الفيل (Bishop):</strong> <code>[+11, -11, +9, -9]</code> (الأقطار الأربعة).</li>
-                    <li><strong>الوزير والملك:</strong> يجمعان متجهات القلعة والفيل.</li>
-                    <li><strong>الحصان (Knight):</strong> <code>[+21, +19, +12, +8, -8, -12, -19, -21]</code> (قفزات حرف L).</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>خوارزمية حساب الحركات الطويلة (القلعة/الفيل/الوزير)</h3>
-                <div class="scratch-code">
-<span class="sb-custom">عرف [توليد_حركة_ممتدة (المتجه)]:</span>
-<span class="sb-stack">اجعل [المستهدف] مساوياً لـ (المربع_المحدد + المتجه)</span>
-<span class="sb-control">كرر حتى (عنصر (المستهدف) من [الرقعة] = 99):</span>
-    <span class="sb-control">إذا كان (عنصر (المستهدف) من [الرقعة] = 0) ثم:</span>
-        <span class="sb-list">أضف (المستهدف) إلى [الحركات_المسموحة]</span>
-    <span class="sb-control">وإلا:</span>
-        <span class="sb-control">إذا كان (لون_القطعة(المستهدف) != لون_قطعتي) ثم:</span>
-            <span class="sb-list">أضف (المستهدف) إلى [الحركات_المسموحة] <span style="color:#64748b;">// أكل قطعة الخصم</span></span>
-        <span class="sb-control">أوقف هذه الحلقة <span style="color:#64748b;">// اصطدام بقطعة</span></span>
-    <span class="sb-stack">غيّر [المستهدف] بمقدار (المتجه)</span>
+                <div class="panel-box">
+                    <h3>سجل النقلات</h3>
+                    <div id="movesLog" class="moves-log"></div>
                 </div>
+
+                <button class="btn" style="background: #ef4444; color: white;" onclick="resetBoard()">إعادة تشغيل اللعبة</button>
             </div>
         </div>
-
-        <!-- Section 4 -->
-        <div id="check" class="content-section">
-            <h1>4. خوارزمية كشف الكش والتثبيت</h1>
-            <p class="subtitle">التحقق من شرعية الحركة واختبارها على رقعة وهمية قبل اعتمادها.</p>
-
-            <div class="card">
-                <h3>فكرة الاختبار الافتراضي (Virtual Move Test)</h3>
-                <p>لا يجوز للاعب القيام بحركة تضع ملكه في حالة كش. للتحقق من ذلك قبل إظهار الحركة للاعب:</p>
-                <ol>
-                    <li>نفذ الحركة مؤقتاً داخل قائمة <code>[الرقعة]</code>.</li>
-                    <li>استدعِ لبنة <code>[هل_الملك_مكشوف؟]</code>.</li>
-                    <li>إذا كان الملك مكشوفاً، احذف الحركة من قائمة <code>[الحركات_المسموحة]</code>.</li>
-                    <li>أرجع قائمة <code>[الرقعة]</code> إلى حالتها الأصلية قبل التجربة.</li>
-                </ol>
-            </div>
-
-            <div class="card">
-                <h3>ملاحظة أداء حاسمة في سكراتش</h3>
-                <p>تأكد دائماً من تفعيل خيار <strong>"Run without screen refresh" (التشغيل بدون تحديث الشاشة)</strong> عند تعريف اللبنات المخصصة لتوليد الحركات وفحص الكش، لكي تتنفذ هذه الحسابات المعقدة في أقل من 1/60 من الثانية دون أي تهنيج في اللعبة.</p>
-            </div>
-        </div>
-
-        <!-- Section 5 -->
-        <div id="code" class="content-section">
-            <h1>5. هيكل اللبنات البرمجية الكامل</h1>
-            <p class="subtitle">الصيغة النصية الكاملة للمشروع لتسهيل نقلها إلى واجهة سكراتش.</p>
-
-            <div class="card">
-                <h3>لبنة التهيئة الأولى (Setup)</h3>
-                <div class="scratch-code">
-<span class="sb-hat">عند نقر الراية الخضراء</span>
-<span class="sb-stack">حذف الكل من [الرقعة]</span>
-<span class="sb-control">كرر (120) مرات:</span>
-    <span class="sb-list">أضف (99) إلى [الرقعة]</span>
-<span class="sb-custom">استدعِ [بناء_الرقعة_الابتدائية]</span>
-<span class="sb-custom">استدعِ [توليد_المستنسخات]</span>
-<span class="sb-stack">بث [تحديث_الشاشة]</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>لبنة التفاعل عند النقر على المربع</h3>
-                <div class="scratch-code">
-<span class="sb-hat">عند انقضاء هذا المستنسخ (When this clone clicked)</span>
-<span class="sb-control">إذا كان (المربع_المحدد = 0) ثم:</span>
-    <span class="sb-control">إذا كان (عنصر (رقم_المربع) من [الرقعة] != 0) ثم:</span>
-        <span class="sb-stack">اجعل [المربع_المحدد] مساوياً لـ (رقم_المربع)</span>
-        <span class="sb-custom">استدعِ [حساب_الحركات_المسموحة (رقم_المربع)]</span>
-<span class="sb-control">وإلا:</span>
-    <span class="sb-control">إذا كان ([الحركات_المسموحة] تحتوي على (رقم_المربع)) ثم:</span>
-        <span class="sb-custom">استدعِ [تنفيذ_النقلة (المربع_المحدد, رقم_المربع)]</span>
-        <span class="sb-stack">اجعل [المربع_المحدد] مساوياً لـ (0)</span>
-        <span class="sb-list">حذف الكل من [الحركات_المسموحة]</span>
-        <span class="sb-stack">بث [تحديث_الشاشة]</span>
-    <span class="sb-control">وإلا:</span>
-        <span class="sb-stack">اجعل [المربع_المحدد] مساوياً لـ (0)</span>
-        <span class="sb-list">حذف الكل من [الحركات_المسموحة]</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 6 -->
-        <div id="explorer" class="content-section">
-            <h1>6. المحاكي التفاعلي لرقعة 10x12</h1>
-            <p class="subtitle">اضغط على أي مربع لرؤية موقعه ودليله داخل قائمة 10x12 والمتجهات الخاصة به.</p>
-
-            <div class="card">
-                <div id="gridContainer" class="grid-10x12"></div>
-                <div style="margin-top: 15px; text-align: center; color: var(--accent);" id="gridInfo">
-                    اضغط على أي مربع داخل الرقعة لمعاينة دليله في القائمة
-                </div>
-            </div>
-        </div>
-    </main>
+    </div>
 
     <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+        const SECRET_PASS = "6310894123456789987654321123456789987654321010203040506070809";
+
+        function authenticate() {
+            const input = document.getElementById('passInput').value;
+            if (input === SECRET_PASS) {
+                document.getElementById('authGate').style.display = 'none';
+                document.getElementById('gameApp').style.display = 'flex';
+                initGame();
+            } else {
+                alert("كلمة المرور غير صحيحة!");
+            }
         }
 
-        // Generate Interactive 10x12 Grid
-        const gridContainer = document.getElementById('gridContainer');
-        const gridInfo = document.getElementById('gridInfo');
+        // تخصيص الألوان
+        function updateBoardColors() {
+            const light = document.getElementById('lightColorPicker').value;
+            const dark = document.getElementById('darkColorPicker').value;
+            document.documentElement.style.setProperty('--light-square', light);
+            document.documentElement.style.setProperty('--dark-square', dark);
+        }
 
-        for (let row = 0; row < 12; row++) {
-            for (let col = 0; col < 10; col++) {
-                const index = row * 10 + col + 1;
-                const cell = document.createElement('div');
-                cell.classList.add('cell');
-
-                const isBorder = row < 2 || row > 9 || col === 0 || col === 9;
-
-                if (isBorder) {
-                    cell.classList.add('border-cell');
-                    cell.textContent = '99';
-                } else {
-                    const boardRow = row - 2;
-                    const boardCol = col - 1;
-                    const isLight = (boardRow + boardCol) % 2 === 0;
-                    cell.classList.add(isLight ? 'board-light' : 'board-dark');
-                    cell.textContent = index;
-                }
-
-                cell.addEventListener('click', () => {
-                    document.querySelectorAll('.cell').forEach(c => c.classList.remove('highlight', 'target'));
-                    cell.classList.add('highlight');
-
-                    if (isBorder) {
-                        gridInfo.innerHTML = `المربع <strong>#${index}</strong> هو جدار وهمي (خارج الحدود - قيمة 99)`;
-                    } else {
-                        const colsStr = ['a','b','c','d','e','f','g','h'];
-                        const colName = colsStr[col - 1];
-                        const rowName = 8 - (row - 2);
-                        gridInfo.innerHTML = `المربع الشطرنجي: <strong>${colName}${rowName}</strong> | الدليل في القائمة: <strong>#${index}</strong>`;
-                    }
-                });
-
-                gridContainer.appendChild(cell);
+        function applyPreset(theme) {
+            if (theme === 'classic') {
+                setColors('#f0d9b5', '#b58863');
+            } else if (theme === 'emerald') {
+                setColors('#e2e8f0', '#059669');
+            } else if (theme === 'cyber') {
+                setColors('#38bdf8', '#818cf8');
             }
+        }
+
+        function setColors(light, dark) {
+            document.getElementById('lightColorPicker').value = light;
+            document.getElementById('darkColorPicker').value = dark;
+            updateBoardColors();
+        }
+
+        // محرك الشطرنج
+        const pieceSymbols = {
+            'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
+            'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
+        };
+
+        let initialBoard = [
+            ['r','n','b','q','k','b','n','r'],
+            ['p','p','p','p','p','p','p','p'],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['P','P','P','P','P','P','P','P'],
+            ['R','N','B','Q','K','B','N','R']
+        ];
+
+        let boardState = [];
+        let selectedSquare = null;
+        let turn = 'W'; // W: White, B: Black
+
+        function initGame() {
+            resetBoard();
+        }
+
+        function resetBoard() {
+            boardState = JSON.parse(JSON.stringify(initialBoard));
+            turn = 'W';
+            selectedSquare = null;
+            document.getElementById('movesLog').innerHTML = '';
+            updateTurnText();
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const square = document.createElement('div');
+                    square.classList.add('square');
+                    square.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
+                    square.dataset.row = r;
+                    square.dataset.col = c;
+
+                    const piece = boardState[r][c];
+                    if (piece) {
+                        square.textContent = pieceSymbols[piece];
+                        square.style.color = piece === piece.toUpperCase() ? '#ffffff' : '#000000';
+                    }
+
+                    square.addEventListener('click', () => onSquareClick(r, c));
+                    boardEl.appendChild(square);
+                }
+            }
+        }
+
+        function onSquareClick(r, c) {
+            const piece = boardState[r][c];
+
+            if (selectedSquare === null) {
+                if (piece !== '') {
+                    const isWhite = piece === piece.toUpperCase();
+                    if ((turn === 'W' && isWhite) || (turn === 'B' && !isWhite)) {
+                        selectedSquare = { r, c };
+                        highlightSquare(r, c);
+                    }
+                }
+            } else {
+                if (selectedSquare.r === r && selectedSquare.c === c) {
+                    selectedSquare = null;
+                    renderBoard();
+                } else {
+                    executeMove(selectedSquare.r, selectedSquare.col, r, c);
+                    selectedSquare = null;
+                    renderBoard();
+                }
+            }
+        }
+
+        function highlightSquare(r, c) {
+            renderBoard();
+            const index = r * 8 + c;
+            const squares = document.querySelectorAll('.square');
+            if (squares[index]) squares[index].classList.add('selected');
+        }
+
+        function executeMove(fromR, fromC, toR, toC) {
+            const piece = boardState[fromR][fromC];
+            boardState[toR][toC] = piece;
+            boardState[fromR][fromC] = '';
+
+            // تسجيل النقلة
+            const cols = ['a','b','c','d','e','f','g','h'];
+            const logEl = document.getElementById('movesLog');
+            const moveText = `• ${piece.toUpperCase()} من ${cols[fromC]}${8-fromR} إلى ${cols[toC]}${8-toR}`;
+            logEl.innerHTML += `<div>${moveText}</div>`;
+            logEl.scrollTop = logEl.scrollHeight;
+
+            // التبديل
+            turn = turn === 'W' ? 'B' : 'W';
+            updateTurnText();
+        }
+
+        function updateTurnText() {
+            const turnText = document.getElementById('turnStatus');
+            turnText.innerHTML = `الدور الحالي: <strong style="color: ${turn === 'W' ? '#38bdf8' : '#f43f5e'};">${turn === 'W' ? 'الأبيض' : 'الأسود'}</strong>`;
         }
     </script>
 </body>
