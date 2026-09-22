@@ -3,652 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahmoud.games.com | Grandmaster Pro Chess</title>
+    <title>لعبة المافيا - Mahmoud.games.com</title>
     <style>
         :root {
-            --light-square: #f0d9b5;
-            --dark-square: #b58863;
-            --panel-bg: rgba(30, 10, 25, 0.85);
-            --accent-color: #f43f5e;
-            --duo-green: #58cc02;
-            --text-color: #f8fafc;
+            --bg-color: #0d0f18;
+            --card-bg: #161b22;
+            --primary: #8a2be2;
+            --accent: #ff4757;
+            --success: #2ed573;
+            --text: #f1f2f6;
         }
-
-        * {
-            box-sizing: border-box;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
         }
-
-        /* خلفية متدرجة تحرك باستمرار بين الوردي والأحمر */
-        body {
+        .screen {
+            display: none;
+            padding: 20px;
             min-height: 100vh;
+            box-sizing: border-box;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* الشاشة الأولى: اللوجو الاحترافي */
+        #splash-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #1a1c29 0%, #0d0f18 100%);
+        }
+        .logo-box {
+            border: 3px solid var(--primary);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+            background: rgba(22, 27, 34, 0.8);
+            margin-bottom: 30px;
+        }
+        .logo-box h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(45deg, #ff4757, #8a2be2, #2ed573);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-box p {
+            color: #a4b0be;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 30px auto;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+        button {
+            background: linear-gradient(135deg, var(--primary), #6c5ce7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+        }
+        input, select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4b6584;
+            background: #222f3e;
+            color: white;
+            margin: 10px;
+            width: 80%;
+            font-size: 16px;
+        }
+        /* الشخصية الكرتونية المرعبة واللطيفة */
+        .mascot-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1vw;
-            color: var(--text-color);
-            background: linear-gradient(-45deg, #ec4899, #f43f5e, #be123c, #831843, #fb7185);
-            background-size: 400% 400%;
-            animation: pinkRedGradient 8s ease infinite;
-            overflow-x: hidden;
+            gap: 15px;
+            margin-bottom: 20px;
         }
-
-        @keyframes pinkRedGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* الشعار واللوجو الاحترافي */
-        .brand-logo {
-            font-size: clamp(1.2rem, 2.5vw, 2rem);
-            font-weight: 900;
-            background: linear-gradient(90deg, #ffffff, #fbcfe8, #fda4af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 12px rgba(244, 63, 94, 0.6);
-            letter-spacing: 1px;
-            display: inline-flex;
+        .mascot-avatar {
+            width: 70px;
+            height: 70px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.6);
+            animation: bounce 2s infinite;
         }
-
-        .auth-container {
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: clamp(20px, 4vw, 40px);
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 90vw;
-            max-width: 480px;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
-
-        .auth-container h2 { color: #fda4af; margin: 15px 0 10px; font-size: clamp(1rem, 2vw, 1.4rem); }
-        .auth-container p { color: #f1f5f9; font-size: clamp(0.75rem, 1.5vw, 0.9rem); margin-bottom: 20px; }
-        .auth-container input {
-            width: 100%; padding: 12px; border-radius: 10px;
-            border: 1px solid #f43f5e; background: rgba(15, 23, 42, 0.9);
-            color: white; font-size: 14px; text-align: center; margin-bottom: 20px; outline: none;
+        .speech-bubble {
+            background: #2f3640;
+            border: 2px solid #718093;
+            padding: 12px 20px;
+            border-radius: 15px;
+            max-width: 300px;
+            text-align: right;
+            position: relative;
+            font-size: 16px;
         }
-
-        .btn {
-            background: linear-gradient(90deg, #f43f5e, #fb7185);
-            color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; font-weight: bold;
-            cursor: pointer; transition: all 0.2s; font-size: clamp(0.75rem, 1.2vw, 1rem);
+        .player-btn {
+            display: block;
+            width: 100%;
+            background: #2f3640;
+            margin: 8px 0;
+            border: 1px solid #4b6584;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(244, 63, 94, 0.4); }
-
-        .btn-duo {
-            background: var(--duo-green);
-            box-shadow: 0 4px 0 #46a302;
-            border-radius: 12px; color: white; font-weight: 800; border: none;
-            padding: 10px 18px; cursor: pointer; transition: all 0.1s;
+        .player-btn:hover {
+            background: var(--primary);
         }
-        .btn-duo:active { transform: translateY(4px); box-shadow: 0 0 0 #46a302; }
-
-        .game-layout {
-            display: none; flex-direction: column; align-items: center;
-            width: 100%; max-width: 1400px; gap: 15px;
-        }
-
-        .navbar {
-            background: var(--panel-bg); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15); padding: 10px 20px;
-            border-radius: 14px; display: flex; justify-content: space-between;
-            align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;
-        }
-
-        .controls-bar {
-            background: var(--panel-bg); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1); padding: 10px 15px;
-            border-radius: 12px; display: flex; gap: 12px;
-            align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;
-        }
-
-        .color-picker-group { display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .color-picker-group input[type="color"] {
-            border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; background: none;
-        }
-
-        .main-content { display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; }
-
-        .board-wrapper {
-            background: var(--panel-bg); backdrop-filter: blur(10px);
-            padding: 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-        }
-
-        /* التوافق الكامل مع جميع أنواع وشاشات الأرض */
-        .chess-board {
-            display: grid;
-            grid-template-columns: repeat(8, min(8.5vw, 65px));
-            grid-template-rows: repeat(8, min(8.5vw, 65px));
-            border: 3px solid #0f172a; border-radius: 6px; overflow: hidden;
-        }
-
-        .square {
-            position: relative; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; user-select: none; transition: background-color 0.2s;
-        }
-
-        .square.light { background-color: var(--light-square); }
-        .square.dark { background-color: var(--dark-square); }
-        .square.selected { background-color: #f1c40f !important; }
-
-        .piece {
-            position: relative; z-index: 2;
-            font-size: min(6vw, 42px);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); pointer-events: none;
-        }
-
-        .square.in-check {
-            background-color: #ef4444 !important;
-            animation: pulseCheck 1s infinite alternate;
-        }
-
-        @keyframes pulseCheck {
-            from { box-shadow: inset 0 0 5px #7f1d1d; }
-            to { box-shadow: inset 0 0 20px #dc2626; }
-        }
-
-        .square.possible::after {
-            content: ''; position: absolute; width: 30%; height: 30%;
-            background-color: rgba(34, 197, 94, 0.85); border-radius: 50%;
-            z-index: 1; box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
-        }
-
-        .square.possible.capture::after {
-            width: 100%; height: 100%; border-radius: 0;
-            background-color: rgba(239, 68, 68, 0.15);
-            border: 4px solid rgba(239, 68, 68, 0.85);
-            box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.5); z-index: 1;
-        }
-
-        .sidebar {
-            background: var(--panel-bg); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
-            padding: 15px; width: min(90vw, 320px); display: flex; flex-direction: column; gap: 12px;
-        }
-
-        .panel-box {
-            background: rgba(15, 23, 42, 0.6); padding: 12px;
-            border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .panel-box h3 {
-            font-size: 0.9rem; color: #fda4af; margin-bottom: 6px;
-            border-bottom: 1px solid #334155; padding-bottom: 4px;
-        }
-
-        .moves-log {
-            height: 140px; overflow-y: auto; font-family: monospace;
-            font-size: 12px; color: #cbd5e1; display: flex; flex-direction: column; gap: 4px;
-        }
-
-        /* نافذة ألغاز شطرنج بأسلوب دولينجو Duolingo */
-        .duo-modal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px);
-            z-index: 100; align-items: center; justify-content: center; padding: 15px;
-        }
-
-        .duo-card {
-            background: #1e293b; border: 3px solid #334155; border-radius: 20px;
-            width: 100%; max-width: 450px; padding: 20px; text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .duo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .duo-progress { height: 12px; background: #334155; border-radius: 10px; width: 70%; overflow: hidden; }
-        .duo-progress-fill { height: 100%; width: 20%; background: var(--duo-green); transition: width 0.3s; }
     </style>
 </head>
 <body>
 
-    <!-- صفحة الكلمة السرية واللوجو -->
-    <div id="authGate" class="auth-container">
-        <div class="brand-logo">♟️ Mahmoud.games.com</div>
-        <h2>🔒 تسجيل الدخول للمنصة</h2>
-        <p>أدخل كلمة المرور السرية للوصول:</p>
-        <input type="password" id="passInput" placeholder="أدخل كلمة المرور السرية...">
-        <br>
-        <button class="btn" onclick="authenticate()">دخول المنصة</button>
+    <!-- 1. شاشة البداية واللوجو -->
+    <div id="splash-screen" class="screen active">
+        <div class="logo-box">
+            <h1>MAFIA GAME</h1>
+            <p>Mahmoud.games.com</p>
+        </div>
+        <button onclick="goToModeSelect()">اضغط للبدء والإبهار 🚀</button>
     </div>
 
-    <!-- التطبيق الرئيسي -->
-    <div id="gameApp" class="game-layout">
-        <div class="navbar">
-            <div class="brand-logo">♟️ Mahmoud.games.com</div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-duo" onclick="openDuolingoPuzzles()">🎯 ألغاز الشطرنج (Duolingo)</button>
-                <button class="btn" style="background: #ef4444;" onclick="resetBoard()">إعادة تشغيل اللعبة</button>
-            </div>
-        </div>
-
-        <div class="controls-bar">
-            <div class="color-picker-group">
-                <label>المربعات الفاتحة:</label>
-                <input type="color" id="lightColorPicker" value="#f0d9b5" onchange="updateBoardColors()">
-            </div>
-            <div class="color-picker-group">
-                <label>المربعات الداكنة:</label>
-                <input type="color" id="darkColorPicker" value="#b58863" onchange="updateBoardColors()">
-            </div>
-            <button class="btn" onclick="applyPreset('classic')">خشب كلاسيكي</button>
-            <button class="btn" onclick="applyPreset('emerald')">زمردي</button>
-            <button class="btn" onclick="applyPreset('cyber')">سايبر بنك</button>
-        </div>
-
-        <div class="main-content">
-            <div class="board-wrapper">
-                <div id="board" class="chess-board"></div>
-            </div>
-
-            <div class="sidebar">
-                <div class="panel-box">
-                    <h3>حالة اللعبة</h3>
-                    <p id="turnStatus">الدور الحالي: <strong style="color: #38bdf8;">الأبيض</strong></p>
-                </div>
-
-                <div class="panel-box">
-                    <h3>سجل النقلات</h3>
-                    <div id="movesLog" class="moves-log"></div>
-                </div>
-            </div>
+    <!-- 2. اختيار طريقة اللعب -->
+    <div id="mode-screen" class="screen">
+        <div class="card">
+            <h2>اختر نظام اللعب</h2>
+            <button onclick="setupOnlineMode()">🌐 إنشاء غرفة (جهاز عن بعد / كود)</button>
+            <br>
+            <button onclick="setupLocalMode()">🖥️ اللعب على شاشة واحدة (تمرير الهاتف)</button>
         </div>
     </div>
 
-    <!-- صفحة الألغاز بأسلوب دولينجو -->
-    <div id="duoModal" class="duo-modal">
-        <div class="duo-card">
-            <div class="duo-header">
-                <span style="color: var(--duo-green); font-weight: 900; font-size: 1.2rem;">🦉 Chess Duo</span>
-                <div class="duo-progress"><div id="duoProgress" class="duo-progress-fill"></div></div>
-                <button onclick="closeDuolingoPuzzles()" style="background:none; border:none; color:white; font-size: 20px; cursor:pointer;">✖</button>
-            </div>
-            <h3 id="puzzleTitle" style="color: #38bdf8; margin-bottom: 10px;">اللغز 1 من 5</h3>
-            <p id="puzzleDesc" style="font-size: 14px; margin-bottom: 15px; color: #cbd5e1;">أوجد أفضل نقلة للفرق الأبيض لتحقيق كش مات بنقلة واحدة!</p>
-            <div id="puzzleHint" style="background: rgba(88, 204, 2, 0.1); border: 1px dashed var(--duo-green); padding: 10px; border-radius: 10px; font-size: 13px; color: #a7f3d0; margin-bottom: 15px;">💡 التلميح: ابحث عن النقلة القاتلة للوزير!</div>
-            <button id="puzzleBtn" class="btn-duo" style="width: 100%; font-size: 16px;" onclick="nextPuzzle()">إجابة اللغز / النقلة التالية ➔</button>
+    <!-- 3. شاشة إدخال اللاعبين -->
+    <div id="setup-local-screen" class="screen">
+        <div class="card">
+            <h2>إعداد أسماء اللاعبين</h2>
+            <p>أدخل أسماء اللاعبين مفصولة بفاصلة (مثال: محمود، أحمد، خالد، فهد، ريان):</p>
+            <input type="text" id="names-input" placeholder="اكتب الأسماء هنا...">
+            <br>
+            <button onclick="initGameData()">بدء اللعبة وتوزيع الأدوار 🎮</button>
         </div>
     </div>
 
-    <script>
-        const SECRET_PASS = "6310894123456789987654321123456789987654321010203040506070809";
+    <!-- 4. شاشة غرفة الأصدقاء (أونلاين / كود) -->
+    <div id="online-room-screen" class="screen">
+        <div class="card">
+            <h2>غرفة اللعب الذكية</h2>
+            <p>تم إنتاج كود الغرفة الخاص بك:</p>
+            <h1 style="color: var(--success); letter-spacing: 5px;" id="room-code-display">MAFIA-8823</h1>
+            <p>شارك هذا الكود مع أصدقائك ليدخلوا معك بنفس اللحظة (مثل نظام Sporcle)!</p>
+            <button onclick="startLocalPlayFromOnline()">بدء اللعبة جماعياً</button>
+        </div>
+    </div>
 
-        function authenticate() {
-            const input = document.getElementById('passInput').value.trim();
-            if (input === SECRET_PASS) {
-                document.getElementById('authGate').style.display = 'none';
-                document.getElementById('gameApp').style.display = 'flex';
-                resetBoard();
-            } else {
-                alert("كلمة المرور غير صحيحة!");
+    <!-- 5. حلقة اللعب والأدوار (الليل والنهار) -->
+    <div id="gameplay-screen" class="screen">
+        <div class="card" style="max-width: 650px;">
+            <div class="mascot-container">
+                <div class="mascot-avatar">👺</div>
+                <div class="speech-bubble" id="mascot-speech">أهلاً بكم في ليلة الغموض... استعدوا!</div>
+            </div>
+            
+            <h3 id="phase-header">مرحلة اللعبة</h3>
+            <div id="action-container">
+                <!-- محتوى الأدوار والتصويت يتغير ديناميكياً هنا -->
+            </div>
+            <button id="action-btn" style="display:none;" onclick="nextGameStep()">التالي</button>
+        </div>
+    </div>
+
+<script>
+    let players = [];
+    let roles = {}; // { 'محمود': 'المافيا 🦹‍♂️', ... }
+    let gamePhase = 'pass_phone'; // pass_phone, mafia_turn, doctor_turn, oldman_turn, day_voting
+    let currentIndex = 0;
+    
+    // حالات الليل والنتائج المؤقتة
+    let nightVictim = null;
+    let savedByDoctor = null;
+    let votes = {};
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function goToModeSelect() {
+        showScreen('mode-screen');
+    }
+
+    function setupOnlineMode() {
+        let randomCode = "MAFIA-" + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById("room-code-display").innerText = randomCode;
+        showScreen('online-room-screen');
+    }
+
+    function startLocalPlayFromOnline() {
+        let defaultNames = "محمود، أحمد، خالد، فهد، ريان";
+        let namesInput = prompt("أدخل أسماء اللاعبين المشاركين في الغرفة:", defaultNames);
+        if(namesInput) {
+            document.getElementById("names-input").value = namesInput;
+            showScreen('setup-local-screen');
+        }
+    }
+
+    function setupLocalMode() {
+        showScreen('setup-local-screen');
+    }
+
+    function initGameData() {
+        let input = document.getElementById("names-input").value;
+        if(!input) {
+            alert("الرجاء إدخال أسماء اللاعبين!");
+            return;
+        }
+        players = input.split(",").map(p => p.trim());
+        if(players.length < 4) {
+            alert("يجب أن يكون عدد اللاعبين 4 على الأقل لتبدأ لعبة مافيا ممتعة!");
+            return;
+        }
+
+        // توزيع الأدوار بذكاء
+        let rolePool = ["المافيا 🦹‍♂️", "الطبيب 💉", "الشايب 🔍", "مواطن بريء 🧑", "مواطن بريء 🧑"];
+        // توزيع إضافي إذا كان عدد اللاعبين أكبر
+        while(rolePool.length < players.length) {
+            rolePool.push("مواطن بريء 🧑");
+        }
+        rolePool.sort(() => Math.random() - 0.5);
+
+        roles = {};
+        for(let i = 0; i < players.length; i++) {
+            roles[players[i]] = rolePool[i];
+        }
+
+        currentIndex = 0;
+        gamePhase = 'pass_phone_roles';
+        showScreen('gameplay-screen');
+        runPassPhonePhase();
+    }
+
+    function runPassPhonePhase() {
+        if(currentIndex < players.length) {
+            document.getElementById("mascot-speech").innerText = `أعطِ الشاشة سراً إلى اللاعب: ${players[currentIndex]}`;
+            document.getElementById("phase-header").innerText = `توزيع الأدوار السرية`;
+            
+            let html = `
+                <p>هل أنت <b>${players[currentIndex]}</b>؟ اضغط بالأسفل لترى دورك سراً ولا تريه لأحد!</p>
+                <button onclick="revealMyRole('${players[currentIndex]}')">إظهار دوري سراً 👁️</button>
+                <div id="secret-role-box" style="margin-top:15px; font-size:22px; color:var(--accent); font-weight:bold;"></div>
+            `;
+            document.getElementById("action-container").innerHTML = html;
+            document.getElementById("action-btn").style.display = "none";
+        } else {
+            // انتهى توزيع الأدوار، يبدأ الليل المخيف
+            startNightPhase();
+        }
+    }
+
+    function revealMyRole(playerName) {
+        let r = roles[playerName];
+        document.getElementById("secret-role-box").innerText = `دورك هو: ${r}`;
+        // زر للانتقال للاعب التالي
+        document.getElementById("action-container").innerHTML += `
+            <br><br>
+            <button onclick="nextPlayerRole()" style="background-color: var(--success);">تم، أعطِ الهاتف للاعب التالي ✅</button>
+        `;
+    }
+
+    function nextPlayerRole() {
+        currentIndex++;
+        runPassPhonePhase();
+    }
+
+    function startNightPhase() {
+        gamePhase = 'mafia_turn';
+        document.getElementById("mascot-speech").innerText = "🌙 حل الليل على المدينة... غمضوا أعينكم وسيقظوا المافيا!";
+        document.getElementById("phase-header").innerText = "دور المافيا الشرير 🦹‍♂️";
+        
+        let html = `<p>اختر ضحيتك من القائمة بحذر شديد:</p>`;
+        players.forEach(p => {
+            html += `<button class="player-btn" onclick="mafiaChoose('${p}')">${p}</button>`;
+        });
+        document.getElementById("action-container").innerHTML = html;
+    }
+
+    function mafiaChoose(victim) {
+        nightVictim = victim;
+        startDoctorTurn();
+    }
+
+    function startDoctorTurn() {
+        gamePhase = 'doctor_turn';
+        document.getElementById("mascot-speech").innerText = "💉 نامت المافيا، واستيقظ الطبيب لإنقاذ شخص واحد!";
+        document.getElementById("phase-header").innerText = "دور الطبيب الحكيم 💉";
+        
+        let html = `<p>اختر من تريد أن تحميه هذه الليلة:</p>`;
+        players.forEach(p => {
+            html += `<button class="player-btn" onclick="doctorChoose('${p}')">${p}</button>`;
+        });
+        document.getElementById("action-container").innerHTML = html;
+    }
+
+    function doctorChoose(protectedPlayer) {
+        savedByDoctor = protectedPlayer;
+        startOldManTurn();
+    }
+
+    function startOldManTurn() {
+        gamePhase = 'oldman_turn';
+        document.getElementById("mascot-speech").innerText = "🔍 استيقظ الشايب/المحقق لكشف أسرار أحدهم!";
+        document.getElementById("phase-header").innerText = "دور الشايب (الفاحص) 🔍";
+        
+        let html = `<p>اختر لاعباً لتفحص هويته (هل هو مافيا أم لا؟):</p>`;
+        players.forEach(p => {
+            if(roles[p] !== 'الشايب 🔍') {
+                html += `<button class="player-btn" onclick="oldManChoose('${p}')">${p}</button>`;
             }
+        });
+        document.getElementById("action-container").innerHTML = html;
+    }
+
+    function oldManChoose(target) {
+        let isMafia = (roles[target] === 'المافيا 🦹‍♂️');
+        let resultMsg = isMafia ? "✅ (هذا الشخص مافيا!)" : "❌ (هذا الشخص بريء تماماً!)";
+        let color = isMafia ? "var(--success)" : "var(--accent)";
+        
+        let html = `
+            <h3>نتيجة فحص الشايب لـ ${target}:</h3>
+            <h1 style="color: ${color};">${resultMsg}</h1>
+            <p>احفظ السر في ذهنك جيداً ولا تفشِهِ بصوت عالٍ!</p>
+            <br>
+            <button onclick="startDayPhase()" style="background-color: var(--success);">شروق الشمس والتوجه للنهار ☀️</button>
+        `;
+        document.getElementById("action-container").innerHTML = html;
+    }
+
+    function startDayPhase() {
+        gamePhase = 'day_voting';
+        document.getElementById("mascot-speech").innerText = "☀️ أشرقت الشمس! لنتعرف على ما حدث في الليل ونبدأ التصويت.";
+        document.getElementById("phase-header").innerText = "مرحلة النهار والتصويت الجماعي 🗣️";
+
+        let nightResultText = "";
+        if (nightVictim === savedByDoctor) {
+            nightResultText = `🎉 عمت الفرحة! حاولت المافيا قتل (${nightVictim})، لكن الطبيب أنقذه في اللحظة الأخيرة! لم يمت أحد هذه الليلة.`;
+        } else {
+            nightResultText = `🚨 فجيعة! تم اغتيال اللاعب (${nightVictim}) ليلًا وكان دوره: (${roles[nightVictim]}).`;
         }
 
-        function updateBoardColors() {
-            const light = document.getElementById('lightColorPicker').value;
-            const dark = document.getElementById('darkColorPicker').value;
-            document.documentElement.style.setProperty('--light-square', light);
-            document.documentElement.style.setProperty('--dark-square', dark);
-        }
+        let html = `
+            <div style="background:#222f3e; padding:15px; border-radius:10px; margin-bottom:15px;">
+                <p style="font-size:16px;">${nightResultText}</p>
+            </div>
+            <p>الآن حان وقت النقاش، وصوتوا على الشخص المشتبه به لإقصائه:</p>
+        `;
+        
+        players.forEach(p => {
+            html += `<button class="player-btn" onclick="castVote('${p}')">تصويت ضد: ${p}</button>`;
+        });
+        document.getElementById("action-container").innerHTML = html;
+    }
 
-        function applyPreset(theme) {
-            if (theme === 'classic') setColors('#f0d9b5', '#b58863');
-            if (theme === 'emerald') setColors('#e2e8f0', '#059669');
-            if (theme === 'cyber') setColors('#38bdf8', '#818cf8');
-        }
+    function castVote(suspect) {
+        document.getElementById("mascot-speech").innerText = `انتهى التصويت وتم إقصاء اللاعب (${suspect}).`;
+        let html = `
+            <h2>نتيجة التصويت الجماعي:</h2>
+            <p>تم إقصاء اللاعب <b>${suspect}</b> وكان دوره: <span style="color:var(--accent);">${roles[suspect]}</span></p>
+            <br>
+            <button onclick="location.reload()" style="background-color: var(--primary);">لعب دورة جديدة 🔄</button>
+        `;
+        document.getElementById("action-container").innerHTML = html;
+    }
+</script>
 
-        function setColors(light, dark) {
-            document.getElementById('lightColorPicker').value = light;
-            document.getElementById('darkColorPicker').value = dark;
-            updateBoardColors();
-        }
-
-        // الألغاز المخصصة بنفس نمط دولينجو
-        const duoPuzzles = [
-            { title: "اللغز 1: كش مات نابليون", desc: "الأبيض يلعب وينتهي بالقتال السريع! ما هي النقلة؟", hint: "الوزير يهاجم المربع f7 بدعم من الفيل!" },
-            { title: "اللغز 2: التضحية بالوزير (Smothered Mate)", desc: "الملك الأسود محاصر بقطعه. كيف تنفذ كش مات بالحصان؟", hint: "اقفز بالحصان إلى المربع f7!" },
-            { title: "اللغز 3: الممر الأخير (Back Rank Mate)", desc: "الرخ الأسود ضعيف في الصف الأخير. أين تحرك القلعة؟", hint: "أنزل بالرخ إلى الصف الثامن مباشرة!" },
-            { title: "اللغز 4: شوكة الحصان الملكية (Royal Fork)", desc: "كيف تهاجم الملك والوزير معاً بنفس الوقت؟", hint: "احرّك الحصان لمربع c7 لتضرب القطعتين!" },
-            { title: "اللغز 5: التضحية الذهبية للفيل", desc: "اكسر دفاعات ملك الخصم بتضحية فيل قوية!", hint: "اضرب البيدق الموجود في h7 بالفيل مباشرة!" }
-        ];
-        let currentPuzzleIdx = 0;
-
-        function openDuolingoPuzzles() {
-            document.getElementById('duoModal').style.display = 'flex';
-            loadPuzzle(0);
-        }
-
-        function closeDuolingoPuzzles() {
-            document.getElementById('duoModal').style.display = 'none';
-        }
-
-        function loadPuzzle(idx) {
-            currentPuzzleIdx = idx;
-            const p = duoPuzzles[idx];
-            document.getElementById('puzzleTitle').textContent = p.title;
-            document.getElementById('puzzleDesc').textContent = p.desc;
-            document.getElementById('puzzleHint').textContent = "💡 التلميح: " + p.hint;
-            document.getElementById('duoProgress').style.width = ((idx + 1) * 20) + '%';
-        }
-
-        function nextPuzzle() {
-            if (currentPuzzleIdx < duoPuzzles.length - 1) {
-                loadPuzzle(currentPuzzleIdx + 1);
-            } else {
-                alert("🎉 رائع جداً! أكملت جميع الألغاز بنجاح وحصلت على وسام Duolingo Grandmaster!");
-                closeDuolingoPuzzles();
-            }
-        }
-
-        const pieceSymbols = {
-            'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
-            'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟'
-        };
-
-        const defaultBoard = [
-            ['r','n','b','q','k','b','n','r'],
-            ['p','p','p','p','p','p','p','p'],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['P','P','P','P','P','P','P','P'],
-            ['R','N','B','Q','K','B','N','R']
-        ];
-
-        let boardState = [];
-        let selected = null; 
-        let legalMoves = []; 
-        let turn = 'W'; 
-
-        function isWhite(p) { return p && p === p.toUpperCase(); }
-        function isBlack(p) { return p && p === p.toLowerCase(); }
-
-        function resetBoard() {
-            boardState = defaultBoard.map(row => [...row]);
-            turn = 'W'; selected = null; legalMoves = [];
-            document.getElementById('movesLog').innerHTML = '';
-            renderBoard(); updateGameStatus();
-        }
-
-        function isSquareAttacked(tr, tc, attackerColor, board) {
-            const isAttackerWhite = (attackerColor === 'W');
-            const pawnDir = isAttackerWhite ? 1 : -1;
-            const pawnChar = isAttackerWhite ? 'P' : 'p';
-            for (let dc of [-1, 1]) {
-                let pr = tr + pawnDir, pc = tc + dc;
-                if (pr >= 0 && pr <= 7 && pc >= 0 && pc <= 7) {
-                    if (board[pr][pc] === pawnChar) return true;
-                }
-            }
-
-            const knightChar = isAttackerWhite ? 'N' : 'n';
-            const knightOffsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
-            for (let [dr, dc] of knightOffsets) {
-                let kr = tr + dr, kc = tc + dc;
-                if (kr >= 0 && kr <= 7 && kc >= 0 && kc <= 7) {
-                    if (board[kr][kc] === knightChar) return true;
-                }
-            }
-
-            const kingChar = isAttackerWhite ? 'K' : 'k';
-            for (let dr of [-1,0,1]) {
-                for (let dc of [-1,0,1]) {
-                    if (dr === 0 && dc === 0) continue;
-                    let kr = tr + dr, kc = tc + dc;
-                    if (kr >= 0 && kr <= 7 && kc >= 0 && kc <= 7) {
-                        if (board[kr][kc] === kingChar) return true;
-                    }
-                }
-            }
-
-            const straightDirs = [[-1,0],[1,0],[0,-1],[0,1]];
-            const rookChar = isAttackerWhite ? 'R' : 'r';
-            const queenChar = isAttackerWhite ? 'Q' : 'q';
-            for (let [dr, dc] of straightDirs) {
-                let r = tr + dr, c = tc + dc;
-                while (r >= 0 && r <= 7 && c >= 0 && c <= 7) {
-                    const p = board[r][c];
-                    if (p) {
-                        if (p === rookChar || p === queenChar) return true;
-                        break;
-                    }
-                    r += dr; c += dc;
-                }
-            }
-
-            const diagDirs = [[-1,-1],[-1,1],[1,-1],[1,1]];
-            const bishopChar = isAttackerWhite ? 'B' : 'b';
-            for (let [dr, dc] of diagDirs) {
-                let r = tr + dr, c = tc + dc;
-                while (r >= 0 && r <= 7 && c >= 0 && c <= 7) {
-                    const p = board[r][c];
-                    if (p) {
-                        if (p === bishopChar || p === queenChar) return true;
-                        break;
-                    }
-                    r += dr; c += dc;
-                }
-            }
-
-            return false;
-        }
-
-        function findKing(color, board) {
-            const target = color === 'W' ? 'K' : 'k';
-            for (let r = 0; r < 8; r++) {
-                for (let c = 0; c < 8; c++) {
-                    if (board[r][c] === target) return { r, c };
-                }
-            }
-            return null;
-        }
-
-        function isKingInCheck(color, board) {
-            const kingPos = findKing(color, board);
-            if (!kingPos) return false;
-            const enemyColor = color === 'W' ? 'B' : 'W';
-            return isSquareAttacked(kingPos.r, kingPos.c, enemyColor, board);
-        }
-
-        function getRawMoves(r, c, board) {
-            const piece = board[r][c];
-            if (!piece) return [];
-            const white = isWhite(piece);
-            const type = piece.toLowerCase();
-            const moves = [];
-
-            function addMove(tr, tc) {
-                if (tr < 0 || tr > 7 || tc < 0 || tc > 7) return false;
-                const target = board[tr][tc];
-                if (!target) {
-                    moves.push({ r: tr, c: tc, isCapture: false });
-                    return true;
-                }
-                if ((white && isBlack(target)) || (!white && isWhite(target))) {
-                    moves.push({ r: tr, c: tc, isCapture: true });
-                }
-                return false;
-            }
-
-            if (type === 'p') {
-                const dir = white ? -1 : 1;
-                const startRow = white ? 6 : 1;
-                if (r + dir >= 0 && r + dir <= 7 && !board[r + dir][c]) {
-                    moves.push({ r: r + dir, c: c, isCapture: false });
-                    if (r === startRow && !board[r + 2 * dir][c]) {
-                        moves.push({ r: r + 2 * dir, c: c, isCapture: false });
-                    }
-                }
-                for (let dc of [-1, 1]) {
-                    let tc = c + dc, tr = r + dir;
-                    if (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
-                        let target = board[tr][tc];
-                        if (target && ((white && isBlack(target)) || (!white && isWhite(target)))) {
-                            moves.push({ r: tr, c: tc, isCapture: true });
-                        }
-                    }
-                }
-            } else if (type === 'n') {
-                const offsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
-                for (let [dr, dc] of offsets) addMove(r + dr, c + dc);
-            } else if (type === 'r' || type === 'b' || type === 'q') {
-                const dirs = [];
-                if (type === 'r' || type === 'q') dirs.push([-1,0], [1,0], [0,-1], [0,1]);
-                if (type === 'b' || type === 'q') dirs.push([-1,-1], [-1,1], [1,-1], [1,1]);
-
-                for (let [dr, dc] of dirs) {
-                    let tr = r + dr, tc = c + dc;
-                    while (tr >= 0 && tr <= 7 && tc >= 0 && tc <= 7) {
-                        if (!addMove(tr, tc)) break;
-                        tr += dr; tc += dc;
-                    }
-                }
-            } else if (type === 'k') {
-                for (let dr of [-1, 0, 1]) {
-                    for (let dc of [-1, 0, 1]) {
-                        if (dr !== 0 || dc !== 0) addMove(r + dr, c + dc);
-                    }
-                }
-            }
-            return moves;
-        }
-
-        function getLegalMoves(r, c) {
-            const piece = boardState[r][c];
-            if (!piece) return [];
-            const pieceColor = isWhite(piece) ? 'W' : 'B';
-            if (pieceColor !== turn) return [];
-
-            const rawMoves = getRawMoves(r, c, boardState);
-            const verifiedLegalMoves = [];
-
-            for (let move of rawMoves) {
-                const simBoard = boardState.map(row => [...row]);
-                simBoard[move.r][move.c] = simBoard[r][c];
-                simBoard[r][c] = '';
-
-                if (!isKingInCheck(pieceColor, simBoard)) {
-                    verifiedLegalMoves.push(move);
-                }
-            }
-            return verifiedLegalMoves;
-        }
-
-        function renderBoard() {
-            const boardEl = document.getElementById('board');
-            boardEl.innerHTML = '';
-
-            const inCheck = isKingInCheck(turn, boardState);
-            const kingPos = findKing(turn, boardState);
-
-            for (let r = 0; r < 8; r++) {
-                for (let c = 0; c < 8; c++) {
-                    const square = document.createElement('div');
-                    square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
-
-                    if (inCheck && kingPos && kingPos.r === r && kingPos.c === c) {
-                        square.classList.add('in-check');
-                    }
-
-                    if (selected && selected.r === r && selected.c === c) {
-                        square.classList.add('selected');
-                    }
-
-                    const moveOption = legalMoves.find(m => m.r === r && m.c === c);
-                    if (moveOption) {
-                        square.classList.add('possible');
-                        if (moveOption.isCapture) square.classList.add('capture');
-                    }
-
-                    const piece = boardState[r][c];
-                    if (piece) {
-                        const pieceSpan = document.createElement('span');
-                        pieceSpan.className = 'piece';
-                        pieceSpan.textContent = pieceSymbols[piece];
-                        pieceSpan.style.color = (piece === piece.toUpperCase()) ? '#ffffff' : '#0f172a';
-                        square.appendChild(pieceSpan);
-                    }
-
-                    square.onclick = () => handleSquareClick(r, c);
-                    boardEl.appendChild(square);
-                }
-            }
-        }
-
-        function handleSquareClick(r, c) {
-            const clickedPiece = boardState[r][c];
-            const isWhitePiece = clickedPiece && isWhite(clickedPiece);
-            const isBlackPiece = clickedPiece && isBlack(clickedPiece);
-
-            if (!selected) {
-                if (!clickedPiece) return;
-                if ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece)) {
-                    selected = { r, c };
-                    legalMoves = getLegalMoves(r, c);
-                    renderBoard();
-                } else {
-                    alert(turn === 'W' ? "الدور حالياً للاعب الأبيض!" : "الدور حالياً للاعب الأسود!");
-                }
-                return;
-            }
-
-            if (selected.r === r && selected.c === c) {
-                selected = null; legalMoves = []; renderBoard(); return;
-            }
-
-            const validMove = legalMoves.find(m => m.r === r && m.c === c);
-            if (validMove) {
-                executeMove(selected.r, selected.c, r, c);
-                selected = null; legalMoves = []; return;
-            }
-
-            if (clickedPiece && ((turn === 'W' && isWhitePiece) || (turn === 'B' && isBlackPiece))) {
-                selected = { r, c }; legalMoves = getLegalMoves(r, c); renderBoard();
-            } else {
-                selected = null; legalMoves = []; renderBoard();
-            }
-        }
-
-        function executeMove(fromR, fromC, toR, toC) {
-            let piece = boardState[fromR][fromC];
-            if (piece === 'P' && toR === 0) piece = 'Q';
-            if (piece === 'p' && toR === 7) piece = 'q';
-
-            boardState[toR][toC] = piece;
-            boardState[fromR][fromC] = '';
-
-            const cols = ['a','b','c','d','e','f','g','h'];
-            const logEl = document.getElementById('movesLog');
-            const moveText = `• ${piece.toUpperCase()} من (${cols[fromC]}${8-fromR}) إلى (${cols[toC]}${8-toR})`;
-            logEl.innerHTML += `<div>${moveText}</div>`;
-            logEl.scrollTop = logEl.scrollHeight;
-
-            turn = turn === 'W' ? 'B' : 'W';
-            renderBoard();
-            updateGameStatus();
-        }
-
-        function updateGameStatus() {
-            const el = document.getElementById('turnStatus');
-            const turnName = turn === 'W' ? 'الأبيض' : 'الأسود';
-            const turnColorHex = turn === 'W' ? '#38bdf8' : '#f43f5e';
-            const inCheck = isKingInCheck(turn, boardState);
-
-            if (inCheck) {
-                el.innerHTML = `الدور الحالي: <strong style="color: ${turnColorHex};">${turnName}</strong> <span style="color: #ef4444; font-weight: bold;">⚠️ (كش ملك!)</span>`;
-            } else {
-                el.innerHTML = `الدور الحالي: <strong style="color: ${turnColorHex};">${turnName}</strong>`;
-            }
-        }
-    </script>
 </body>
 </html>
