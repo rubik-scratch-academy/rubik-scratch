@@ -3,399 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahmoud.games.com - Mafia Party</title>
+    <title>Mahmoud.Games - AI Edition</title>
     <style>
-        :root {
-            --bg-dark: #0b0e14;
-            --card-bg: #151922;
-            --accent-purple: #8a2be2;
-            --accent-red: #ff3838;
-            --accent-green: #2ed573;
-            --text-light: #f1f2f6;
-        }
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
-        .screen {
-            display: none;
-            padding: 20px;
+
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
             min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .active { display: block; }
-        
-        /* شاشة اللوجو الاحترافي */
-        .logo-container {
-            border: 3px solid var(--accent-purple);
-            padding: 25px 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 35px rgba(138, 43, 226, 0.5);
-            background: rgba(21, 25, 34, 0.9);
-            display: inline-block;
-            margin-top: 15vh;
-        }
-        .logo-title {
-            font-size: 3.2rem;
-            margin: 0;
-            background: linear-gradient(45deg, #ff3838, #8a2be2, #2ed573);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-        }
-        .logo-sub {
-            color: #a4b0be;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            margin-top: 5px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid #2f3640;
-            border-radius: 16px;
-            padding: 25px;
-            max-width: 550px;
-            margin: 20px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        }
-
-        /* شخصية الراوي الكرتونية */
-        .host-box {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* --- شاشة الشعار --- */
+        #logo-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeOut 1s ease-in-out 2s forwards;
+        }
+
+        .logo-box {
+            text-align: center;
+            animation: zoomIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-title span { color: #ef4444; }
+
+        /* --- شاشة كلمة السر --- */
+        #password-screen {
+            display: none;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: #1e272e;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 5px solid var(--accent-purple);
-        }
-        .host-avatar {
-            font-size: 45px;
-            background: #2f3640;
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            border-radius: 50%;
-        }
-        .host-speech {
-            text-align: right;
-            font-size: 1.05rem;
-            color: #dcdde1;
+            width: 90%;
+            max-width: 400px;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+            text-align: center;
         }
 
-        button {
-            background: linear-gradient(135deg, var(--accent-purple), #6c5ce7);
+        .pass-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            background-color: #0f172a;
+            color: #38bdf8;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 17px;
             border-radius: 10px;
-            cursor: pointer;
+            font-size: 1.1rem;
             font-weight: bold;
-            margin: 8px;
+            cursor: pointer;
             transition: 0.2s;
         }
-        button:hover { transform: scale(1.03); }
-        .btn-player {
-            width: 100%;
-            background: #2f3640;
-            border: 1px solid #485460;
-            margin: 5px 0;
-        }
-        .btn-player:hover { background: var(--accent-purple); }
 
-        input {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #485460;
-            background: #1e272e;
+        .btn-submit:active { transform: scale(0.95); }
+        .error-msg { color: #ef4444; margin-top: 10px; display: none; }
+
+        /* --- الواجهة الأساسية --- */
+        #main-dashboard {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .header-title { font-size: 2.2rem; margin-bottom: 25px; }
+        .header-title span { color: #ef4444; }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .game-btn {
+            background: #1e293b;
+            border: none;
+            border-radius: 16px;
+            padding: 20px;
             color: white;
-            width: 80%;
-            font-size: 16px;
-            margin: 10px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 0 #0f172a;
+            min-height: 110px;
+            transition: 0.1s;
         }
-        .symbol-display {
-            font-size: 80px;
-            margin: 20px 0;
+
+        .game-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0f172a;
         }
+
+        /* --- شاشة الذكاء الاصطناعي السري --- */
+        #ai-screen {
+            display: none;
+            flex-direction: column;
+            width: 90%;
+            max-width: 600px;
+            height: 85vh;
+            background: #0f172a;
+            border: 2px solid #38bdf8;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ai-header {
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg { padding: 12px 15px; border-radius: 15px; max-width: 80%; line-height: 1.4; }
+        .msg-ai { background: #1e293b; color: #38bdf8; align-self: flex-start; border-bottom-right-radius: 0; }
+        .msg-user { background: #38bdf8; color: #0f172a; align-self: flex-end; border-bottom-left-radius: 0; }
+
+        .ai-input-area {
+            display: flex;
+            padding: 15px;
+            background: #1e293b;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .ai-send {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            border-radius: 10px;
+            padding: 0 20px;
+            margin-right: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* شاشة معاينة اللعبة المصنوعة */
+        .game-preview {
+            display: none;
+            margin-top: 10px;
+            background: #000;
+            border: 2px dashed #10b981;
+            height: 150px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 1.5rem;
+            flex-direction: column;
+        }
+
+        .preview-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .btn-approve { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-edit { background: #f59e0b; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-close { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+
+        @keyframes zoomIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeOut { 0% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
     </style>
 </head>
 <body>
 
-    <!-- 1. واجهة اللوجو الاحترافية الرئيسي -->
-    <div id="splash-screen" class="screen active">
-        <div class="logo-container">
-            <div style="font-size: 50px;">🕵️‍♂️🦹‍♂️</div>
-            <h1 class="logo-title">MAFIA PARTY</h1>
-            <div class="logo-sub">Mahmoud.games.com</div>
-        </div>
-        <br><br>
-        <button onclick="showScreen('mode-screen')">دخول اللعبة 🚀</button>
-    </div>
-
-    <!-- 2. اختيار نمط اللعب -->
-    <div id="mode-screen" class="screen">
-        <div class="card">
-            <h2>اختر نظام اللعب</h2>
-            <button onclick="setupOnlineRoom()">🌐 إنشاء غرفة عن بعد (Sporcle Party Style)</button>
-            <br>
-            <button onclick="showScreen('setup-local-screen')">🖥️ اللعب على شاشة واحدة (تمرير الهاتف)</button>
+    <!-- شاشة الشعار -->
+    <div id="logo-screen">
+        <div class="logo-box">
+            <div class="logo-title">Mahmoud.<span>Games</span></div>
         </div>
     </div>
 
-    <!-- 3. إعداد غرفة أونلاين -->
-    <div id="online-screen" class="screen">
-        <div class="card">
-            <h2>غرفة الأونلاين التفاعلية</h2>
-            <p>كود الغرفة الخاص بك:</p>
-            <h1 style="color: var(--accent-green); letter-spacing: 4px;" id="room-code">MAFIA-9982</h1>
-            <p>شارك هذا الكود مع أصدقائك لينضموا عبر أجهزتهم مباشرة!</p>
-            <button onclick="showScreen('setup-local-screen')">الاستمرار إلى قائمة اللاعبين</button>
+    <!-- شاشة كلمة السر -->
+    <div id="password-screen">
+        <h2 style="color:white; margin-bottom:20px;">تسجيل الدخول للمنصة</h2>
+        <input type="password" id="pass-input" class="pass-input" placeholder="أدخل الرمز...">
+        <button class="btn-submit" onclick="checkPassword()">دخول</button>
+        <p id="error-msg" class="error-msg">الرمز غير صحيح!</p>
+    </div>
+
+    <!-- الواجهة الأساسية -->
+    <div id="main-dashboard">
+        <h1 class="header-title">Mahmoud.<span>Games</span></h1>
+        <div class="grid-container" id="games-grid">
+            <button class="game-btn" style="background:#ef4444; box-shadow:0 6px 0 #991b1b;">1 PLAYER</button>
+            <button class="game-btn" style="background:#3b82f6; box-shadow:0 6px 0 #1d4ed8;">2 PLAYERS</button>
+            <button class="game-btn" style="background:#8b5cf6; box-shadow:0 6px 0 #6d28d9; grid-column:span 2;">🎉 PARTY GAMES</button>
         </div>
     </div>
 
-    <!-- 4. إعداد أسماء اللاعبين -->
-    <div id="setup-local-screen" class="screen">
-        <div class="card">
-            <h2>إضافة اللاعبين</h2>
-            <p>أدخل أسماء اللاعبين (تفصل بينهم بفاصلة):</p>
-            <input type="text" id="names-input" placeholder="محمود، أحمد، خالد، فهد، ريان">
-            <br>
-            <button onclick="initGame()">بدء اللعبة (Start) 🎮</button>
+    <!-- شاشة الذكاء الاصطناعي السرية -->
+    <div id="ai-screen">
+        <div class="ai-header">
+            <span>🤖 مختبر الذكاء الاصطناعي (المطور المساعد)</span>
+            <button class="btn-close" onclick="exitAI()">خروج</button>
         </div>
-    </div>
-
-    <!-- 5. الشاشة الرئيسية للعب وتفاعل الشخصية -->
-    <div id="game-screen" class="screen">
-        <div class="card">
-            <div class="host-box">
-                <div class="host-avatar">🤵‍♂️</div>
-                <div class="host-speech" id="host-text">أهلاً بكم! أنا راوي اللعبة، وسأرافقكم في كل خطوة...</div>
-            </div>
-
-            <h3 id="step-title">عنوان المرحلة</h3>
-            <div id="interactive-area"></div>
-        </div>
-    </div>
-
-<script>
-    let players = [];
-    let roles = {}; 
-    let alivePlayers = [];
-    
-    let mafiaChoice = null;
-    let doctorChoice = null;
-    let voteCounts = {};
-    let currentVoterIndex = 0;
-
-    function showScreen(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
-    function setupOnlineRoom() {
-        let code = "ROOM-" + Math.floor(1000 + Math.random() * 9000);
-        document.getElementById("room-code").innerText = code;
-        showScreen("online-screen");
-    }
-
-    function initGame() {
-        let raw = document.getElementById("names-input").value;
-        if(!raw) { alert("أدخل أسماء اللاعبين أولاً!"); return; }
         
-        players = raw.split(",").map(s => s.trim()).filter(s => s.length > 0);
-        if(players.length < 4) { alert("يجب أن يكون عدد اللاعبين 4 على الأقل!"); return; }
-
-        alivePlayers = [...players];
-        
-        // توزيع الأدوار: مافيا، دكتور، شايب، والاقي مواطنين
-        let pool = ["المافيا 🦹‍♂️", "الدكتور 💉", "الشايب 🔍"];
-        while(pool.length < players.length) pool.push("مواطن 🧑");
-        pool.sort(() => Math.random() - 0.5);
-
-        roles = {};
-        players.forEach((p, i) => roles[p] = pool[i]);
-
-        showScreen("game-screen");
-        startRoleRevealPhase(0);
-    }
-
-    // كشف الأدوار بالتمرير
-    function startRoleRevealPhase(index) {
-        if(index < players.length) {
-            let p = players[index];
-            updateHost(`أعطِ الشاشة الآن للاعب: (${p}) ليرى دوره سراً.`);
-            document.getElementById("step-title").innerText = "توزيع الأدوار السرية";
+        <div class="ai-chat" id="chat-box">
+            <div class="msg msg-ai">أهلاً بك يا سيدي المطور! أنا ذكاء اصطناعي مبرمج لخدمتك. ماذا تريدني أن أصنع لك اليوم؟</div>
             
-            document.getElementById("interactive-area").innerHTML = `
-                <button onclick="revealRole('${p}', ${index})">أنا ${p}، أظهر دوري 👁️</button>
-                <div id="role-box" style="font-size:20px; margin-top:15px; font-weight:bold;"></div>
-            `;
-        } else {
-            startNightPhase();
-        }
-    }
+            <!-- نافذة المعاينة المخفية -->
+            <div id="game-preview-container" style="display: none; width: 100%; margin-top: 10px;">
+                <div class="game-preview" id="game-preview-screen">
+                    <span id="preview-icon">♟️</span>
+                    <span id="preview-title">لعبة الشطرنج</span>
+                </div>
+                <div class="preview-btns">
+                    <button class="btn-approve" onclick="approveGame()">✅ اعتمدها</button>
+                    <button class="btn-edit" onclick="requestEdit()">✏️ عدّلها</button>
+                </div>
+            </div>
+        </div>
 
-    function revealRole(player, index) {
-        document.getElementById("role-box").innerText = `دورك هو: ${roles[player]}`;
-        document.getElementById("interactive-area").innerHTML += `
-            <br><br><button onclick="startRoleRevealPhase(${index + 1})">تم، اخفِ الشاشة وأعطها للاعب التالي ➡️</button>
-        `;
-    }
+        <div class="ai-input-area">
+            <input type="text" id="ai-command" class="ai-input" placeholder="مثال: اصنع لي لعبة شطرنج احترافية...">
+            <button class="ai-send" onclick="sendToAI()">إرسال</button>
+        </div>
+    </div>
 
-    function updateHost(text) {
-        document.getElementById("host-text").innerText = text;
-    }
+    <script>
+        let currentGameRequested = "";
 
-    // ليل اللعبة
-    function startNightPhase() {
-        mafiaChoice = null;
-        doctorChoice = null;
-        
-        updateHost("🌙 إغلاق الأعين... افتح يا مافيا عينك واختر ضحيتك سراً!");
-        document.getElementById("step-title").innerText = "دور المافيا 🦹‍♂️";
+        setTimeout(() => {
+            document.getElementById('logo-screen').style.display = 'none';
+            document.getElementById('password-screen').style.display = 'flex';
+        }, 2200);
 
-        let html = "";
-        alivePlayers.forEach(p => {
-            html += `<button class="btn-player" onclick="selectMafiaTarget('${p}')">${p}</button>`;
-        });
-        document.getElementById("interactive-area").innerHTML = html;
-    }
-
-    function selectMafiaTarget(target) {
-        mafiaChoice = target;
-        runDoctorPhase();
-    }
-
-    function runDoctorPhase() {
-        updateHost("💉 نامت المافيا... استيقظ يا دكتور واختر من تريد إنقاذه هذه الليلة!");
-        document.getElementById("step-title").innerText = "دور الدكتور 💉";
-
-        let html = "";
-        alivePlayers.forEach(p => {
-            html += `<button class="btn-player" onclick="selectDoctorTarget('${p}')">${p}</button>`;
-        });
-        document.getElementById("interactive-area").innerHTML = html;
-    }
-
-    function selectDoctorTarget(target) {
-        doctorChoice = target;
-        runOldManPhase();
-    }
-
-    function runOldManPhase() {
-        updateHost("🔍 نام الدكتور... استيقظ يا شايب/المحقق واسأل عن أي لاعب تود كشفه!");
-        document.getElementById("step-title").innerText = "دور الشايب 🔍";
-
-        let html = "";
-        alivePlayers.forEach(p => {
-            if(roles[p] !== "الشايب 🔍") {
-                html += `<button class="btn-player" onclick="inspectPlayer('${p}')">${p}</button>`;
-            }
-        });
-        document.getElementById("interactive-area").innerHTML = html;
-    }
-
-    function inspectPlayer(target) {
-        let isMafia = roles[target] === "المافيا 🦹‍♂️";
-        
-        // إظهار إعجاب 👍 بدون صوت إذا كان مافيا، أو علامة حمراء ❌
-        let symbol = isMafia ? "👍" : "❌";
-        
-        updateHost(`النتيجة السرية للشايب عند فحصه لـ (${target}):`);
-        document.getElementById("interactive-area").innerHTML = `
-            <div class="symbol-display">${symbol}</div>
-            <p style="color: #a4b0be;">احفظ هذه الإشارة سراً ولا تتحدث!</p>
-            <button onclick="startDayPhase()">الانتقال لشروق الشمس ☀️</button>
-        `;
-    }
-
-    // نهار اللعبة
-    function startDayPhase() {
-        let killed = null;
-        if(mafiaChoice !== doctorChoice) {
-            killed = mafiaChoice;
-        }
-
-        let msg = "";
-        if(killed) {
-            msg = `☀️ أشرقت الشمس! للأسف تم اغتيال اللاعب (${killed}) هذه الليلة!`;
-            alivePlayers = alivePlayers.filter(p => p !== killed);
-        } else {
-            msg = `☀️ أشرقت الشمس! نجح الدكتور في حماية الضحية ولم يمت أحد هذه الليلة! 🎉`;
-        }
-
-        updateHost(msg);
-        document.getElementById("step-title").innerText = "مرحلة النهار والنقاش";
-        
-        document.getElementById("interactive-area").innerHTML = `
-            <p>تناقشوا سوياً، ثم اضغطوا للبدء بالتصويت السري التراكمي.</p>
-            <button onclick="startSequentialVoting()">بدء مرحلة التصويت 🗳️</button>
-        `;
-    }
-
-    // تصويت فردي تراكمي شاشة بواحدة
-    function startSequentialVoting() {
-        voteCounts = {};
-        alivePlayers.forEach(p => voteCounts[p] = 0);
-        currentVoterIndex = 0;
-        runSingleVoter();
-    }
-
-    function runSingleVoter() {
-        if(currentVoterIndex < alivePlayers.length) {
-            let voter = alivePlayers[currentVoterIndex];
-            updateHost(`أعطِ الشاشة للاعب: (${voter}) ليصوت سراً ضد المشتبه به.`);
-            document.getElementById("step-title").innerText = `دور تصويت: ${voter}`;
-
-            let html = "";
-            alivePlayers.forEach(p => {
-                if(p !== voter) {
-                    html += `<button class="btn-player" onclick="recordVote('${p}')">${p}</button>`;
-                }
-            });
-            document.getElementById("interactive-area").innerHTML = html;
-        } else {
-            finalizeVotingResults();
-        }
-    }
-
-    function recordVote(suspect) {
-        voteCounts[suspect] = (voteCounts[suspect] || 0) + 1;
-        currentVoterIndex++;
-        runSingleVoter();
-    }
-
-    function finalizeVotingResults() {
-        let highestVotes = -1;
-        let eliminated = null;
-
-        for(let p in voteCounts) {
-            if(voteCounts[p] > highestVotes) {
-                highestVotes = voteCounts[p];
-                eliminated = p;
+        function checkPassword() {
+            const val = document.getElementById('pass-input').value;
+            if (val === "323232") {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('main-dashboard').style.display = 'flex';
+            } else if (val === "232323") {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('ai-screen').style.display = 'flex';
+                document.getElementById('pass-input').value = ""; // تصفير الحقل
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
             }
         }
 
-        alivePlayers = alivePlayers.filter(p => p !== eliminated);
+        function exitAI() {
+            document.getElementById('ai-screen').style.display = 'none';
+            document.getElementById('password-screen').style.display = 'flex';
+        }
 
-        updateHost(`تم إغلاق صندوق التصويت! أكثر لاعب حصل على أصوات وتم إقصاؤه هو: (${eliminated}) وكان دوره: (${roles[eliminated]}).`);
-        document.getElementById("step-title").innerText = "نتيجة التصويت النهائي";
+        function sendToAI() {
+            const inputField = document.getElementById('ai-command');
+            const chatBox = document.getElementById('chat-box');
+            const previewContainer = document.getElementById('game-preview-container');
+            const cmd = inputField.value.trim();
 
-        document.getElementById("interactive-area").innerHTML = `
-            <br>
-            <button onclick="startNightPhase()">الانتقال لليلة التالية 🌙</button>
-            <br>
-            <button onclick="location.reload()" style="background:#2ed573; color:#000;">جولة جديدة بالكامل 🔄</button>
-        `;
-    }
-</script>
+            if (!cmd) return;
+
+            // رسالة المستخدم
+            chatBox.innerHTML += `<div class="msg msg-user">${cmd}</div>`;
+            inputField.value = "";
+            previewContainer.style.display = 'none';
+
+            // تحديد اسم اللعبة
+            currentGameRequested = cmd.includes("شطرنج") ? "شطرنج احترافية" : 
+                                   cmd.includes("سيارات") ? "سباق سيارات" : "لعبة جديدة";
+            
+            let icon = cmd.includes("شطرنج") ? "♟️" : cmd.includes("سيارات") ? "🏎️" : "🎮";
+
+            // رد الذكاء الاصطناعي المؤقت
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="msg msg-ai">جاري تحليل طلبك وبرمجة الأكواد... ⚙️</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                // إظهار اللعبة
+                setTimeout(() => {
+                    chatBox.innerHTML += `<div class="msg msg-ai">تم الانتهاء! تفضل بتجربة "${currentGameRequested}". هل أعتمدها أم تحتاج تعديل؟</div>`;
+                    
+                    document.getElementById('preview-title').innerText = currentGameRequested;
+                    document.getElementById('preview-icon').innerText = icon;
+                    
+                    // نقل نافذة المعاينة للأسفل
+                    chatBox.appendChild(previewContainer);
+                    previewContainer.style.display = 'block';
+                    document.getElementById('game-preview-screen').style.display = 'flex';
+                    
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1500);
+
+            }, 500);
+        }
+
+        function requestEdit() {
+            const chatBox = document.getElementById('chat-box');
+            document.getElementById('game-preview-container').style.display = 'none';
+            chatBox.innerHTML += `<div class="msg msg-user">قم بتعديلها وإضافة مؤثرات أفضل</div>`;
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="msg msg-ai">حاضر، تم تعديل الفيزياء والألوان. جربها الآن! يمكنك الاعتماد إذا أعجبتك.</div>`;
+                chatBox.appendChild(document.getElementById('game-preview-container'));
+                document.getElementById('game-preview-container').style.display = 'block';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function approveGame() {
+            // إخفاء نافذة المعاينة
+            document.getElementById('game-preview-container').style.display = 'none';
+            
+            // رد الذكاء
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="msg msg-ai">تم اعتماد "${currentGameRequested}" وإضافتها بنجاح إلى الواجهة الأساسية! ✅</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // إضافة اللعبة برمجياً للوحة الرئيسية
+            const grid = document.getElementById('games-grid');
+            const newBtn = document.createElement('button');
+            newBtn.className = 'game-btn';
+            newBtn.style.background = '#10b981'; // لون أخضر للألعاب الجديدة
+            newBtn.style.boxShadow = '0 6px 0 #047857';
+            newBtn.innerHTML = `🎮 ${currentGameRequested}<br><small style="font-size:0.8rem; color:#d1fae5;">(مُضافة بواسطة AI)</small>`;
+            grid.appendChild(newBtn);
+        }
+
+        // تفعيل زر Enter
+        document.getElementById('pass-input').addEventListener('keypress', e => { if(e.key === 'Enter') checkPassword(); });
+        document.getElementById('ai-command').addEventListener('keypress', e => { if(e.key === 'Enter') sendToAI(); });
+    </script>
 </body>
 </html>
