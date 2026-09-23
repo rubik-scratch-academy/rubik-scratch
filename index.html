@@ -3,412 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة المافيا - Mahmoud.games.com</title>
+    <title>Mahmoud.games.com - Mafia Party</title>
     <style>
         :root {
-            --bg-color: #0d0f18;
-            --card-bg: #161b22;
-            --primary: #8a2be2;
-            --accent: #ff4757;
-            --success: #2ed573;
-            --text: #f1f2f6;
+            --bg-dark: #0b0e14;
+            --card-bg: #151922;
+            --accent-purple: #8a2be2;
+            --accent-red: #ff3838;
+            --accent-green: #2ed573;
+            --text-light: #f1f2f6;
         }
         body {
-            background-color: var(--bg-color);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
         .screen {
             display: none;
             padding: 20px;
             min-height: 100vh;
             box-sizing: border-box;
-            animation: fadeIn 0.5s ease-in-out;
         }
-        .active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* الشاشة الأولى: اللوجو الاحترافي */
-        #splash-screen {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: radial-gradient(circle, #1a1c29 0%, #0d0f18 100%);
-        }
-        .logo-box {
-            border: 3px solid var(--primary);
-            padding: 30px 50px;
+        .active { display: block; }
+        
+        /* شاشة اللوجو الاحترافي */
+        .logo-container {
+            border: 3px solid var(--accent-purple);
+            padding: 25px 40px;
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
-            background: rgba(22, 27, 34, 0.8);
-            margin-bottom: 30px;
+            box-shadow: 0 0 35px rgba(138, 43, 226, 0.5);
+            background: rgba(21, 25, 34, 0.9);
+            display: inline-block;
+            margin-top: 15vh;
         }
-        .logo-box h1 {
-            font-size: 3rem;
+        .logo-title {
+            font-size: 3.2rem;
             margin: 0;
-            background: linear-gradient(45deg, #ff4757, #8a2be2, #2ed573);
+            background: linear-gradient(45deg, #ff3838, #8a2be2, #2ed573);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 900;
         }
-        .logo-box p {
+        .logo-sub {
             color: #a4b0be;
-            font-size: 1.1rem;
-            margin-top: 10px;
+            font-size: 1.2rem;
             letter-spacing: 2px;
+            margin-top: 5px;
         }
+
         .card {
             background: var(--card-bg);
-            border: 1px solid #30363d;
+            border: 1px solid #2f3640;
             border-radius: 16px;
-            padding: 30px;
-            max-width: 500px;
-            margin: 30px auto;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            padding: 25px;
+            max-width: 550px;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
-        button {
-            background: linear-gradient(135deg, var(--primary), #6c5ce7);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            margin: 10px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
-        }
-        input, select {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #4b6584;
-            background: #222f3e;
-            color: white;
-            margin: 10px;
-            width: 80%;
-            font-size: 16px;
-        }
-        /* الشخصية الكرتونية المرعبة واللطيفة */
-        .mascot-container {
+
+        /* شخصية الراوي الكرتونية */
+        .host-box {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
             margin-bottom: 20px;
+            background: #1e272e;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-purple);
         }
-        .mascot-avatar {
+        .host-avatar {
+            font-size: 45px;
+            background: #2f3640;
             width: 70px;
             height: 70px;
-            background: #ff4757;
+            line-height: 70px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 35px;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.6);
-            animation: bounce 2s infinite;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .speech-bubble {
-            background: #2f3640;
-            border: 2px solid #718093;
-            padding: 12px 20px;
-            border-radius: 15px;
-            max-width: 300px;
+        .host-speech {
             text-align: right;
-            position: relative;
-            font-size: 16px;
+            font-size: 1.05rem;
+            color: #dcdde1;
         }
-        .player-btn {
-            display: block;
+
+        button {
+            background: linear-gradient(135deg, var(--accent-purple), #6c5ce7);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 17px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 8px;
+            transition: 0.2s;
+        }
+        button:hover { transform: scale(1.03); }
+        .btn-player {
             width: 100%;
             background: #2f3640;
-            margin: 8px 0;
-            border: 1px solid #4b6584;
+            border: 1px solid #485460;
+            margin: 5px 0;
         }
-        .player-btn:hover {
-            background: var(--primary);
+        .btn-player:hover { background: var(--accent-purple); }
+
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #485460;
+            background: #1e272e;
+            color: white;
+            width: 80%;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .symbol-display {
+            font-size: 80px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. شاشة البداية واللوجو -->
+    <!-- 1. واجهة اللوجو الاحترافية الرئيسي -->
     <div id="splash-screen" class="screen active">
-        <div class="logo-box">
-            <h1>MAFIA GAME</h1>
-            <p>Mahmoud.games.com</p>
+        <div class="logo-container">
+            <div style="font-size: 50px;">🕵️‍♂️🦹‍♂️</div>
+            <h1 class="logo-title">MAFIA PARTY</h1>
+            <div class="logo-sub">Mahmoud.games.com</div>
         </div>
-        <button onclick="goToModeSelect()">اضغط للبدء والإبهار 🚀</button>
+        <br><br>
+        <button onclick="showScreen('mode-screen')">دخول اللعبة 🚀</button>
     </div>
 
-    <!-- 2. اختيار طريقة اللعب -->
+    <!-- 2. اختيار نمط اللعب -->
     <div id="mode-screen" class="screen">
         <div class="card">
             <h2>اختر نظام اللعب</h2>
-            <button onclick="setupOnlineMode()">🌐 إنشاء غرفة (جهاز عن بعد / كود)</button>
+            <button onclick="setupOnlineRoom()">🌐 إنشاء غرفة عن بعد (Sporcle Party Style)</button>
             <br>
-            <button onclick="setupLocalMode()">🖥️ اللعب على شاشة واحدة (تمرير الهاتف)</button>
+            <button onclick="showScreen('setup-local-screen')">🖥️ اللعب على شاشة واحدة (تمرير الهاتف)</button>
         </div>
     </div>
 
-    <!-- 3. شاشة إدخال اللاعبين -->
+    <!-- 3. إعداد غرفة أونلاين -->
+    <div id="online-screen" class="screen">
+        <div class="card">
+            <h2>غرفة الأونلاين التفاعلية</h2>
+            <p>كود الغرفة الخاص بك:</p>
+            <h1 style="color: var(--accent-green); letter-spacing: 4px;" id="room-code">MAFIA-9982</h1>
+            <p>شارك هذا الكود مع أصدقائك لينضموا عبر أجهزتهم مباشرة!</p>
+            <button onclick="showScreen('setup-local-screen')">الاستمرار إلى قائمة اللاعبين</button>
+        </div>
+    </div>
+
+    <!-- 4. إعداد أسماء اللاعبين -->
     <div id="setup-local-screen" class="screen">
         <div class="card">
-            <h2>إعداد أسماء اللاعبين</h2>
-            <p>أدخل أسماء اللاعبين مفصولة بفاصلة (مثال: محمود، أحمد، خالد، فهد، ريان):</p>
-            <input type="text" id="names-input" placeholder="اكتب الأسماء هنا...">
+            <h2>إضافة اللاعبين</h2>
+            <p>أدخل أسماء اللاعبين (تفصل بينهم بفاصلة):</p>
+            <input type="text" id="names-input" placeholder="محمود، أحمد، خالد، فهد، ريان">
             <br>
-            <button onclick="initGameData()">بدء اللعبة وتوزيع الأدوار 🎮</button>
+            <button onclick="initGame()">بدء اللعبة (Start) 🎮</button>
         </div>
     </div>
 
-    <!-- 4. شاشة غرفة الأصدقاء (أونلاين / كود) -->
-    <div id="online-room-screen" class="screen">
+    <!-- 5. الشاشة الرئيسية للعب وتفاعل الشخصية -->
+    <div id="game-screen" class="screen">
         <div class="card">
-            <h2>غرفة اللعب الذكية</h2>
-            <p>تم إنتاج كود الغرفة الخاص بك:</p>
-            <h1 style="color: var(--success); letter-spacing: 5px;" id="room-code-display">MAFIA-8823</h1>
-            <p>شارك هذا الكود مع أصدقائك ليدخلوا معك بنفس اللحظة (مثل نظام Sporcle)!</p>
-            <button onclick="startLocalPlayFromOnline()">بدء اللعبة جماعياً</button>
-        </div>
-    </div>
+            <div class="host-box">
+                <div class="host-avatar">🤵‍♂️</div>
+                <div class="host-speech" id="host-text">أهلاً بكم! أنا راوي اللعبة، وسأرافقكم في كل خطوة...</div>
+            </div>
 
-    <!-- 5. حلقة اللعب والأدوار (الليل والنهار) -->
-    <div id="gameplay-screen" class="screen">
-        <div class="card" style="max-width: 650px;">
-            <div class="mascot-container">
-                <div class="mascot-avatar">👺</div>
-                <div class="speech-bubble" id="mascot-speech">أهلاً بكم في ليلة الغموض... استعدوا!</div>
-            </div>
-            
-            <h3 id="phase-header">مرحلة اللعبة</h3>
-            <div id="action-container">
-                <!-- محتوى الأدوار والتصويت يتغير ديناميكياً هنا -->
-            </div>
-            <button id="action-btn" style="display:none;" onclick="nextGameStep()">التالي</button>
+            <h3 id="step-title">عنوان المرحلة</h3>
+            <div id="interactive-area"></div>
         </div>
     </div>
 
 <script>
     let players = [];
-    let roles = {}; // { 'محمود': 'المافيا 🦹‍♂️', ... }
-    let gamePhase = 'pass_phone'; // pass_phone, mafia_turn, doctor_turn, oldman_turn, day_voting
-    let currentIndex = 0;
+    let roles = {}; 
+    let alivePlayers = [];
     
-    // حالات الليل والنتائج المؤقتة
-    let nightVictim = null;
-    let savedByDoctor = null;
-    let votes = {};
+    let mafiaChoice = null;
+    let doctorChoice = null;
+    let voteCounts = {};
+    let currentVoterIndex = 0;
 
-    function showScreen(screenId) {
+    function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
+        document.getElementById(id).classList.add('active');
     }
 
-    function goToModeSelect() {
-        showScreen('mode-screen');
+    function setupOnlineRoom() {
+        let code = "ROOM-" + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById("room-code").innerText = code;
+        showScreen("online-screen");
     }
 
-    function setupOnlineMode() {
-        let randomCode = "MAFIA-" + Math.floor(1000 + Math.random() * 9000);
-        document.getElementById("room-code-display").innerText = randomCode;
-        showScreen('online-room-screen');
-    }
+    function initGame() {
+        let raw = document.getElementById("names-input").value;
+        if(!raw) { alert("أدخل أسماء اللاعبين أولاً!"); return; }
+        
+        players = raw.split(",").map(s => s.trim()).filter(s => s.length > 0);
+        if(players.length < 4) { alert("يجب أن يكون عدد اللاعبين 4 على الأقل!"); return; }
 
-    function startLocalPlayFromOnline() {
-        let defaultNames = "محمود، أحمد، خالد، فهد، ريان";
-        let namesInput = prompt("أدخل أسماء اللاعبين المشاركين في الغرفة:", defaultNames);
-        if(namesInput) {
-            document.getElementById("names-input").value = namesInput;
-            showScreen('setup-local-screen');
-        }
-    }
-
-    function setupLocalMode() {
-        showScreen('setup-local-screen');
-    }
-
-    function initGameData() {
-        let input = document.getElementById("names-input").value;
-        if(!input) {
-            alert("الرجاء إدخال أسماء اللاعبين!");
-            return;
-        }
-        players = input.split(",").map(p => p.trim());
-        if(players.length < 4) {
-            alert("يجب أن يكون عدد اللاعبين 4 على الأقل لتبدأ لعبة مافيا ممتعة!");
-            return;
-        }
-
-        // توزيع الأدوار بذكاء
-        let rolePool = ["المافيا 🦹‍♂️", "الطبيب 💉", "الشايب 🔍", "مواطن بريء 🧑", "مواطن بريء 🧑"];
-        // توزيع إضافي إذا كان عدد اللاعبين أكبر
-        while(rolePool.length < players.length) {
-            rolePool.push("مواطن بريء 🧑");
-        }
-        rolePool.sort(() => Math.random() - 0.5);
+        alivePlayers = [...players];
+        
+        // توزيع الأدوار: مافيا، دكتور، شايب، والاقي مواطنين
+        let pool = ["المافيا 🦹‍♂️", "الدكتور 💉", "الشايب 🔍"];
+        while(pool.length < players.length) pool.push("مواطن 🧑");
+        pool.sort(() => Math.random() - 0.5);
 
         roles = {};
-        for(let i = 0; i < players.length; i++) {
-            roles[players[i]] = rolePool[i];
-        }
+        players.forEach((p, i) => roles[p] = pool[i]);
 
-        currentIndex = 0;
-        gamePhase = 'pass_phone_roles';
-        showScreen('gameplay-screen');
-        runPassPhonePhase();
+        showScreen("game-screen");
+        startRoleRevealPhase(0);
     }
 
-    function runPassPhonePhase() {
-        if(currentIndex < players.length) {
-            document.getElementById("mascot-speech").innerText = `أعطِ الشاشة سراً إلى اللاعب: ${players[currentIndex]}`;
-            document.getElementById("phase-header").innerText = `توزيع الأدوار السرية`;
+    // كشف الأدوار بالتمرير
+    function startRoleRevealPhase(index) {
+        if(index < players.length) {
+            let p = players[index];
+            updateHost(`أعطِ الشاشة الآن للاعب: (${p}) ليرى دوره سراً.`);
+            document.getElementById("step-title").innerText = "توزيع الأدوار السرية";
             
-            let html = `
-                <p>هل أنت <b>${players[currentIndex]}</b>؟ اضغط بالأسفل لترى دورك سراً ولا تريه لأحد!</p>
-                <button onclick="revealMyRole('${players[currentIndex]}')">إظهار دوري سراً 👁️</button>
-                <div id="secret-role-box" style="margin-top:15px; font-size:22px; color:var(--accent); font-weight:bold;"></div>
+            document.getElementById("interactive-area").innerHTML = `
+                <button onclick="revealRole('${p}', ${index})">أنا ${p}، أظهر دوري 👁️</button>
+                <div id="role-box" style="font-size:20px; margin-top:15px; font-weight:bold;"></div>
             `;
-            document.getElementById("action-container").innerHTML = html;
-            document.getElementById("action-btn").style.display = "none";
         } else {
-            // انتهى توزيع الأدوار، يبدأ الليل المخيف
             startNightPhase();
         }
     }
 
-    function revealMyRole(playerName) {
-        let r = roles[playerName];
-        document.getElementById("secret-role-box").innerText = `دورك هو: ${r}`;
-        // زر للانتقال للاعب التالي
-        document.getElementById("action-container").innerHTML += `
-            <br><br>
-            <button onclick="nextPlayerRole()" style="background-color: var(--success);">تم، أعطِ الهاتف للاعب التالي ✅</button>
+    function revealRole(player, index) {
+        document.getElementById("role-box").innerText = `دورك هو: ${roles[player]}`;
+        document.getElementById("interactive-area").innerHTML += `
+            <br><br><button onclick="startRoleRevealPhase(${index + 1})">تم، اخفِ الشاشة وأعطها للاعب التالي ➡️</button>
         `;
     }
 
-    function nextPlayerRole() {
-        currentIndex++;
-        runPassPhonePhase();
+    function updateHost(text) {
+        document.getElementById("host-text").innerText = text;
     }
 
+    // ليل اللعبة
     function startNightPhase() {
-        gamePhase = 'mafia_turn';
-        document.getElementById("mascot-speech").innerText = "🌙 حل الليل على المدينة... غمضوا أعينكم وسيقظوا المافيا!";
-        document.getElementById("phase-header").innerText = "دور المافيا الشرير 🦹‍♂️";
+        mafiaChoice = null;
+        doctorChoice = null;
         
-        let html = `<p>اختر ضحيتك من القائمة بحذر شديد:</p>`;
-        players.forEach(p => {
-            html += `<button class="player-btn" onclick="mafiaChoose('${p}')">${p}</button>`;
+        updateHost("🌙 إغلاق الأعين... افتح يا مافيا عينك واختر ضحيتك سراً!");
+        document.getElementById("step-title").innerText = "دور المافيا 🦹‍♂️";
+
+        let html = "";
+        alivePlayers.forEach(p => {
+            html += `<button class="btn-player" onclick="selectMafiaTarget('${p}')">${p}</button>`;
         });
-        document.getElementById("action-container").innerHTML = html;
+        document.getElementById("interactive-area").innerHTML = html;
     }
 
-    function mafiaChoose(victim) {
-        nightVictim = victim;
-        startDoctorTurn();
+    function selectMafiaTarget(target) {
+        mafiaChoice = target;
+        runDoctorPhase();
     }
 
-    function startDoctorTurn() {
-        gamePhase = 'doctor_turn';
-        document.getElementById("mascot-speech").innerText = "💉 نامت المافيا، واستيقظ الطبيب لإنقاذ شخص واحد!";
-        document.getElementById("phase-header").innerText = "دور الطبيب الحكيم 💉";
-        
-        let html = `<p>اختر من تريد أن تحميه هذه الليلة:</p>`;
-        players.forEach(p => {
-            html += `<button class="player-btn" onclick="doctorChoose('${p}')">${p}</button>`;
+    function runDoctorPhase() {
+        updateHost("💉 نامت المافيا... استيقظ يا دكتور واختر من تريد إنقاذه هذه الليلة!");
+        document.getElementById("step-title").innerText = "دور الدكتور 💉";
+
+        let html = "";
+        alivePlayers.forEach(p => {
+            html += `<button class="btn-player" onclick="selectDoctorTarget('${p}')">${p}</button>`;
         });
-        document.getElementById("action-container").innerHTML = html;
+        document.getElementById("interactive-area").innerHTML = html;
     }
 
-    function doctorChoose(protectedPlayer) {
-        savedByDoctor = protectedPlayer;
-        startOldManTurn();
+    function selectDoctorTarget(target) {
+        doctorChoice = target;
+        runOldManPhase();
     }
 
-    function startOldManTurn() {
-        gamePhase = 'oldman_turn';
-        document.getElementById("mascot-speech").innerText = "🔍 استيقظ الشايب/المحقق لكشف أسرار أحدهم!";
-        document.getElementById("phase-header").innerText = "دور الشايب (الفاحص) 🔍";
-        
-        let html = `<p>اختر لاعباً لتفحص هويته (هل هو مافيا أم لا؟):</p>`;
-        players.forEach(p => {
-            if(roles[p] !== 'الشايب 🔍') {
-                html += `<button class="player-btn" onclick="oldManChoose('${p}')">${p}</button>`;
+    function runOldManPhase() {
+        updateHost("🔍 نام الدكتور... استيقظ يا شايب/المحقق واسأل عن أي لاعب تود كشفه!");
+        document.getElementById("step-title").innerText = "دور الشايب 🔍";
+
+        let html = "";
+        alivePlayers.forEach(p => {
+            if(roles[p] !== "الشايب 🔍") {
+                html += `<button class="btn-player" onclick="inspectPlayer('${p}')">${p}</button>`;
             }
         });
-        document.getElementById("action-container").innerHTML = html;
+        document.getElementById("interactive-area").innerHTML = html;
     }
 
-    function oldManChoose(target) {
-        let isMafia = (roles[target] === 'المافيا 🦹‍♂️');
-        let resultMsg = isMafia ? "✅ (هذا الشخص مافيا!)" : "❌ (هذا الشخص بريء تماماً!)";
-        let color = isMafia ? "var(--success)" : "var(--accent)";
+    function inspectPlayer(target) {
+        let isMafia = roles[target] === "المافيا 🦹‍♂️";
         
-        let html = `
-            <h3>نتيجة فحص الشايب لـ ${target}:</h3>
-            <h1 style="color: ${color};">${resultMsg}</h1>
-            <p>احفظ السر في ذهنك جيداً ولا تفشِهِ بصوت عالٍ!</p>
-            <br>
-            <button onclick="startDayPhase()" style="background-color: var(--success);">شروق الشمس والتوجه للنهار ☀️</button>
+        // إظهار إعجاب 👍 بدون صوت إذا كان مافيا، أو علامة حمراء ❌
+        let symbol = isMafia ? "👍" : "❌";
+        
+        updateHost(`النتيجة السرية للشايب عند فحصه لـ (${target}):`);
+        document.getElementById("interactive-area").innerHTML = `
+            <div class="symbol-display">${symbol}</div>
+            <p style="color: #a4b0be;">احفظ هذه الإشارة سراً ولا تتحدث!</p>
+            <button onclick="startDayPhase()">الانتقال لشروق الشمس ☀️</button>
         `;
-        document.getElementById("action-container").innerHTML = html;
     }
 
+    // نهار اللعبة
     function startDayPhase() {
-        gamePhase = 'day_voting';
-        document.getElementById("mascot-speech").innerText = "☀️ أشرقت الشمس! لنتعرف على ما حدث في الليل ونبدأ التصويت.";
-        document.getElementById("phase-header").innerText = "مرحلة النهار والتصويت الجماعي 🗣️";
-
-        let nightResultText = "";
-        if (nightVictim === savedByDoctor) {
-            nightResultText = `🎉 عمت الفرحة! حاولت المافيا قتل (${nightVictim})، لكن الطبيب أنقذه في اللحظة الأخيرة! لم يمت أحد هذه الليلة.`;
-        } else {
-            nightResultText = `🚨 فجيعة! تم اغتيال اللاعب (${nightVictim}) ليلًا وكان دوره: (${roles[nightVictim]}).`;
+        let killed = null;
+        if(mafiaChoice !== doctorChoice) {
+            killed = mafiaChoice;
         }
 
-        let html = `
-            <div style="background:#222f3e; padding:15px; border-radius:10px; margin-bottom:15px;">
-                <p style="font-size:16px;">${nightResultText}</p>
-            </div>
-            <p>الآن حان وقت النقاش، وصوتوا على الشخص المشتبه به لإقصائه:</p>
-        `;
+        let msg = "";
+        if(killed) {
+            msg = `☀️ أشرقت الشمس! للأسف تم اغتيال اللاعب (${killed}) هذه الليلة!`;
+            alivePlayers = alivePlayers.filter(p => p !== killed);
+        } else {
+            msg = `☀️ أشرقت الشمس! نجح الدكتور في حماية الضحية ولم يمت أحد هذه الليلة! 🎉`;
+        }
+
+        updateHost(msg);
+        document.getElementById("step-title").innerText = "مرحلة النهار والنقاش";
         
-        players.forEach(p => {
-            html += `<button class="player-btn" onclick="castVote('${p}')">تصويت ضد: ${p}</button>`;
-        });
-        document.getElementById("action-container").innerHTML = html;
+        document.getElementById("interactive-area").innerHTML = `
+            <p>تناقشوا سوياً، ثم اضغطوا للبدء بالتصويت السري التراكمي.</p>
+            <button onclick="startSequentialVoting()">بدء مرحلة التصويت 🗳️</button>
+        `;
     }
 
-    function castVote(suspect) {
-        document.getElementById("mascot-speech").innerText = `انتهى التصويت وتم إقصاء اللاعب (${suspect}).`;
-        let html = `
-            <h2>نتيجة التصويت الجماعي:</h2>
-            <p>تم إقصاء اللاعب <b>${suspect}</b> وكان دوره: <span style="color:var(--accent);">${roles[suspect]}</span></p>
+    // تصويت فردي تراكمي شاشة بواحدة
+    function startSequentialVoting() {
+        voteCounts = {};
+        alivePlayers.forEach(p => voteCounts[p] = 0);
+        currentVoterIndex = 0;
+        runSingleVoter();
+    }
+
+    function runSingleVoter() {
+        if(currentVoterIndex < alivePlayers.length) {
+            let voter = alivePlayers[currentVoterIndex];
+            updateHost(`أعطِ الشاشة للاعب: (${voter}) ليصوت سراً ضد المشتبه به.`);
+            document.getElementById("step-title").innerText = `دور تصويت: ${voter}`;
+
+            let html = "";
+            alivePlayers.forEach(p => {
+                if(p !== voter) {
+                    html += `<button class="btn-player" onclick="recordVote('${p}')">${p}</button>`;
+                }
+            });
+            document.getElementById("interactive-area").innerHTML = html;
+        } else {
+            finalizeVotingResults();
+        }
+    }
+
+    function recordVote(suspect) {
+        voteCounts[suspect] = (voteCounts[suspect] || 0) + 1;
+        currentVoterIndex++;
+        runSingleVoter();
+    }
+
+    function finalizeVotingResults() {
+        let highestVotes = -1;
+        let eliminated = null;
+
+        for(let p in voteCounts) {
+            if(voteCounts[p] > highestVotes) {
+                highestVotes = voteCounts[p];
+                eliminated = p;
+            }
+        }
+
+        alivePlayers = alivePlayers.filter(p => p !== eliminated);
+
+        updateHost(`تم إغلاق صندوق التصويت! أكثر لاعب حصل على أصوات وتم إقصاؤه هو: (${eliminated}) وكان دوره: (${roles[eliminated]}).`);
+        document.getElementById("step-title").innerText = "نتيجة التصويت النهائي";
+
+        document.getElementById("interactive-area").innerHTML = `
             <br>
-            <button onclick="location.reload()" style="background-color: var(--primary);">لعب دورة جديدة 🔄</button>
+            <button onclick="startNightPhase()">الانتقال لليلة التالية 🌙</button>
+            <br>
+            <button onclick="location.reload()" style="background:#2ed573; color:#000;">جولة جديدة بالكامل 🔄</button>
         `;
-        document.getElementById("action-container").innerHTML = html;
     }
 </script>
-
 </body>
 </html>
