@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVI-BOT | العرض التفاعلي</title>
+    <title>SERVI-BOT ATLAS | العرض التفاعلي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #050505;
+            background-color: #0b0f19;
             color: #ffffff;
-            overflow: hidden; /* منع التمرير نهائيا */
+            overflow: hidden;
             margin: 0;
             padding: 0;
             height: 100vh;
         }
 
-        /* حاوية الشرائح */
         .slider-container {
             position: relative;
             width: 100vw;
             height: 100vh;
         }
 
-        /* تصميم الشريحة الأساسي */
         .slide {
             position: absolute;
             top: 0;
@@ -34,26 +32,20 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-            transform: scale(0.95) translateX(50px);
+            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: scale(1) translateX(0);
             z-index: 10;
         }
 
-        .slide.prev {
-            transform: scale(0.95) translateX(-50px);
-        }
-
-        /* صور الخلفية الاحترافية المظلمة */
-        .bg-overlay {
+        /* تأثير الحركة للصور الخلفية الواضحة */
+        .slide-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -61,88 +53,53 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.3;
-            z-index: -1;
-            filter: grayscale(80%) contrast(120%);
+            z-index: -2;
+            transform: scale(1);
+            transition: transform 6s ease-out;
         }
 
-        /* التدرج اللوني فوق الصورة */
-        .bg-gradient {
+        .slide.active .slide-bg {
+            transform: scale(1.08); /* تأثير التقريب البطيء المتحرك */
+        }
+
+        .slide-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(5,5,5,1) 0%, rgba(5,5,5,0.7) 100%);
+            background: linear-gradient(90deg, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.7) 60%, rgba(11, 15, 25, 0.2) 100%);
             z-index: -1;
         }
 
-        /* أزرار التنقل */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-btn { right: 30px; }
-        .next-btn { left: 30px; }
-
-        /* نقاط المؤشر بالأسفل */
-        .dots-container {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 20;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background: #3b82f6;
-            width: 30px;
-            border-radius: 10px;
+        @media (max-width: 768px) {
+            .slide-overlay {
+                background: linear-gradient(0deg, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.7) 100%);
+            }
+            .slide {
+                justify-content: center;
+            }
         }
 
         /* الصندوق الزجاجي للنص */
         .content-box {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
             padding: 3rem;
             border-radius: 24px;
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            margin-right: auto;
-            margin-left: 10%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            margin-right: 8%;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.8s ease-out 0.3s;
+        }
+
+        .slide.active .content-box {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -151,9 +108,60 @@
                 padding: 2rem;
                 text-align: center;
             }
-            .bg-gradient {
-                background: linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(5,5,5,0.6) 100%);
-            }
+        }
+
+        /* أزرار التنقل */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: #3b82f6;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn { right: 35px; }
+        .next-btn { left: 35px; }
+
+        /* النقاط السفلية */
+        .dots-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #3b82f6;
+            width: 35px;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -163,109 +171,113 @@
 
         <!-- الشريحة 1: المقدمة -->
         <div class="slide active">
-            <!-- صورة ذراع آلية تقنية كخلفية -->
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center h-full">
                 <div class="content-box">
-                    <h1 class="text-5xl md:text-6xl font-black mb-4 text-white">المساعد الذكي</h1>
-                    <div class="w-16 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        مشروع متكامل لروبوت منزلي حقيقي. صُمم ليحمل الأوزان، ويساعد في المهام اليومية، ويجعل الحياة أسهل بتكنولوجيا عملية.
+                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">نظام الروبوت المنزلي</span>
+                    <h1 class="text-4xl md:text-6xl font-black mb-4 text-white">SERVI-BOT ATLAS</h1>
+                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                        روبوت متطور مصمم خصيصاً للمساعدة اليومية. يجمع بين قوة التحمل الميكانيكية والذكاء العملي لخدمة العائلة.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- الشريحة 2: حمل الأغراض -->
+        <!-- الشريحة 2: حمل ونقل الأغراض -->
         <div class="slide">
-            <!-- صورة لآلة تحمل أو تنقل -->
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center h-full">
                 <div class="content-box">
-                    <h2 class="text-4xl font-bold mb-4 text-white">نقل وإحضار الأغراض</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-4">
-                        قوة تحمل كبيرة تصل إلى عشرة كيلوجرامات. يمكنه نقل الصناديق بين الغرف، أو إحضار قوارير المياه والأشياء الثقيلة بكل سلاسة ويسر.
+                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الأولى</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">حمل ونقل الأغراض الثقيلة</h2>
+                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
+                        بفضل المنصة الخلفية المتينة والجنازير القوية، يستطيع الروبوت حمل الأوزان ونقل الصناديق والمشتريات بين الغرف بكل ثبات وسهولة.
                     </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>- منصة تحميل واسعة</li>
-                        <li>- محركات قوية ومستقرة</li>
+                    <ul class="text-blue-200 space-y-2 font-medium">
+                        <li>- منصة تحميل واسعة وآمنة</li>
+                        <li>- قدرة عالية على اتزان الحركة مع الوزن</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- الشريحة 3: الكتابة والتعليم -->
+        <!-- الشريحة 3: الكتابة والتعليم والتخطيط -->
         <div class="slide">
-            <!-- صورة لذراع روبوتية دقيقة -->
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center h-full">
                 <div class="content-box">
-                    <h2 class="text-4xl font-bold mb-4 text-white">كتابة وتخطيط وتعليم</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-4">
-                        الذراع الآلية قادرة على الإمساك بالقلم بدقة عالية. يمكن برمجتها لكتابة النصوص، ورسم الأشكال والتخطيطات الهندسية على الورق.
+                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الثانية</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">الكتابة والتخطيط الدقيق</h2>
+                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
+                        الذراع الآلية مجهزة بإمكانية الإمساك بالأقلام بتركيز عالٍ. تم برمجتها لتخطيط الرسومات الهندسية، وكتابة الكلمات على الورق بوضوح متناهٍ.
                     </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>- أداة ممتازة لتعلم البرمجة</li>
-                        <li>- تحكم دقيق في المفاصل</li>
+                    <ul class="text-blue-200 space-y-2 font-medium">
+                        <li>- تحكم مفاصل بمدى حركة واسع</li>
+                        <li>- أداة مثالية للمهام التعليمية</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- الشريحة 4: المطبخ -->
+        <!-- الشريحة 4: المساعدة في المطبخ -->
         <div class="slide">
-            <!-- صورة لتقنية في بيئة معملية/مطبخ -->
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center h-full">
                 <div class="content-box">
-                    <h2 class="text-4xl font-bold mb-4 text-white">مساعد فعّال في المطبخ</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-4">
-                        لا يقتصر دوره على النقل، بل يمكنه أن يكون يدك اليمنى. يناولك الأدوات أثناء الطبخ، ويحمل لك الوصفات، ويساعد في ترتيب المكونات.
+                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الثالثة</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">المساعدة العملية في المطبخ</h2>
+                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
+                        يعتبر بمثابة يد يمنى إضافية داخل المطبخ. يساعد في ترتيب الأدوات، مناولة المكونات، وتخفيف الجهد في المهام اليومية المتكررة.
                     </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>- ذراع متعددة الاستخدامات</li>
-                        <li>- استجابة سريعة للأوامر</li>
+                    <ul class="text-blue-200 space-y-2 font-medium">
+                        <li>- استجابة سريعة للأوامر اللاسلكية</li>
+                        <li>- قبضة ذراع محكمة لا تنزلق</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- الشريحة 5: تخطي العقبات -->
+        <!-- الشريحة 5: تخطي التضاريس والدرج -->
         <div class="slide">
-            <!-- صورة مجنازير أو تضاريس ميكانيكية -->
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1513343041531-1555e1b12b5b?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1513343041531-1555e1b12b5b?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center h-full">
                 <div class="content-box">
-                    <h2 class="text-4xl font-bold mb-4 text-white">يتخطى السجاد والدرج</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-4">
-                        هيكل معدني قوي مزود بجنازير مطاطية. يتحرك بسهولة تامة فوق السجاد الكثيف، ويصعد عتبات الدرج دون توقف بفضل محركاته الجبارة.
+                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الرابعة</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">تخطي العقبات والدرج</h2>
+                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
+                        مصمم بهيكل معدني مزود بجنازير مطاطية قوية تتيح له الحركة بسلاسة فوق السجاد الكثيف، وصعود عتبات الدرج بكل ثبات دون توقف.
                     </p>
+                    <ul class="text-blue-200 space-y-2 font-medium">
+                        <li>- محركات دفع رباعي المجنازير</li>
+                        <li>- ثبات كامل على المنحدرات</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- الشريحة 6: الخاتمة -->
         <div class="slide">
-            <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1613143527264-500b73c4f74d?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="bg-gradient"></div>
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1613143527264-500b73c4f74d?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide-overlay"></div>
             <div class="w-full flex items-center justify-center h-full text-center">
                 <div class="content-box" style="margin: 0 auto;">
-                    <h2 class="text-4xl font-bold mb-4 text-white">تصميم فخم وتقنية حديثة</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-6 mx-auto"></div>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        مظهر خارجي أسود مطفي يعكس الجودة العالية. يتم التحكم به عن بعد عبر شاشة مخصصة، ليكون آلة عملية، مفيدة، واستثماراً حقيقياً للمستقبل.
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">مشروع هندسي متكامل</h2>
+                    <div class="w-20 h-1 bg-blue-500 mb-6 mx-auto"></div>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                        تقنية متقدمة وهيكل متين يجسد مستقبل الروبوتات المنزلية الذكية. مشروع يجمع بين الابتكار والواقعية بكفاءة عالية.
                     </p>
-                    <button class="bg-blue-600 text-white font-bold py-3 px-10 rounded-full hover:bg-blue-500 transition duration-300">
-                        مشروع متكامل
+                    <button class="bg-blue-600 text-white font-bold py-3 px-10 rounded-full hover:bg-blue-500 transition duration-300 shadow-lg shadow-blue-600/50">
+                        جاهز للعرض
                     </button>
                 </div>
             </div>
@@ -284,9 +296,7 @@
         </button>
 
         <!-- النقاط السفلية -->
-        <div class="dots-container" id="dots-container">
-            <!-- سيتم توليد النقاط بواسطة الجافاسكربت -->
-        </div>
+        <div class="dots-container" id="dots-container"></div>
 
     </div>
 
@@ -295,7 +305,6 @@
         const dotsContainer = document.getElementById('dots-container');
         let currentSlide = 0;
 
-        // إنشاء النقاط بناء على عدد الشرائح
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -307,46 +316,33 @@
         const dots = document.querySelectorAll('.dot');
 
         function updateSlides(oldIndex, newIndex) {
-            // إزالة الكلاسات الحالية
             slides[oldIndex].classList.remove('active');
             dots[oldIndex].classList.remove('active');
             
-            // تحديد اتجاه الحركة
-            if (oldIndex < newIndex) {
-                slides[oldIndex].classList.add('prev');
-            } else {
-                slides[oldIndex].classList.remove('prev');
-            }
-
-            // تفعيل الشريحة الجديدة
-            slides[newIndex].classList.remove('prev');
             slides[newIndex].classList.add('active');
             dots[newIndex].classList.add('active');
+            currentSlide = newIndex;
         }
 
         function nextSlide() {
-            const oldIndex = currentSlide;
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlides(oldIndex, currentSlide);
+            let newIndex = (currentSlide + 1) % slides.length;
+            updateSlides(currentSlide, newIndex);
         }
 
         function prevSlide() {
-            const oldIndex = currentSlide;
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlides(oldIndex, currentSlide);
+            let newIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides(currentSlide, newIndex);
         }
 
         function goToSlide(index) {
             if (index === currentSlide) return;
-            const oldIndex = currentSlide;
-            currentSlide = index;
-            updateSlides(oldIndex, currentSlide);
+            updateSlides(currentSlide, index);
         }
 
-        // دعم التنقل عبر لوحة المفاتيح
+        // دعم التنقل عبر الكيبورد
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') nextSlide(); // لليمين
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') prevSlide(); // لليسار
+            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') prevSlide();
         });
     </script>
 </body>
