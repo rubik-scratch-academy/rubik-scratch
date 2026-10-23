@@ -3,347 +3,971 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVI-BOT ATLAS | العرض التفاعلي</title>
+    <title>دفتر الإنجاز الشخصي للمبتكر محمود</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Cairo & Amiri for Luxury Notebook Feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Amiri:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#040b14',
+                            800: '#0a192f',
+                            700: '#112240',
+                            600: '#1e3a8a',
+                        },
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            light: '#fef08a'
+                        },
+                        paper: '#fcfbf7',
+                        paperLines: '#e2e8f0'
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        /* Notebook Effect CSS */
         body {
+            background-color: #040b14;
             font-family: 'Cairo', sans-serif;
-            background-color: #0b0f19;
-            color: #ffffff;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
+            color: #1e293b;
         }
 
-        .slider-container {
+        .notebook-page {
+            background-color: #fdfbf7;
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 100% 2rem;
+            line-height: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(212, 175, 55, 0.1);
             position: relative;
-            width: 100vw;
-            height: 100vh;
         }
 
-        .slide {
+        .notebook-page::before {
+            content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            bottom: 0;
+            right: 40px;
+            width: 2px;
+            background-color: #f87171;
+            opacity: 0.6;
         }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
+        /* Gold Gradient Borders */
+        .gold-border {
+            border: 2px solid #ca8a04;
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
 
-        /* تأثير الحركة للصور الخلفية الواضحة */
-        .slide-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
-            transform: scale(1);
-            transition: transform 6s ease-out;
+        .gold-text {
+            background: linear-gradient(135deg, #d4af37, #fef08a, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .slide.active .slide-bg {
-            transform: scale(1.08); /* تأثير التقريب البطيء المتحرك */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ca8a04;
+            border-radius: 4px;
         }
 
-        .slide-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.7) 60%, rgba(11, 15, 25, 0.2) 100%);
-            z-index: -1;
+        /* Checkbox Custom Style */
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #1e3a8a;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            background-color: #fff;
+            flex-shrink: 0;
         }
 
-        @media (max-width: 768px) {
-            .slide-overlay {
-                background: linear-gradient(0deg, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.7) 100%);
-            }
-            .slide {
-                justify-content: center;
-            }
+        .custom-checkbox:checked {
+            background-color: #16a34a;
+            border-color: #15803d;
         }
 
-        /* الصندوق الزجاجي للنص */
-        .content-box {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 3rem;
-            border-radius: 24px;
-            max-width: 650px;
-            width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            margin-right: 8%;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.8s ease-out 0.3s;
-        }
-
-        .slide.active .content-box {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        @media (max-width: 768px) {
-            .content-box {
-                margin: 0 auto;
-                padding: 2rem;
-                text-align: center;
-            }
-        }
-
-        /* أزرار التنقل */
-        .nav-btn {
+        .custom-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 12px;
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            color: white;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-btn:hover {
-            background: #3b82f6;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-btn { right: 35px; }
-        .next-btn { left: 35px; }
-
-        /* النقاط السفلية */
-        .dots-container {
-            position: absolute;
-            bottom: 30px;
             left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 20;
+            transform: translate(-50%, -50%);
         }
 
-        .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background: #3b82f6;
-            width: 35px;
-            border-radius: 10px;
+        .task-checked {
+            text-decoration: line-through;
+            color: #94a3b8 !important;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
 
-    <div class="slider-container" id="slider">
-
-        <!-- الشريحة 1: المقدمة -->
-        <div class="slide active">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center h-full">
-                <div class="content-box">
-                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">نظام الروبوت المنزلي</span>
-                    <h1 class="text-4xl md:text-6xl font-black mb-4 text-white">SERVI-BOT ATLAS</h1>
-                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed">
-                        روبوت متطور مصمم خصيصاً للمساعدة اليومية. يجمع بين قوة التحمل الميكانيكية والذكاء العملي لخدمة العائلة.
-                    </p>
+    <!-- Header / Navbar -->
+    <header class="bg-navy-800 border-b-2 border-gold-500 sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-600 to-gold-light flex items-center justify-center text-navy-900 font-bold text-xl shadow-lg">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black gold-text">دفتر الإنجاز الشخصي للمبتكر محمود</h1>
+                    <p class="text-xs text-slate-300">الخطة الشاملة والمبتكرة لإدارة الوقت والمواد الدراسية</p>
                 </div>
             </div>
-        </div>
 
-        <!-- الشريحة 2: حمل ونقل الأغراض -->
-        <div class="slide">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center h-full">
-                <div class="content-box">
-                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الأولى</span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">حمل ونقل الأغراض الثقيلة</h2>
-                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
-                        بفضل المنصة الخلفية المتينة والجنازير القوية، يستطيع الروبوت حمل الأوزان ونقل الصناديق والمشتريات بين الغرف بكل ثبات وسهولة.
-                    </p>
-                    <ul class="text-blue-200 space-y-2 font-medium">
-                        <li>- منصة تحميل واسعة وآمنة</li>
-                        <li>- قدرة عالية على اتزان الحركة مع الوزن</li>
-                    </ul>
+            <!-- Overall Progress Bar -->
+            <div class="flex items-center gap-3 bg-navy-700 px-4 py-2 rounded-xl border border-gold-500/30 w-full sm:w-auto">
+                <div class="text-xs font-bold text-slate-200 whitespace-nowrap">الإنجاز الكلي:</div>
+                <div class="w-32 bg-navy-900 h-3 rounded-full overflow-hidden border border-slate-700">
+                    <div id="overall-progress-bar" class="bg-gradient-to-r from-gold-600 to-green-500 h-full w-0 transition-all duration-500"></div>
                 </div>
+                <span id="overall-progress-text" class="text-xs font-black text-gold-400">0%</span>
             </div>
         </div>
+    </header>
 
-        <!-- الشريحة 3: الكتابة والتعليم والتخطيط -->
-        <div class="slide">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center h-full">
-                <div class="content-box">
-                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الثانية</span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">الكتابة والتخطيط الدقيق</h2>
-                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
-                        الذراع الآلية مجهزة بإمكانية الإمساك بالأقلام بتركيز عالٍ. تم برمجتها لتخطيط الرسومات الهندسية، وكتابة الكلمات على الورق بوضوح متناهٍ.
-                    </p>
-                    <ul class="text-blue-200 space-y-2 font-medium">
-                        <li>- تحكم مفاصل بمدى حركة واسع</li>
-                        <li>- أداة مثالية للمهام التعليمية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- الشريحة 4: المساعدة في المطبخ -->
-        <div class="slide">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center h-full">
-                <div class="content-box">
-                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الثالثة</span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">المساعدة العملية في المطبخ</h2>
-                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
-                        يعتبر بمثابة يد يمنى إضافية داخل المطبخ. يساعد في ترتيب الأدوات، مناولة المكونات، وتخفيف الجهد في المهام اليومية المتكررة.
-                    </p>
-                    <ul class="text-blue-200 space-y-2 font-medium">
-                        <li>- استجابة سريعة للأوامر اللاسلكية</li>
-                        <li>- قبضة ذراع محكمة لا تنزلق</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- الشريحة 5: تخطي التضاريس والدرج -->
-        <div class="slide">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1513343041531-1555e1b12b5b?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center h-full">
-                <div class="content-box">
-                    <span class="text-blue-400 font-bold tracking-widest text-sm uppercase mb-2 block">الميزة الرابعة</span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">تخطي العقبات والدرج</h2>
-                    <div class="w-20 h-1 bg-blue-500 mb-6"></div>
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
-                        مصمم بهيكل معدني مزود بجنازير مطاطية قوية تتيح له الحركة بسلاسة فوق السجاد الكثيف، وصعود عتبات الدرج بكل ثبات دون توقف.
-                    </p>
-                    <ul class="text-blue-200 space-y-2 font-medium">
-                        <li>- محركات دفع رباعي المجنازير</li>
-                        <li>- ثبات كامل على المنحدرات</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- الشريحة 6: الخاتمة -->
-        <div class="slide">
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1613143527264-500b73c4f74d?auto=format&fit=crop&q=80&w=2000');"></div>
-            <div class="slide-overlay"></div>
-            <div class="w-full flex items-center justify-center h-full text-center">
-                <div class="content-box" style="margin: 0 auto;">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">مشروع هندسي متكامل</h2>
-                    <div class="w-20 h-1 bg-blue-500 mb-6 mx-auto"></div>
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
-                        تقنية متقدمة وهيكل متين يجسد مستقبل الروبوتات المنزلية الذكية. مشروع يجمع بين الابتكار والواقعية بكفاءة عالية.
-                    </p>
-                    <button class="bg-blue-600 text-white font-bold py-3 px-10 rounded-full hover:bg-blue-500 transition duration-300 shadow-lg shadow-blue-600/50">
-                        جاهز للعرض
+        <!-- Sidebar Navigation -->
+        <aside class="lg:col-span-3 space-y-2">
+            <div class="bg-navy-800 p-4 rounded-2xl border border-gold-500/30 text-white shadow-xl">
+                <h2 class="text-lg font-bold text-gold-400 mb-3 pb-2 border-b border-navy-700 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> أقسام الدفتر
+                </h2>
+                <nav class="space-y-1" id="navigation-menu">
+                    <!-- Nav items dynamically generated/handled -->
+                    <button onclick="switchTab('tab-cover')" class="nav-btn active w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 bg-navy-700 text-gold-400 border-r-4 border-gold-500">
+                        <i class="fa-solid fa-star w-5 text-center"></i> 1. الغلاف والرسالة
                     </button>
-                </div>
+                    <button onclick="switchTab('tab-daily')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-calendar-day w-5 text-center"></i> 2. الثوابت والروتين اليومي
+                    </button>
+                    <button onclick="switchTab('tab-skills')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-cubes w-5 text-center"></i> 3. استوديو المهارات
+                    </button>
+                    <button onclick="switchTab('tab-math')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-calculator w-5 text-center"></i> 4. الرياضيات
+                    </button>
+                    <button onclick="switchTab('tab-science')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-flask w-5 text-center"></i> 5. العلوم
+                    </button>
+                    <button onclick="switchTab('tab-arabic')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-book w-5 text-center"></i> 6. اللغة العربية
+                    </button>
+                    <button onclick="switchTab('tab-english')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-language w-5 text-center"></i> 7. اللغة الإنجليزية (Super Goal 3)
+                    </button>
+                    <button onclick="switchTab('tab-islamic')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-kaaba w-5 text-center"></i> 8. الدراسات الإسلامية
+                    </button>
+                    <button onclick="switchTab('tab-backlog')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-fire w-5 text-center"></i> 9. حسم التراكمات (7 أيام)
+                    </button>
+                    <button onclick="switchTab('tab-summary')" class="nav-btn w-full text-right px-3 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 text-slate-300 hover:bg-navy-700 hover:text-gold-400">
+                        <i class="fa-solid fa-trophy w-5 text-center"></i> 10. سجل الإنجاز النهائي
+                    </button>
+                </nav>
             </div>
-        </div>
 
-        <!-- أزرار التنقل -->
-        <button class="nav-btn prev-btn" onclick="nextSlide()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
-        <button class="nav-btn next-btn" onclick="prevSlide()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-        </button>
+            <!-- Quick Motivation Box -->
+            <div class="bg-gradient-to-br from-navy-800 to-navy-900 p-4 rounded-2xl border border-gold-500/20 text-center text-slate-300 space-y-2 hidden md:block">
+                <i class="fa-solid fa-quote-right text-gold-400 text-xl"></i>
+                <p class="text-xs italic font-amiri leading-relaxed">"الهدف الأساسي: أن أقترب إلى الله، وأتقن دراستي، وأطور مهاراتي، وأصبح مبتكراً ناجحاً."</p>
+            </div>
+        </aside>
 
-        <!-- النقاط السفلية -->
-        <div class="dots-container" id="dots-container"></div>
+        <!-- Main Content Viewer (Notebook Sheet) -->
+        <section class="lg:col-span-9">
+            <div class="notebook-page rounded-2xl p-4 sm:p-8 pr-12 min-h-[700px] border-4 border-navy-800 relative">
+                
+                <!-- Binder Rings Graphic (Left Side) -->
+                <div class="absolute -right-3 top-10 bottom-10 flex flex-col justify-between py-4 pointer-events-none z-10">
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-200 border-2 border-gray-600 shadow-md"></div>
+                </div>
 
-    </div>
+                <!-- TAB 1: COVER & INTRODUCTION -->
+                <div id="tab-cover" class="tab-content space-y-6">
+                    <div class="text-center py-6 border-b-2 border-navy-900/10">
+                        <span class="bg-navy-800 text-gold-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">دفتر الإنجاز الشخصي للمبتكر</span>
+                        <h1 class="text-3xl sm:text-4xl font-black text-navy-900 mt-3 font-amiri">محمود</h1>
+                        <p class="text-sm text-slate-600 mt-1">رحلة الإنجاز والتتميز</p>
+                        <div class="mt-4 flex justify-center items-center gap-4 text-xs font-bold text-slate-700">
+                            <span>الفترة: من <input type="text" placeholder="  /  /  " class="bg-transparent border-b border-navy-900 text-center w-20 focus:outline-none"></span>
+                            <span>إلى <input type="text" placeholder="  /  /  " class="bg-transparent border-b border-navy-900 text-center w-20 focus:outline-none"></span>
+                        </div>
+                    </div>
 
+                    <div class="bg-amber-50/80 p-5 rounded-xl border border-amber-200/60 space-y-3">
+                        <h3 class="font-bold text-navy-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-compass text-gold-600"></i> قواعد استخدام الدفتر:
+                        </h3>
+                        <ul class="text-xs sm:text-sm text-slate-700 space-y-2 list-disc list-inside leading-relaxed">
+                            <li>اكتب التاريخ في بداية كل يوم.</li>
+                            <li>ضع <i class="fa-solid fa-check text-green-600"></i> أمام المهمة بعد إنجازها فعلياً.</li>
+                            <li>أقسم المهام الطويلة إلى أجزاء صغيرة.</li>
+                            <li>ضع <i class="fa-solid fa-star text-gold-600"></i> أمام المهام الصعبة التي أنجزتها.</li>
+                            <li>إذا لم تنجز مهمة، انقلها إلى اليوم التالي دون أن تعتبر نفسك فاشلاً.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-navy-800 text-white rounded-xl shadow-md border border-gold-500/30">
+                        <h4 class="text-sm font-bold text-gold-400 mb-1"><i class="fa-solid fa-bullseye"></i> هدفي الأساسي:</h4>
+                        <p class="text-xs sm:text-sm text-slate-200 font-amiri leading-relaxed">
+                            "أن أقترب إلى الله، وأتقن دراستي، وأطور مهاراتي، وأصبح مبتكراً ناجحاً."
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-blue-50/80 rounded-xl border border-blue-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2">
+                        <p class="font-bold text-navy-800"><i class="fa-solid fa-circle-info text-blue-600"></i> تعليمات محمود:</p>
+                        <p>يا محمود، خلينا نحول قائمتك إلى <strong>دفتر إنجازات منظم واحترافي</strong>، بحيث يكون لكل مهمة مربع تتضع بجانبه علامة عند انتهائها، وتشوف تقدمك بعينك بدل ما تشعر أن المهام متراكمة عليك.</p>
+                        <p>سأرتبها لك على شكل صفحات جاهزة للنسخ في الدفتر: الثوابت اليومية، المهارات، خطة الأيام السبعة، وقوائم تفصيلية لكل مادة.</p>
+                    </div>
+                </div>
+
+                <!-- TAB 2: DAILY ROUTINE -->
+                <div id="tab-daily" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold text-navy-900">الصفحة الأولى والثانية: الثوابت والروتين اليومي</h2>
+                            <p class="text-xs text-slate-600">اليومية والتثبيت - انسخ هذه القائمة يومياً</p>
+                        </div>
+                        <div class="text-xs font-bold bg-navy-800 text-gold-400 px-3 py-1 rounded-lg">
+                            التاريخ: <input type="text" placeholder="اليوم/التاريخ" class="bg-transparent border-b border-gold-400 text-white w-24 text-center focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- 1. العبادات -->
+                    <div class="space-y-3">
+                        <h3 class="font-black text-navy-900 text-sm sm:text-base bg-amber-100/60 px-3 py-1 rounded-lg border-r-4 border-navy-800">1. العبادات والصلوات والسنن</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm" id="section-worship">
+                            <!-- Items added via JS / hardcoded with data attributes -->
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d1" class="custom-checkbox">
+                                <span>صلاة الفجر في المسجد.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d2" class="custom-checkbox">
+                                <span>المحافظة على السنن المرتبطة بصلاة الفجر.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d3" class="custom-checkbox">
+                                <span>صلاة الظهر في المسجد.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d4" class="custom-checkbox">
+                                <span>المحافظة على السنن المرتبطة بصلاة الظهر.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d5" class="custom-checkbox">
+                                <span>صلاة العصر في المسجد.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d6" class="custom-checkbox">
+                                <span>أذكار المساء في وقتها.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d7" class="custom-checkbox">
+                                <span>صلاة المغرب في المسجد.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d8" class="custom-checkbox">
+                                <span>المحافظة على السنن المرتبطة بصلاة المغرب.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d9" class="custom-checkbox">
+                                <span>صلاة العشاء في المسجد.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                                <input type="checkbox" data-id="d10" class="custom-checkbox">
+                                <span>المحافظة على السنن المرتبطة بصلاة العشاء.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer col-span-1 md:col-span-2">
+                                <input type="checkbox" data-id="d11" class="custom-checkbox">
+                                <span>مراجعة ما فاتني من أذكار أو عبادات مستحبة.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- الأذكار -->
+                    <div class="space-y-3">
+                        <h3 class="font-black text-navy-900 text-sm sm:text-base bg-amber-100/60 px-3 py-1 rounded-lg border-r-4 border-navy-800">الأذكار والتسابيح (المجموع: 500 استغفار + 500 تسبيح)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az1" class="custom-checkbox"> <span>أذكار الصباح كاملة.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az2" class="custom-checkbox"> <span>أذكار المساء كاملة.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az3" class="custom-checkbox"> <span>الاستغفار: 100 مرة (1)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az4" class="custom-checkbox"> <span>الاستغفار: 100 مرة (2)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az5" class="custom-checkbox"> <span>الاستغفار: 100 مرة (3)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az6" class="custom-checkbox"> <span>الاستغفار: 100 مرة (4)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az7" class="custom-checkbox"> <span>الاستغفار: 100 مرة (5)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az8" class="custom-checkbox"> <span>سبحان الله وبحمده: 100 مرة (1)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az9" class="custom-checkbox"> <span>سبحان الله وبحمده: 100 مرة (2)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az10" class="custom-checkbox"> <span>سبحان الله وبحمده: 100 مرة (3)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az11" class="custom-checkbox"> <span>سبحان الله وبحمده: 100 مرة (4)</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="az12" class="custom-checkbox"> <span>سبحان الله وبحمده: 100 مرة (5)</span></label>
+                        </div>
+                    </div>
+
+                    <!-- القرآن الكريم -->
+                    <div class="space-y-3">
+                        <h3 class="font-black text-navy-900 text-sm sm:text-base bg-amber-100/60 px-3 py-1 rounded-lg border-r-4 border-navy-800">القرآن الكريم</h3>
+                        <div class="space-y-2 text-xs sm:text-sm">
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q1" class="custom-checkbox"> <span>مراجعة الجزء اليومي: نصف جزء من سورة يس إلى سورة الناس.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q2" class="custom-checkbox"> <span>مراجعة سورة البقرة حسب موضع المراجعة المحدد، حتى الصفحة 11 من الجزء المستهدف.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q3" class="custom-checkbox"> <span>تحديد الصفحة الجديدة للحفظ.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q4" class="custom-checkbox"> <span>قراءة الصفحة الجديدة قراءة صحيحة.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q5" class="custom-checkbox"> <span>فهم الكلمات أو الآيات التي تحتاج إلى توضيح.</span></label>
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer"><input type="checkbox" data-id="q6" class="custom-checkbox"> <span>حفظ الصفحة الجديدة.</span></label>
+                            
+                            <!-- التكرارات -->
+                            <div class="p-3 bg-amber-50/50 rounded-lg border border-amber-200 mt-2 space-y-2">
+                                <p class="font-bold text-navy-900 text-xs">التكرار للحفظ الجديد:</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r1" class="custom-checkbox"> <span>التكرار الأول</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r2" class="custom-checkbox"> <span>التكرار الثاني</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r3" class="custom-checkbox"> <span>التكرار الثالث</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r4" class="custom-checkbox"> <span>التكرار الرابع</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r5" class="custom-checkbox"> <span>التكرار الخامس</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r6" class="custom-checkbox"> <span>التكرار السادس</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r7" class="custom-checkbox"> <span>التكرار السابع</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r8" class="custom-checkbox"> <span>التكرار الثامن</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r9" class="custom-checkbox"> <span>التكرار التاسع</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r10" class="custom-checkbox"> <span>التكرار العاشر</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r11" class="custom-checkbox"> <span>التكرار 11 إلى 15</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="q_r16" class="custom-checkbox"> <span>التكرار 16 إلى 20</span></label>
+                                </div>
+                                <div class="flex flex-wrap gap-4 pt-2 border-t border-amber-200">
+                                    <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" data-id="q_tasmee" class="custom-checkbox"> <span>تسميع الصفحة غيباً.</span></label>
+                                    <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" data-id="q_sleep" class="custom-checkbox"> <span>مراجعة الصفحة المحفوظة قبل النوم.</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- اللياقة والمهارات والترفيه -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <!-- اللياقة البدنية -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h4 class="font-bold text-navy-800 text-xs sm:text-sm border-b pb-1">2. اللياقة البدنية – 30 دقيقة</h4>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit1" class="custom-checkbox"> <span>إحماء خفيف لمدة 5 دقائق.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit2" class="custom-checkbox"> <span>تمارين الضغط حسب القدرة.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit3" class="custom-checkbox"> <span>تمارين السكوات حسب القدرة.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit4" class="custom-checkbox"> <span>تمارين البلانك أو البطن حسب القدرة.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit5" class="custom-checkbox"> <span>إنهاء التمرين وتهدئة الجسم.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="fit6" class="custom-checkbox"> <span>شرب الماء والراحة المناسبة.</span></label>
+                        </div>
+
+                        <!-- الترفيه والراحة -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h4 class="font-bold text-navy-800 text-xs sm:text-sm border-b pb-1">4. الترفيه والراحة</h4>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="ent1" class="custom-checkbox"> <span>ساعة ترفيه أو مشاهدة التلفاز.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="ent2" class="custom-checkbox"> <span>إنهاء الترفيه في الوقت المحدد.</span></label>
+                            <label class="flex items-center gap-2 text-xs"><input type="checkbox" data-id="ent3" class="custom-checkbox"> <span>تجهيز مكان الدراسة ومهام الغد.</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: SKILLS STUDIO -->
+                <div id="tab-skills" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة الثالثة: استوديو المهارات والابتكار</h2>
+                        <p class="text-xs text-slate-600">حتى لا تتشتت بين أربع مهارات في اليوم الواحد، استخدم هذا التناوب. كل جلسة مدتها 30 دقيقة.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- اليوم الأول: مكعب روبيك -->
+                        <div class="p-4 bg-white rounded-xl border-2 border-amber-300 shadow-sm space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-cube"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-navy-900 text-sm">اليوم الأول – مكعب روبيك</h3>
+                                    <p class="text-xs text-slate-500">تطوير سرعة الحل والتركيز</p>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 pt-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="rubik1" class="custom-checkbox"> <span>إحماء بحل المكعب.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="rubik2" class="custom-checkbox"> <span>تدريب على خوارزمية أو حالة محددة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="rubik3" class="custom-checkbox"> <span>تكرار الحالة حتى تتحسن الدقة والسرعة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="rubik4" class="custom-checkbox"> <span>تسجيل أفضل زمن.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- اليوم الثاني: ESP32 -->
+                        <div class="p-4 bg-white rounded-xl border-2 border-blue-300 shadow-sm space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-microchip"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-navy-900 text-sm">اليوم الثاني – برمجة الإلكترونيات ESP32</h3>
+                                    <p class="text-xs text-slate-500">الابتكار والتحكم الذكي</p>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 pt-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="esp1" class="custom-checkbox"> <span>مراجعة مفهوم أو مكون إلكتروني.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="esp2" class="custom-checkbox"> <span>تجربة عملية صغيرة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="esp3" class="custom-checkbox"> <span>اختبار التوصيلات والكود.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="esp4" class="custom-checkbox"> <span>تدوين النتيجة والخطأ الذي تعلمت منه.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- اليوم الثالث: يوتيوب والمونتاج -->
+                        <div class="p-4 bg-white rounded-xl border-2 border-red-300 shadow-sm space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-600 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-video"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-navy-900 text-sm">اليوم الثالث – يوتيوب والمونتاج</h3>
+                                    <p class="text-xs text-slate-500">إنتاج وتوثيق الأفكار</p>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 pt-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="yt1" class="custom-checkbox"> <span>اختيار فكرة فيديو قصيرة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="yt2" class="custom-checkbox"> <span>تصوير لقطة أو مشهد.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="yt3" class="custom-checkbox"> <span>قص اللقطات وترتيبها.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="yt4" class="custom-checkbox"> <span>تحسين الصوت أو إضافة عنوان.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- اليوم الرابع: الأنيمايشن -->
+                        <div class="p-4 bg-white rounded-xl border-2 border-purple-300 shadow-sm space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-navy-900 text-sm">اليوم الرابع – الأنيمايشن (التحريك)</h3>
+                                    <p class="text-xs text-slate-500">الإبداع البصري والرسوم</p>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 pt-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="anim1" class="custom-checkbox"> <span>تعلم أداة واحدة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="anim2" class="custom-checkbox"> <span>إنشاء حركة بسيطة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="anim3" class="custom-checkbox"> <span>معاينة الحركة وتصحيحها.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="anim4" class="custom-checkbox"> <span>حفظ العمل وتسجيل ما تعلمته.</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-100 rounded-xl text-xs text-slate-700 font-bold">
+                        اليوم الخامس: مكعب روبيك | اليوم السادس: ESP32 | اليوم السابع: اختر المهارة التي تحتاج إلى تطوير أكبر.
+                    </div>
+                </div>
+
+                <!-- TAB 4: MATHEMATICS -->
+                <div id="tab-math" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة الرابعة: ملف الرياضيات – المادة ذات الأولوية</h2>
+                        <p class="text-xs text-slate-600">خطط الإتقان والتطبيق الدرسي</p>
+                    </div>
+
+                    <!-- وحدة المعالم والدروس -->
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm border-b pb-1">الوحدة الأولى: المعادلات</h3>
+                            <div class="space-y-2 text-xs">
+                                <p class="font-semibold text-slate-700">1. درس المعادلات – مستوى متوسط</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_1" class="custom-checkbox"> <span>قراءة الدرس كاملاً.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_2" class="custom-checkbox"> <span>كتابة تعريف المعادلة والمفاهيم المهمة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_3" class="custom-checkbox"> <span>تلخيص خطوات الحل في الدفتر.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_4" class="custom-checkbox"> <span>حل أمثلة الكتاب.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_5" class="custom-checkbox"> <span>حل التدريبات المطلوبة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_6" class="custom-checkbox"> <span>مراجعة الأخطاء وتصحيحها.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_7" class="custom-checkbox"> <span>حل 5 أسئلة متنوعة دون مساعدة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m1_8" class="custom-checkbox"> <span>اختبار ذاتي قصير.</span></label>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 text-xs pt-3 border-t">
+                                <p class="font-semibold text-slate-700">2. حل المعادلات ذات الخطوة الواحدة</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_1" class="custom-checkbox"> <span>مراجعة فكرة الحفاظ على توازن طرفي المعادلة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_2" class="custom-checkbox"> <span>مراجعة الجمع والطرح/الضرب والقسمة في حل المعادلات.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_3" class="custom-checkbox"> <span>تلخيص قاعدة كل نوع.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_4" class="custom-checkbox"> <span>حل أمثلة الكتاب.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_5" class="custom-checkbox"> <span>حل التدريبات كاملة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_6" class="custom-checkbox"> <span>حل أسئلة متنوعة تشمل الأنماط المختلفة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="m2_7" class="custom-checkbox"> <span>اختبار ذاتي وتصحيح الأخطاء.</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- المزيد من الدروس -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm border-b pb-1">3. حل المعادلات متعددة الخطوات & 4. المتغير في طرفيها & 5. القيمة المطلقة</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="m3_1" class="custom-checkbox"> <span>فهم كيفية تجميع حدود المتغير.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="m3_2" class="custom-checkbox"> <span>التعرف على حالات لا يوجد لها حل / عدد لا نهائي.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="m3_3" class="custom-checkbox"> <span>فهم معنى القيمة المطلقة وحل حالتي الموجب والسالب.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="m3_4" class="custom-checkbox"> <span>حل جميع تدريبات الفصل الأول.</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: SCIENCE -->
+                <div id="tab-science" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة الخامسة: ملف العلوم</h2>
+                        <p class="text-xs text-slate-600">الفهم والتلخيص والحفظ</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <!-- أسلوب العلم -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm">1. أسلوب العلم & 2. عمل العلم</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc1" class="custom-checkbox"> <span>مشاهدة الشرح على منصة عين أو مراجعة الدرس.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc2" class="custom-checkbox"> <span>تحديد المفاهيم والتعريفات المهمة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc3" class="custom-checkbox"> <span>تلخيص الفكرة الأساسية للأدوات والتقنيات.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc4" class="custom-checkbox"> <span>الإجابة عن أسئلة الكتاب والتأكد من الفهم.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- الزلازل والبراكين -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm">4. الزلازل & 5. البراكين & 6. الصفائح الأرضية</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc5" class="custom-checkbox"> <span>فهم كيفية حدوث الزلازل والبراكين والعلاقة بينهما.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc6" class="custom-checkbox"> <span>رسم مخطط بسيط أو جدول لحركات الصفائح الأرضية.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc7" class="custom-checkbox"> <span>حفظ تلخيص الدروس ومراجعة أسئلة الفصل.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- أنشطة في الخلية -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm">7. أنشطة في الخلية</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc8" class="custom-checkbox"> <span>تحديد المفاهيم الجديدة وتلخيص الأنشطة والأنواش.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc9" class="custom-checkbox"> <span>مراجعة الرسم أو الأشكال الواردة في الكتاب.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="sc10" class="custom-checkbox"> <span>حل اختبر نفسك وإجابة أسئلة الفصل.</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: ARABIC -->
+                <div id="tab-arabic" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة السادسة: اللغة العربية – الوحدة الأولى كاملة (حقوق وواجبات)</h2>
+                        <p class="text-xs text-slate-600">لغتي الخالدة – الصف الثالث المتوسط – الفصل الدراسي الأول</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- نص الاستماع والفهم القراءي -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm border-b pb-1">القسم الأول والثاني: نص الاستماع والفهم القرآني</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar1" class="custom-checkbox"> <span>قراءة عنوان نص الاستماع وفهم موضوعه العام.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar2" class="custom-checkbox"> <span>الاستماع إلى النص كاملاً بتركيز.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar3" class="custom-checkbox"> <span>قراءة نص (وقضى ربك) قراءة صحيحة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar4" class="custom-checkbox"> <span>استخراج معاني الكلمات والمفردات الجديدة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar5" class="custom-checkbox"> <span>تحديد القيم والسلوكيات التي يدعو إليها النص.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="ar6" class="custom-checkbox"> <span>حل أسئلة الفهم والاستنتاج بالكتاب.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- الدروس اللغوية (الرسم الإملائي، الكتابي، الصرفي، النحوي) -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h3 class="font-bold text-navy-800 text-sm border-b pb-1">الدروس اللغوية والشفرات</h3>
+                            <div class="space-y-2 text-xs">
+                                <p class="font-bold text-slate-700">1. الرسم الإملائي: الألف اللينة في الأفعال الثلاثية</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_em1" class="custom-checkbox"> <span>فهم المقصود بالألف اللينة وطريقة كتابتها (ا / ى).</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_em2" class="custom-checkbox"> <span>مراجعة القاعدة مع الأمثلة وحل تدريبات الكتاب.</span></label>
+                                </div>
+
+                                <p class="font-bold text-slate-700 pt-2">2. الصنف اللغوي: اسم الفاعل & الأساليبي: أسلوب القسم & الوظيفة: الحال</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_lg1" class="custom-checkbox"> <span>فهم صياغة اسم الفاعل من الثلاثي وغير الثلاثي.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_lg2" class="custom-checkbox"> <span>التعرف على أركان أسلوب القسم (أداة، مقسم به، مقسم عليه).</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_lg3" class="custom-checkbox"> <span>كتابة تعريف الحال وتحديد صاحب الحال وإعرابه.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="ar_lg4" class="custom-checkbox"> <span>حل تدريبات كتاب الطالب والنشاط كاملة.</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 7: ENGLISH (SUPER GOAL 3) - FULL DETAIL -->
+                <div id="tab-english" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3 flex justify-between items-center flex-wrap gap-2">
+                        <div>
+                            <h2 class="text-xl font-bold text-navy-900">الصفحة السادسة (مكرر): اللغة الإنجليزية (اللغة الإنكليزية)</h2>
+                            <p class="text-xs text-slate-600">Super Goal 3 – Student's Book, Workbook & Expansion Units 1–4 (تفصيلي بالكامل)</p>
+                        </div>
+                        <span class="bg-blue-900 text-gold-400 font-bold px-3 py-1 rounded-lg text-xs">حرفياً دون اختصار</span>
+                    </div>
+
+                    <!-- UNIT 1 -->
+                    <div class="p-4 bg-white rounded-xl border-2 border-navy-800 shadow-sm space-y-3">
+                        <div class="bg-navy-800 text-gold-400 px-3 py-1 rounded-lg font-bold text-sm flex justify-between">
+                            <span>الوحدة الأولى: Unit 1: Lifestyles</span>
+                            <span class="text-xs text-slate-300">مرحلة 1</span>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <p class="font-bold text-navy-900">أ. الاستماع والمناقشة (A. Listen and Discuss):</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_1" class="custom-checkbox"> <span>قراءة عنوان الوحدة وفهم موضوعها.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_2" class="custom-checkbox"> <span>دراسة الصور والأسئلة التمهيدية.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_3" class="custom-checkbox"> <span>الاستماع إلى المحادثة كاملة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_4" class="custom-checkbox"> <span>فهم العادات وأنماط الحياة المذكورة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_5" class="custom-checkbox"> <span>حل أسئلة الاستماع والمناقشة.</span></label>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t">
+                                <p class="font-bold text-navy-900">ب. القواعد (B. Grammar):</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_g1" class="custom-checkbox"> <span>المضارع البسيط (Simple Present) والجمل المثبتة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_g2" class="custom-checkbox"> <span>مراجعة النفي باستخدام do not / does not.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_g3" class="custom-checkbox"> <span>ظروف التكرار (Adverbs of Frequency): always, usually, often, sometimes, never.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_g4" class="custom-checkbox"> <span>الأسئلة بـ How often, How much, How long.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_g5" class="custom-checkbox"> <span>تراكيب All, Both, Neither, None واستعمالاتها.</span></label>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t">
+                                <p class="font-bold text-navy-900">ج. باقي الأقسام (Reading, Writing, Form/Meaning):</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_o1" class="custom-checkbox"> <span>C. Language in Context: دراسة المفردات في سياقها.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_o2" class="custom-checkbox"> <span>D. Reading: قراءة النص واستخراج المفردات وحل الأسئلة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_o3" class="custom-checkbox"> <span>E. Writing: كتابة جمل عن العادات اليومية مع نموذج الكتابة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en1_o4" class="custom-checkbox"> <span>F. Form, Meaning and Function: التراكيب وحل التدريبات.</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UNIT 2 -->
+                    <div class="p-4 bg-white rounded-xl border-2 border-navy-800 shadow-sm space-y-3">
+                        <div class="bg-navy-800 text-gold-400 px-3 py-1 rounded-lg font-bold text-sm flex justify-between">
+                            <span>الوحدة الثانية: Unit 2: Life Stories</span>
+                            <span class="text-xs text-slate-300">مرحلة 2</span>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <p class="font-bold text-navy-900">أ. القواعد والتركيب (B. Grammar):</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1">
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g1" class="custom-checkbox"> <span>الماضي البسيط (Simple Past) والأفعال المنتهية بـ ed والمنتظمة.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g2" class="custom-checkbox"> <span>الأفعال غير المنتظمة (Irregular Verbs) والنفي بـ did not.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g3" class="custom-checkbox"> <span>تركيب Be + Born (was born / were born).</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g4" class="custom-checkbox"> <span>المبني للمجهول (Passive) والتراكيب المرتبطة به.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g5" class="custom-checkbox"> <span>استعمال Used to للتقاليد والعادات الماضية.</span></label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_g6" class="custom-checkbox"> <span>تعبيرات الزمن في الماضي (Time Expressions for the Past).</span></label>
+                                </div>
+                            </div>
+                            <div class="pt-2 border-t">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en2_all" class="custom-checkbox"> <span>إنهاء جميع تدريبات القراءة والاستماع والمهارات الخاصة بالوحدة الثانية.</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UNIT 3 -->
+                    <div class="p-4 bg-white rounded-xl border-2 border-navy-800 shadow-sm space-y-3">
+                        <div class="bg-navy-800 text-gold-400 px-3 py-1 rounded-lg font-bold text-sm flex justify-between">
+                            <span>الوحدة الثالثة: Unit 3: When Are You Traveling?</span>
+                            <span class="text-xs text-slate-300">مرحلة 3</span>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en3_g1" class="custom-checkbox"> <span>المضارع المستمر (Present Progressive) والصيغ am/is/are + verb-ing.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en3_g2" class="custom-checkbox"> <span>التعبير عن المستقبل بـ Going to و Will.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en3_g3" class="custom-checkbox"> <span>مصدر الغرض (Infinitives of Purpose - to + base verb).</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en3_g4" class="custom-checkbox"> <span>أدوات الزمن (Time Clauses: as soon as, before, after).</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en3_g5" class="custom-checkbox"> <span>حروف جر الحركة (Prepositions of Movement).</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UNIT 4 -->
+                    <div class="p-4 bg-white rounded-xl border-2 border-navy-800 shadow-sm space-y-3">
+                        <div class="bg-navy-800 text-gold-400 px-3 py-1 rounded-lg font-bold text-sm flex justify-between">
+                            <span>الوحدة الرابعة: Unit 4: What Do I Need to Buy?</span>
+                            <span class="text-xs text-slate-300">مرحلة 4</span>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en4_g1" class="custom-checkbox"> <span>تعبيرات الكمية (Expressions of Quantity): a few, a little, a lot of, much, many, enough.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en4_g2" class="custom-checkbox"> <span>التمييز بين الأسماء المعدودة وغير المعدودة.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en4_g3" class="custom-checkbox"> <span>كلمات الترتيب (Sequence Words): First, Then, After that, Finally.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en4_g4" class="custom-checkbox"> <span>الضمائر المنعكسة (Reflexive Pronouns): myself, yourself, himself, herself, itself, ourselves, yourselves, themselves.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="en4_g5" class="custom-checkbox"> <span>أدوات الربط (Because / So) والسبب والنتيجة.</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EXPANSION UNITS & WORKBOOK -->
+                    <div class="p-4 bg-amber-50 rounded-xl border border-amber-300 space-y-3">
+                        <h3 class="font-bold text-navy-900 text-sm">الملحقات، التوسع، كتاب النشاط والاختبار النهائي (Expansion & Workbook)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="exp1" class="custom-checkbox"> <span>Expansion Units 1–3: حل تدريبات القواعد والتراكيب والمفردات.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="exp2" class="custom-checkbox"> <span>Expansion Units 1–4: حل التدريبات الشاملة والمراجعة العامة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="wb1" class="custom-checkbox"> <span>كتاب النشاط (Workbook): Unit 1, Unit 2, Unit 3, Unit 4 كاملة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="ir1" class="custom-checkbox"> <span>قائمة الأفعال غير المنتظمة (Irregular Verbs List): حفظ تصاريف الأفعال.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="chk1" class="custom-checkbox"> <span>قوائم التحقق من الكتابة (Writing Checklists 1–4).</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="fin_en" class="custom-checkbox"> <span>الاختبار النهائي التجريبي لجميع الوحدات المذكورة.</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 8: ISLAMIC STUDIES -->
+                <div id="tab-islamic" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة السابعة: الدراسات الإسلامية والاجتماعيات</h2>
+                        <p class="text-xs text-slate-600">مراجعة شاملة وإتقان جميع التدريبات</p>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="font-bold text-navy-800 text-sm">الدراسات الإسلامية</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl1" class="custom-checkbox"> <span>تحديد الدروس الداخلة في الاختبار.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl2" class="custom-checkbox"> <span>مراجعة الدرس الأول والدرس الثاني وبقية الدروس.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl3" class="custom-checkbox"> <span>مراجعة التعريفات والمفاهيم والأدلة والنصوص المطلوبة للحفظ.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl4" class="custom-checkbox"> <span>مراجعة المعاني والفوائد المستفادة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl5" class="custom-checkbox"> <span>حل تدريبات الدروس وتصحيح الأخطاء.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="isl6" class="custom-checkbox"> <span>تسميع المعلومات المطلوبة واختبار ذاتي شامل.</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 9: 7-DAY BACKLOG PLAN -->
+                <div id="tab-backlog" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة الثامنة: جدول حسم التراكمات خلال 7 أيام</h2>
+                        <p class="text-xs text-slate-600">جدول مقترح لتوزيع المهام، ضع علامة عند إكمال المهمة</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- اليوم الأول -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم الأول</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b1_1" class="custom-checkbox"> <span>المعادلات ذات الخطوة الواحدة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b1_2" class="custom-checkbox"> <span>المعادلات متعددة الخطوات.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b1_3" class="custom-checkbox"> <span>مراجعة درس المعادلة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b1_4" class="custom-checkbox"> <span>العلوم: أسلوب العلم وعمل العلم.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b1_5" class="custom-checkbox"> <span>اللغة الإنجليزية: حصر كلمات الوحدة الرابعة.</span></label>
+                        </div>
+
+                        <!-- اليوم الثاني -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم الثاني</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b2_1" class="custom-checkbox"> <span>المعادلات التي تحتوي متغير في طرفيها.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b2_2" class="custom-checkbox"> <span>المعادلات التي تتضمن القيمة المطلقة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b2_3" class="custom-checkbox"> <span>بدء تدريبات الوحدة الأولى رياضيات.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b2_4" class="custom-checkbox"> <span>العلوم: العلم والتقنية والمجتمع.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b2_5" class="custom-checkbox"> <span>العربية: بدء دراسة الوحدة والقواعد.</span></label>
+                        </div>
+
+                        <!-- اليوم الثالث -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم الثالث</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b3_1" class="custom-checkbox"> <span>درس العلاقات ودرس الدوال.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b3_2" class="custom-checkbox"> <span>إكمال تدريبات الوحدة الأولى.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b3_3" class="custom-checkbox"> <span>العلوم: الزلازل.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b3_4" class="custom-checkbox"> <span>الاجتماعيات: بدء حل تدريبات الكتاب.</span></label>
+                        </div>
+
+                        <!-- اليوم الرابع -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم الرابع</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b4_1" class="custom-checkbox"> <span>تمثيل المعادلات الخطية بيانياً وحلها.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b4_2" class="custom-checkbox"> <span>العلوم: البراكين.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b4_3" class="custom-checkbox"> <span>الإنجليزية: القواعد والتدريبات.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b4_4" class="custom-checkbox"> <span>الإسلامية: مراجعة الدروس والتدريبات.</span></label>
+                        </div>
+
+                        <!-- اليوم الخامس -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم الخامس</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b5_1" class="custom-checkbox"> <span>معدل التغير والميل والمتتابعات الحسابية.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b5_2" class="custom-checkbox"> <span>العلوم: الصفائح الأرضية.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b5_3" class="custom-checkbox"> <span>العربية: أوراق العمل ومسائل الكتاب.</span></label>
+                        </div>
+
+                        <!-- اليوم السادس -->
+                        <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم السادس</h4>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b6_1" class="custom-checkbox"> <span>مراجعة دروس الرياضيات الصعبة وحل الأسئلة.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b6_2" class="custom-checkbox"> <span>العلوم: أنشطة في الخلية.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="b6_3" class="custom-checkbox"> <span>إكمال تدريبات الإسلامية والإنجليزية والعلوم.</span></label>
+                        </div>
+
+                        <!-- اليوم السابع -->
+                        <div class="p-3 bg-white bg-amber-50/50 rounded-xl border border-amber-300 space-y-2 text-xs md:col-span-2">
+                            <h4 class="font-bold text-navy-800 border-b pb-1">اليوم السابع: المراجعة والاختبار الشامل</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="b7_1" class="custom-checkbox"> <span>اختبار رياضيات شامل.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="b7_2" class="custom-checkbox"> <span>اختبار علوم شامل.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="b7_3" class="custom-checkbox"> <span>مراجعة العربية والإنجليزية والاجتماعيات والإسلامية.</span></label>
+                                <label class="flex items-center gap-2"><input type="checkbox" data-id="b7_4" class="custom-checkbox"> <span>حصر النواقص الأخيرة وتصحيح الأخطاء.</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 10: SUMMARY RECORD -->
+                <div id="tab-summary" class="tab-content hidden space-y-6">
+                    <div class="border-b-2 border-navy-900/10 pb-3">
+                        <h2 class="text-xl font-bold text-navy-900">الصفحة التاسعة: سجل الإنجاز النهائي وتقييم الأسبوع</h2>
+                        <p class="text-xs text-slate-600">ملخص ومتابعة النجاح الشخصي</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-4">
+                        <h3 class="font-bold text-navy-800 text-sm">إنجازاتي هذا الأسبوع:</h3>
+                        <div class="space-y-2 text-xs sm:text-sm">
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="sum1" class="custom-checkbox"> <span>أنهيت أهم التراكمات الدراسية.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="sum2" class="custom-checkbox"> <span>راجعت أخطائي وأصلحتها.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="sum3" class="custom-checkbox"> <span>حافظت على روتيني اليومي بقدر استطاعتي.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="sum4" class="custom-checkbox"> <span>طورت مهارة واحدة على الأقل.</span></label>
+                            <label class="flex items-center gap-2"><input type="checkbox" data-id="sum5" class="custom-checkbox"> <span>حددت أولويات الأسبوع القادم.</span></label>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-navy-900">أكبر إنجاز حققته هذا الأسبوع:</label>
+                                <input type="text" placeholder="اكتب إنجازك هنا..." class="w-full p-2 text-xs border rounded-lg focus:ring-2 focus:ring-navy-800 outline-none">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-navy-900">أكثر مادة تحسن مستواي فيها:</label>
+                                <input type="text" placeholder="اسم المادة..." class="w-full p-2 text-xs border rounded-lg focus:ring-2 focus:ring-navy-800 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-slate-700">
+                            <strong>نصيحة محمود الإضافية:</strong> واصل الانضباط، لا تجعل عدم التزامك ببعض المهام يحبطك، فالمهم هو الاستمرار والتطور الفعلي!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 border-t border-gold-500/20 py-4 text-center text-xs text-slate-400">
+        <p>دفتر الإنجاز الشخصي للمبتكر محمود © 2026 - تم التطوير والربط الكامل بالطلب والمناهج الدراسية</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
     <script>
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.getElementById('dots-container');
-        let currentSlide = 0;
+        // Tab Switcher Logic
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
 
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.onclick = () => goToSlide(index);
-            dotsContainer.appendChild(dot);
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-navy-700', 'text-gold-400', 'border-r-4', 'border-gold-500');
+                btn.classList.add('text-slate-300');
+            });
+
+            // Show selected tab
+            const targetTab = document.getElementById(tabId);
+            if(targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            // Highlight active button
+            event.currentTarget.classList.add('bg-navy-700', 'text-gold-400', 'border-r-4', 'border-gold-500');
+            event.currentTarget.classList.remove('text-slate-300');
+
+            // Scroll to top of content on mobile
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // LocalStorage Sync for Checkboxes & Progress
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            // Load Saved State
+            checkboxes.forEach(cb => {
+                const id = cb.getAttribute('data-id');
+                if (id) {
+                    const saved = localStorage.getItem('mahmoud_notebook_' + id);
+                    if (saved === 'true') {
+                        cb.checked = true;
+                        cb.nextElementSibling?.classList.add('task-checked');
+                    }
+                }
+
+                // Add Change Listener
+                cb.addEventListener('change', (e) => {
+                    const isChecked = e.target.checked;
+                    const dataId = e.target.getAttribute('data-id');
+                    
+                    if (dataId) {
+                        localStorage.setItem('mahmoud_notebook_' + dataId, isChecked);
+                    }
+
+                    if (isChecked) {
+                        e.target.nextElementSibling?.classList.add('task-checked');
+                    } else {
+                        e.target.nextElementSibling?.classList.remove('task-checked');
+                    }
+
+                    updateOverallProgress();
+                });
+            });
+
+            updateOverallProgress();
         });
 
-        const dots = document.querySelectorAll('.dot');
+        // Calculate and Update Overall Progress Bar
+        function updateOverallProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let total = checkboxes.length;
+            let checkedCount = 0;
 
-        function updateSlides(oldIndex, newIndex) {
-            slides[oldIndex].classList.remove('active');
-            dots[oldIndex].classList.remove('active');
+            checkboxes.forEach(cb => {
+                if (cb.checked) checkedCount++;
+            });
+
+            const percent = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
             
-            slides[newIndex].classList.add('active');
-            dots[newIndex].classList.add('active');
-            currentSlide = newIndex;
-        }
+            const progressBar = document.getElementById('overall-progress-bar');
+            const progressText = document.getElementById('overall-progress-text');
 
-        function nextSlide() {
-            let newIndex = (currentSlide + 1) % slides.length;
-            updateSlides(currentSlide, newIndex);
+            if (progressBar && progressText) {
+                progressBar.style.width = percent + '%';
+                progressText.textContent = percent + '%';
+            }
         }
-
-        function prevSlide() {
-            let newIndex = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlides(currentSlide, newIndex);
-        }
-
-        function goToSlide(index) {
-            if (index === currentSlide) return;
-            updateSlides(currentSlide, index);
-        }
-
-        // دعم التنقل عبر الكيبورد
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') nextSlide();
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') prevSlide();
-        });
     </script>
 </body>
 </html>
